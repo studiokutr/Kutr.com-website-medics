@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>رزرو نوبت · کلینیک نیکان</title>
+<style>
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Light.woff2') format('woff2');font-weight:300;font-display:swap}
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-SemiBold.woff2') format('woff2');font-weight:500 600;font-display:swap}
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap}
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-ExtraBlack.woff2') format('woff2');font-weight:900;font-display:swap}
+html{direction:rtl}
+body{margin:0;direction:rtl;background:#F5F6F8;color:#222222;font-family:'Yekan Bakh',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:#3669EE;text-decoration:none}
+a:hover{color:#2453D4}
+</style>
+</helmet>
+
+<div dir="rtl" lang="fa" data-screen-label="Booking flow" style="min-height:100vh; overflow-x:clip">
+
+<header data-screen-label="Header" style="position:sticky; top:0; z-index:20; background:rgba(255,255,255,0.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid #ECEEF0">
+  <div style="max-width:1440px; margin:0 auto; padding:0 {{ L.px }}; height:{{ L.headerH }}; display:flex; align-items:center; justify-content:space-between; gap:16px">
+    <a href="Booking%20platform.dc.html" aria-label="کلینیک نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222">
+      <span aria-hidden="true" style="width:44px; height:44px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
+      <span style="display:{{ brandText }}; flex-direction:column; line-height:1.3">
+        <span style="font-size:18px; font-weight:800">کلینیک نیکان</span>
+        <span style="font-size:12px; color:#676767">نوبت‌دهی و مشاوره آنلاین</span>
+      </span>
+    </a>
+    <a href="{{ profileHref }}" style="min-height:44px; display:flex; align-items:center; gap:6px; font-size:15px; color:#4A4A4A">بازگشت به پروفایل پزشک <span aria-hidden="true">←</span></a>
+  </div>
+</header>
+
+<main style="max-width:{{ maxW }}; margin:0 auto; padding:{{ L.py }} {{ L.px }} 96px; display:flex; flex-direction:column; gap:20px">
+
+  <sc-if value="{{ showStepper }}" hint-placeholder-val="{{ true }}">
+    <ol aria-label="مراحل رزرو" style="list-style:none; margin:0 0 8px; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr))">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+        <li aria-current="{{ st.current }}" style="position:relative; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center">
+          <span aria-hidden="true" style="position:absolute; top:13px; left:50%; width:100%; height:0; border-top:2px dashed {{ st.lineColor }}; display:{{ st.lineDisplay }}"></span>
+          <span aria-hidden="true" style="position:relative; z-index:1; width:28px; height:28px; border-radius:999px; border:2px solid {{ st.ring }}; background:{{ st.fill }}; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; box-shadow:0 0 0 4px #F5F6F8">{{ st.mark }}</span>
+          <span style="font-size:{{ L.stepFs }}; font-weight:{{ st.weight }}; color:{{ st.color }}">{{ st.label }}</span>
+        </li>
+      </sc-for>
+    </ol>
+  </sc-if>
+
+  <sc-if value="{{ isTime }}" hint-placeholder-val="{{ true }}">
+    <section aria-labelledby="time-h" data-screen-label="Step · Choose time" style="background:#FFFFFF; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:24px; box-shadow:0 8px 28px rgba(16,24,40,.06)">
+      <h1 id="time-h" style="margin:0; text-align:center; font-size:20px; font-weight:800">{{ timeTitle }}</h1>
+      <div style="display:flex; align-items:center; gap:12px">
+        <span aria-hidden="true" style="flex:none; width:52px; height:52px; border-radius:16px; background-color:#EBF0FE; background-image:url({{ photo }}); background-size:cover"></span>
+        <div style="display:flex; flex-direction:column; gap:4px; min-width:0">
+          <span style="font-size:17px; font-weight:800">{{ D.name }}</span>
+          <span style="font-size:14px; color:#676767">{{ placeText }}</span>
+        </div>
+      </div>
+      <div role="radiogroup" aria-label="نوع ویزیت" style="display:flex; gap:8px; padding:4px; border-radius:16px; background:#F8F9FA; align-self:flex-start; max-width:100%">
+        <sc-for list="{{ typeOpts }}" as="t" hint-placeholder-count="2">
+          <button type="button" role="radio" aria-checked="{{ t.sel }}" onClick="{{ t.pick }}" style="height:44px; padding:0 18px; border-radius:12px; border:0; background:{{ t.bg }}; color:{{ t.color }}; box-shadow:{{ t.shadow }}; font-size:15px; font-weight:600; cursor:pointer; white-space:nowrap">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <div style="position:relative; display:flex; align-items:center; gap:8px">
+        <button type="button" onClick="{{ dayPrev }}" aria-label="روزهای قبلی" style="flex:none; width:40px; height:40px; border-radius:999px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer; display:flex; align-items:center; justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg></button>
+        <div ref="{{ dayRef }}" role="radiogroup" aria-label="روز نوبت" style="flex:1; min-width:0; display:flex; gap:8px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; padding:2px">
+          <sc-for list="{{ days }}" as="d" hint-placeholder-count="8">
+            <button type="button" role="radio" aria-checked="{{ d.sel }}" onClick="{{ d.pick }}" style="flex:0 0 {{ L.dayW }}; scroll-snap-align:start; min-height:84px; padding:10px 4px; border-radius:14px; border:1px solid {{ d.border }}; background:{{ d.bg }}; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; transition:border-color .2s, background-color .2s" style-hover="border-color:#3669EE">
+              <span style="font-size:13px; color:{{ d.dowColor }}">{{ d.dow }}</span>
+              <span style="font-size:15px; font-weight:700; color:{{ d.dateColor }}">{{ d.date }}</span>
+              <span style="font-size:12px; color:{{ d.countColor }}">{{ d.count }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <button type="button" onClick="{{ dayNext }}" aria-label="روزهای بعدی" style="flex:none; width:40px; height:40px; border-radius:999px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer; display:flex; align-items:center; justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg></button>
+      </div>
+      <sc-if value="{{ dayEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:28px 16px; display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center">
+          <span style="font-size:15px; color:#4A4A4A">در حال حاضر برای این روز نوبتی تعریف نشده است.</span>
+          <button type="button" onClick="{{ jumpFree }}" style="min-height:48px; padding:0 24px; border-radius:14px; border:0; background:#15B743; color:#FFFFFF; font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px" style-hover="background:#119A38">برو به اولین نوبت آزاد بعدی <span aria-hidden="true">←</span></button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ dayHas }}" hint-placeholder-val="{{ true }}">
+        <div role="radiogroup" aria-label="ساعت نوبت" style="display:grid; grid-template-columns:repeat({{ L.slotCols }}, minmax(0,1fr)); gap:10px">
+          <sc-for list="{{ slots }}" as="s" hint-placeholder-count="16">
+            <button type="button" role="radio" aria-checked="{{ s.sel }}" aria-disabled="{{ s.taken }}" onClick="{{ s.pick }}" style="height:44px; border-radius:12px; border:1px solid {{ s.border }}; background:{{ s.bg }}; color:{{ s.color }}; font-size:15px; font-weight:600; cursor:{{ s.cursor }}; text-decoration:{{ s.deco }}; transition:background-color .2s, color .2s" style-hover="{{ s.hover }}">{{ s.t }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+      <button type="button" onClick="{{ confirmTime }}" disabled="{{ noTime }}" style="height:56px; border-radius:16px; border:0; background:{{ timeBtnBg }}; color:{{ timeBtnFg }}; font-size:17px; font-weight:700; cursor:{{ timeBtnCursor }}">{{ timeBtnText }}</button>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+    <section aria-labelledby="login-h" data-screen-label="Step · Account" style="background:#FFFFFF; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:18px; box-shadow:0 8px 28px rgba(16,24,40,.06)">
+      <h1 id="login-h" style="margin:0; font-size:20px; font-weight:800">ورود | ثبت‌نام</h1>
+      <sc-if value="{{ loginPhone }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submitPhone }}" novalidate="" style="display:flex; flex-direction:column; gap:14px">
+          <p style="margin:0; font-size:15px; line-height:1.9; color:#4A4A4A">برای ثبت نوبت، شماره موبایل خود را وارد کنید. اگر حساب نداشته باشید، با همین شماره ساخته می‌شود.</p>
+          <label style="display:flex; flex-direction:column; gap:8px"><span style="font-size:14px; font-weight:600">شماره موبایل</span>
+            <input type="tel" inputmode="numeric" dir="ltr" value="{{ phone }}" onChange="{{ onPhone }}" placeholder="۰۹۱۲ ۳۴۵ ۶۷۸۹" autocomplete="tel" aria-invalid="{{ errInvalid }}" style="height:56px; padding:0 16px; border-radius:16px; border:1px solid {{ errBorder }}; background:#F8F9FA; font-size:18px; text-align:left; outline:none" style-focus="border-color:#3669EE; background:#FFFFFF">
+          </label>
+          <sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px; color:#D92D20">{{ err }}</span></sc-if>
+          <button type="submit" style="height:56px; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:17px; font-weight:700; cursor:pointer" style-hover="background:#2453D4">دریافت کد تأیید</button>
+        </form>
+      </sc-if>
+      <sc-if value="{{ loginCode }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ submitCode }}" novalidate="" style="display:flex; flex-direction:column; gap:14px">
+          <p style="margin:0; font-size:15px; line-height:1.9; color:#4A4A4A">کد ۵ رقمی ارسال‌شده به <b dir="ltr">{{ phoneShown }}</b> را وارد کنید. <button type="button" onClick="{{ editPhone }}" style="padding:0; border:0; background:transparent; color:#3669EE; cursor:pointer; font-size:15px">ویرایش شماره</button></p>
+          <label style="display:flex; flex-direction:column; gap:8px"><span style="font-size:14px; font-weight:600">کد تأیید</span>
+            <input type="text" inputmode="numeric" dir="ltr" maxlength="5" value="{{ code }}" onChange="{{ onCode }}" autocomplete="one-time-code" aria-invalid="{{ errInvalid }}" style="height:56px; padding:0 16px; border-radius:16px; border:1px solid {{ errBorder }}; background:#F8F9FA; font-size:22px; letter-spacing:.4em; text-align:center; outline:none" style-focus="border-color:#3669EE; background:#FFFFFF">
+          </label>
+          <span style="font-size:13px; color:#676767">نسخه نمایشی: پیامکی ارسال نمی‌شود؛ هر کد ۵ رقمی پذیرفته می‌شود.</span>
+          <sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px; color:#D92D20">{{ err }}</span></sc-if>
+          <button type="submit" style="height:56px; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:17px; font-weight:700; cursor:pointer" style-hover="background:#2453D4">تأیید و ادامه</button>
+        </form>
+      </sc-if>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ showSummary }}" hint-placeholder-val="{{ false }}">
+    <section aria-label="خلاصه نوبت" style="background:#FFFFFF; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:18px; box-shadow:0 8px 28px rgba(16,24,40,.06)">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px">
+        <div style="display:flex; align-items:center; gap:12px; min-width:0">
+          <span aria-hidden="true" style="flex:none; width:56px; height:56px; border-radius:16px; background-color:#EBF0FE; background-image:url({{ photo }}); background-size:cover"></span>
+          <div style="display:flex; flex-direction:column; gap:2px; min-width:0"><span style="font-size:17px; font-weight:800">{{ D.name }}</span><span style="font-size:14px; color:#676767">{{ D.specialty }}</span></div>
+        </div>
+        <span role="timer" aria-label="زمان باقی‌مانده برای تکمیل رزرو" style="flex:none; display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:{{ timerBg }}; color:{{ timerFg }}; font-size:14px; font-weight:700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span dir="ltr">{{ timerText }}</span></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; padding-top:14px; border-top:1px solid #F0F2F4; font-size:15px"><span style="color:#676767">زمان نوبت</span><span style="font-weight:600">{{ whenText }}</span></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ expired }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="padding:18px 20px; border-radius:18px; background:#FEF3F2; border:1px solid #FECDCA; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; font-size:15px; color:#912018">
+      <span>زمان نگهداری نوبت به پایان رسید و این زمان آزاد شد.</span>
+      <button type="button" onClick="{{ restart }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #D92D20; background:#FFFFFF; color:#D92D20; font-weight:700; cursor:pointer">انتخاب دوباره زمان</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isPatient }}" hint-placeholder-val="{{ false }}">
+    <section aria-labelledby="pat-h" data-screen-label="Step · Patient" style="background:#FFFFFF; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:16px; box-shadow:0 8px 28px rgba(16,24,40,.06)">
+      <div style="display:flex; flex-direction:column; gap:4px"><h1 id="pat-h" style="margin:0; font-size:18px; font-weight:800">مراجعه‌کننده</h1><span style="font-size:15px; color:#676767">برای چه کسی نوبت می‌گیرید؟</span></div>
+      <div role="radiogroup" aria-label="مراجعه‌کننده" style="display:flex; flex-direction:column; gap:10px">
+        <sc-for list="{{ patients }}" as="pt" hint-placeholder-count="1">
+          <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:16px; border:1px solid {{ pt.border }}; background:{{ pt.bg }}">
+            <button type="button" role="radio" aria-checked="{{ pt.sel }}" onClick="{{ pt.pick }}" style="flex:1; min-width:0; min-height:44px; padding:0; border:0; background:transparent; cursor:pointer; display:flex; align-items:center; gap:12px; text-align:right">
+              <span aria-hidden="true" style="flex:none; width:20px; height:20px; border-radius:999px; border:2px solid {{ pt.ring }}; box-shadow:inset 0 0 0 3px #FFFFFF; background:{{ pt.dot }}"></span>
+              <span style="display:flex; flex-direction:column; gap:2px; min-width:0"><span style="font-size:16px; font-weight:700">{{ pt.name }}</span><span dir="ltr" style="font-size:13px; color:#676767; text-align:right">{{ pt.phone }}</span></span>
+            </button>
+            <span style="flex:none; font-size:13px; color:#676767">{{ pt.rel }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ addOpen }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ addSubmit }}" novalidate="" style="display:grid; grid-template-columns:{{ L.formCols }}; gap:12px; padding:16px; border-radius:16px; background:#F8F9FA">
+          <label style="display:flex; flex-direction:column; gap:6px"><span style="font-size:14px; font-weight:600">نام و نام خانوادگی</span><input type="text" value="{{ newName }}" onChange="{{ onNewName }}" autocomplete="name" style="height:48px; padding:0 14px; border-radius:12px; border:1px solid #D9D9D9; background:#FFFFFF; font-size:16px; outline:none" style-focus="border-color:#3669EE"></label>
+          <label style="display:flex; flex-direction:column; gap:6px"><span style="font-size:14px; font-weight:600">شماره موبایل</span><input type="tel" inputmode="numeric" dir="ltr" value="{{ newPhone }}" onChange="{{ onNewPhone }}" placeholder="۰۹۱۲ ۳۴۵ ۶۷۸۹" style="height:48px; padding:0 14px; border-radius:12px; border:1px solid #D9D9D9; background:#FFFFFF; font-size:16px; text-align:left; outline:none" style-focus="border-color:#3669EE"></label>
+          <label style="display:flex; flex-direction:column; gap:6px"><span style="font-size:14px; font-weight:600">نسبت</span>
+            <select value="{{ newRel }}" onChange="{{ onNewRel }}" style="height:48px; padding:0 12px; border-radius:12px; border:1px solid #D9D9D9; background:#FFFFFF; font-size:16px"><option value="فرزند">فرزند</option><option value="همسر">همسر</option><option value="پدر یا مادر">پدر یا مادر</option><option value="سایر">سایر</option></select>
+          </label>
+          <sc-if value="{{ hasAddErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="grid-column:1 / -1; font-size:13px; color:#D92D20">{{ addErr }}</span></sc-if>
+          <div style="grid-column:1 / -1; display:flex; gap:10px; flex-wrap:wrap">
+            <button type="submit" style="min-height:44px; padding:0 20px; border-radius:12px; border:0; background:#3669EE; color:#FFFFFF; font-weight:700; cursor:pointer; transition:background-color .2s" style-hover="background:#2453D4; color:#FFFFFF">افزودن مراجعه‌کننده</button>
+            <button type="button" onClick="{{ addCancel }}" style="min-height:44px; padding:0 20px; border-radius:12px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer">انصراف</button>
+          </div>
+        </form>
+      </sc-if>
+      <sc-if value="{{ addClosed }}" hint-placeholder-val="{{ true }}">
+        <button type="button" onClick="{{ addOpenFn }}" style="min-height:52px; border-radius:16px; border:1px solid #D9D9D9; background:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px" style-hover="border-color:#3669EE; color:#3669EE"><span aria-hidden="true" style="font-size:20px">+</span>دریافت نوبت برای شخص دیگر</button>
+      </sc-if>
+      <button type="button" onClick="{{ toPay }}" disabled="{{ noPatient }}" style="height:56px; border-radius:16px; border:0; background:{{ patBtnBg }}; color:{{ patBtnFg }}; font-size:17px; font-weight:700; cursor:{{ patBtnCursor }}">ادامه</button>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isPay }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Step · Payment" style="display:grid; grid-template-columns:{{ L.payCols }}; gap:20px; align-items:start">
+      <div style="display:flex; flex-direction:column; gap:16px">
+        <section aria-label="خلاصه نوبت" style="background:#FFFFFF; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:14px; box-shadow:0 8px 28px rgba(16,24,40,.06)">
+          <div style="display:flex; align-items:center; gap:10px; padding:12px 14px; border-radius:14px; background:#FFFAEB; color:#93370D; font-size:14px; line-height:1.8">
+            <span aria-hidden="true">⚠</span><span style="flex:1">نوبت شما هنوز ثبت نشده است. برای ادامه، پرداخت را انجام دهید.</span><span dir="ltr" style="font-weight:700">{{ timerText }}</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px">
+            <span aria-hidden="true" style="flex:none; width:48px; height:48px; border-radius:14px; background-color:#EBF0FE; background-image:url({{ photo }}); background-size:cover"></span>
+            <span style="font-size:17px; font-weight:800">{{ D.name }}</span>
+          </div>
+          <dl style="margin:0; display:flex; flex-direction:column">
+            <sc-for list="{{ facts }}" as="f" hint-placeholder-count="6">
+              <div style="display:flex; justify-content:space-between; gap:16px; padding:10px 0; border-top:1px solid #F0F2F4; font-size:15px"><dt style="flex:none; color:#676767">{{ f.k }}</dt><dd style="margin:0; text-align:left; font-weight:600">{{ f.v }}</dd></div>
+            </sc-for>
+          </dl>
+        </section>
+        <section aria-label="کد تخفیف" style="background:#FFFFFF; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:12px; box-shadow:0 8px 28px rgba(16,24,40,.06)">
+          <sc-if value="{{ promoClosed }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap"><span style="font-size:15px; font-weight:700">کد تخفیف یا معرف دارید؟</span><button type="button" onClick="{{ promoOpen }}" style="min-height:44px; padding:0; border:0; background:transparent; color:#3669EE; font-size:15px; font-weight:600; cursor:pointer">+ افزودن کد</button></div>
+          </sc-if>
+          <sc-if value="{{ promoOpenNow }}" hint-placeholder-val="{{ false }}">
+            <form onSubmit="{{ promoApply }}" novalidate="" style="display:flex; gap:8px">
+              <label style="flex:1; min-width:0; display:flex"><span style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)">کد تخفیف</span><input type="text" value="{{ promo }}" onChange="{{ onPromo }}" placeholder="کد تخفیف" style="flex:1; min-width:0; height:48px; padding:0 14px; border-radius:12px; border:1px solid #D9D9D9; background:#F8F9FA; font-size:16px; outline:none" style-focus="border-color:#3669EE; background:#FFFFFF"></label>
+              <button type="submit" style="flex:none; height:48px; padding:0 18px; border-radius:12px; border:0; background:#222222; color:#FFFFFF; font-weight:700; cursor:pointer">اعمال</button>
+            </form>
+            <sc-if value="{{ promoMsgShow }}" hint-placeholder-val="{{ false }}"><span role="status" style="font-size:13px; color:#676767">{{ promoMsg }}</span></sc-if>
+          </sc-if>
+        </section>
+        <section aria-label="ضمانت" style="background:#FFFFFF; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:10px; box-shadow:0 8px 28px rgba(16,24,40,.06)">
+          <span style="font-size:15px; font-weight:700; color:#15B743">✓ با اطمینان نوبت خود را ثبت کنید</span>
+          <ul style="margin:0; padding:0 18px 0 0; display:flex; flex-direction:column; gap:6px; font-size:14px; line-height:1.8; color:#4A4A4A">
+            <li>بازگشت وجه در صورت لغو نوبت از سوی کلینیک</li>
+            <li>امکان لغو نوبت تا ۲۴ ساعت پیش از زمان ویزیت</li>
+            <li>پشتیبانی تلفنی پذیرش: <span dir="ltr">۰۲۱-۶۶۷۷۸۸۹۹</span></li>
+          </ul>
+        </section>
+      </div>
+      <section aria-labelledby="pay-h" style="background:#FFFFFF; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:16px; box-shadow:0 8px 28px rgba(16,24,40,.06); position:{{ L.paySticky }}; top:96px">
+        <h2 id="pay-h" style="margin:0; font-size:17px; font-weight:800">جزئیات پرداخت</h2>
+        <dl style="margin:0; display:flex; flex-direction:column; gap:10px">
+          <sc-for list="{{ lines }}" as="l" hint-placeholder-count="3">
+            <div style="display:flex; justify-content:space-between; gap:16px; font-size:15px"><dt style="color:#676767">{{ l.k }}</dt><dd style="margin:0">{{ l.v }}</dd></div>
+          </sc-for>
+          <div style="display:flex; justify-content:space-between; gap:16px; padding-top:12px; border-top:1px solid #F0F2F4; font-size:17px; font-weight:800"><dt>مبلغ قابل پرداخت</dt><dd style="margin:0">{{ totalText }}</dd></div>
+        </dl>
+        <span style="font-size:13px; line-height:1.8; color:#676767">{{ payNote }}</span>
+        <label style="display:flex; flex-direction:column; gap:8px"><span style="font-size:15px; font-weight:700">درگاه پرداخت</span>
+          <select value="{{ gateway }}" onChange="{{ onGateway }}" style="height:52px; padding:0 14px; border-radius:14px; border:1px solid #D9D9D9; background:#FFFFFF; font-size:15px; cursor:pointer"><option value="1">پرداخت آنلاین · همه کارت‌های بانکی عضو شتاب</option><option value="2">کیف پول کلینیک (نمونه)</option></select>
+        </label>
+        <label style="display:flex; align-items:flex-start; gap:10px; font-size:14px; line-height:1.8; color:#4A4A4A; cursor:pointer">
+          <input type="checkbox" checked="{{ agree }}" onChange="{{ onAgree }}" style="flex:none; width:20px; height:20px; margin-top:3px; accent-color:#3669EE">
+          <span>پرداخت به منزله پذیرش <a href="Booking%20platform.dc.html#contact">شرایط و قوانین</a> لغو و جابه‌جایی نوبت است.</span>
+        </label>
+        <sc-if value="{{ payErrShow }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px; color:#D92D20">برای ادامه، پذیرش شرایط و قوانین لازم است.</span></sc-if>
+        <button type="button" onClick="{{ pay }}" disabled="{{ expired }}" style="height:56px; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:17px; font-weight:700; cursor:pointer; opacity:{{ payOpacity }}" style-hover="background:#2453D4">پرداخت و ثبت نوبت</button>
+        <button type="button" onClick="{{ backPatient }}" style="min-height:44px; padding:0; border:0; background:transparent; color:#4A4A4A; font-size:14px; cursor:pointer">بازگشت به مرحله قبل</button>
+      </section>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+    <section role="status" data-screen-label="Step · Done" style="background:#FFFFFF; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; box-shadow:0 8px 28px rgba(16,24,40,.06)">
+      <span aria-hidden="true" style="width:72px; height:72px; border-radius:999px; background:#E8F7EC; color:#15B743; display:flex; align-items:center; justify-content:center; font-size:34px">✓</span>
+      <h1 style="margin:0; font-size:22px; font-weight:800">مراحل رزرو کامل شد</h1>
+      <span style="font-size:16px; line-height:1.9">{{ D.name }} · {{ whenText }}</span>
+      <span style="font-size:14px; line-height:1.9; color:#676767; max-width:520px">این نسخه نمایشی است: نوبتی در سامانه ثبت نشده، پرداختی انجام نشده و پیامک یادآوری ارسال نمی‌شود.</span>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center">
+        <a href="Patient%20Dashboard.dc.html#appointments" style="min-height:48px; padding:0 22px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; font-weight:700" style-hover="color:#FFFFFF; background:#2453D4">مشاهده در نوبت‌های من</a>
+        <a href="Booking%20platform.dc.html" style="min-height:48px; padding:0 22px; border-radius:14px; border:1px solid #D9D9D9; background:#FFFFFF; color:#222222; display:flex; align-items:center; font-weight:600" style-hover="color:#222222; background:#F8F9FA">صفحه اصلی</a>
+        <button type="button" onClick="{{ restart }}" style="min-height:48px; padding:0 22px; border-radius:14px; border:1px solid #D9D9D9; background:#FFFFFF; font-weight:600; cursor:pointer">رزرو نوبت دیگر</button>
+      </div>
+    </section>
+  </sc-if>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const DOCS = {
+  sara: ["دکتر سارا محمدی", "متخصص قلب و عروق", ["clinic", "phone", "online"], 650000, 450000, 400000],
+  amir: ["دکتر امیر رضایی", "متخصص پوست، مو و زیبایی", ["clinic", "phone", "online"], 550000, 380000, 330000],
+  narges: ["دکتر نرگس کریمی", "متخصص زنان، زایمان و نازایی", ["clinic"], 700000, 0, 0],
+  hamid: ["دکتر حمید احمدی", "متخصص ارتوپدی", ["clinic", "phone"], 600000, 0, 400000],
+  maryam: ["دکتر مریم حسینی", "پزشک عمومی", ["clinic", "phone", "online"], 350000, 250000, 220000],
+  peyman: ["دکتر پیمان راد", "متخصص مغز و اعصاب (نورولوژی)", ["clinic", "phone", "online"], 650000, 450000, 400000]
+};
+const ADDRESS = "تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم";
+const TYPES = { clinic: "ویزیت حضوری", phone: "نوبت تلفنی", online: "مشاوره آنلاین" };
+const fa = (v) => String(v).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+const en = (v) => String(v).replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/\D/g, "");
+const toman = (n) => n.toLocaleString("fa-IR") + " تومان";
+const HOLD = 10 * 60 * 1000;
+const DEPOSIT = 100000, SERVICE = 25000;
+const TIMES = (() => { const a = []; for (let m = 16 * 60 + 15; m <= 21 * 60; m += 15) a.push(String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0")); return a; })();
+const DAYS = (() => {
+  const out = [], base = new Date(); base.setHours(12, 0, 0, 0);
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(base.getTime() + i * 864e5);
+    const closed = i === 0 || d.getDay() === 5;
+    const taken = TIMES.map((t, k) => (k * 7 + i * 3) % 5 === 0 || (i === 1 && k < 4));
+    out.push({ i, dow: i === 1 ? "فردا" : d.toLocaleDateString("fa-IR", { weekday: "long" }), date: d.toLocaleDateString("fa-IR-u-ca-persian", { day: "numeric", month: "long" }), full: d.toLocaleDateString("fa-IR", { weekday: "long" }) + " " + d.toLocaleDateString("fa-IR-u-ca-persian", { day: "numeric", month: "long" }) + " " + d.toLocaleDateString("fa-IR-u-ca-persian", { year: "numeric" }), closed, taken, free: closed ? 0 : taken.filter((x) => !x).length });
+  }
+  return out;
+})();
+
+class Component extends DCLogic {
+  dayRef = React.createRef();
+  state = { vw: 1440, step: "time", doc: "peyman", type: "clinic", day: 0, time: "", when: "", login: "phone", phone: "", code: "", err: "", user: "", patients: [], patient: -1, addOpen: false, newName: "", newPhone: "", newRel: "فرزند", addErr: "", holdUntil: 0, now: Date.now(), promoOpen: false, promo: "", promoMsg: "", gateway: "1", agree: true, payErr: false };
+  componentDidMount() {
+    const q = new URLSearchParams(location.search);
+    const doc = DOCS[q.get("doctor")] ? q.get("doctor") : "peyman";
+    const type = DOCS[doc][2].includes(q.get("type")) ? q.get("type") : "clinic";
+    const when = q.get("when") || "";
+    let user = ""; try { user = localStorage.getItem("nikan-user") || ""; } catch (e) {}
+    const patients = user ? [{ name: "حساب شما", phone: user, rel: "خودم" }] : [];
+    const st = { vw: window.innerWidth, doc, type, when, user, patients, patient: patients.length ? 0 : -1, day: this.firstFree(-1) };
+    if (when) Object.assign(st, user ? { step: "patient", holdUntil: Date.now() + HOLD } : { step: "login" });
+    const forced = q.get("step"); if (["time", "login", "patient", "pay", "done"].includes(forced)) Object.assign(st, { step: forced, holdUntil: Date.now() + HOLD, when: when || DAYS[2].full + " · ساعت " + fa("17:30"), patients: patients.length ? patients : [{ name: "حساب شما", phone: "09121234567", rel: "خودم" }], patient: 0 });
+    this.setState(st);
+    this.onResize = () => this.setState({ vw: window.innerWidth });
+    window.addEventListener("resize", this.onResize);
+    this.tick = setInterval(() => this.setState({ now: Date.now() }), 1000);
+  }
+  componentWillUnmount() { window.removeEventListener("resize", this.onResize); clearInterval(this.tick); }
+  go(step) { this.setState({ step }); window.scrollTo(0, 0); }
+  firstFree(from) { const d = DAYS.find((x) => x.i > from && x.free > 0); return d ? d.i : from; }
+  scrollDays(dir) { const el = this.dayRef.current; if (el) el.scrollBy({ left: dir * -240, behavior: "smooth" }); }
+  renderVals() {
+    const s = this.state, vw = s.vw, dev = vw >= 1100 ? "desktop" : vw >= 700 ? "tablet" : "mobile";
+    const L = {
+      desktop: { px: "80px", py: "40px", headerH: "80px", cardPad: "32px", slotCols: 8, dayW: "86px", payCols: "minmax(0,1.2fr) minmax(0,1fr)", paySticky: "sticky", formCols: "repeat(3, minmax(0,1fr))", stepFs: "14px" },
+      tablet: { px: "32px", py: "32px", headerH: "72px", cardPad: "28px", slotCols: 6, dayW: "84px", payCols: "minmax(0,1fr)", paySticky: "static", formCols: "repeat(2, minmax(0,1fr))", stepFs: "14px" },
+      mobile: { px: "16px", py: "20px", headerH: "64px", cardPad: "18px", slotCols: 4, dayW: "76px", payCols: "minmax(0,1fr)", paySticky: "static", formCols: "minmax(0,1fr)", stepFs: "12px" }
+    }[dev];
+    const [name, specialty, types, feeC, feeO, feeP] = DOCS[s.doc];
+    const remote = s.type !== "clinic";
+    const PLACE = { clinic: ADDRESS, phone: "تماس تلفنی پزشک با شماره موبایل شما", online: "تماس تصویری یا صوتی" };
+    const D = { name, specialty };
+    const fee = s.type === "online" ? feeO : s.type === "phone" ? feeP : feeC;
+    const dayObj = DAYS[s.day];
+    const left = Math.max(0, s.holdUntil - s.now);
+    const holding = ["patient", "pay"].includes(s.step);
+    const expired = holding && s.holdUntil > 0 && left === 0;
+    const mm = Math.floor(left / 60000), ss = Math.floor((left % 60000) / 1000);
+    const whenText = s.when || (s.time ? dayObj.full + " · ساعت " + fa(s.time) : "");
+    const order = ["login", "patient", "pay"];
+    const cur = order.indexOf(s.step === "done" ? "pay" : s.step);
+    const disabledBtn = (on) => ({ bg: on ? "#3669EE" : "#E4E7EC", fg: on ? "#FFFFFF" : "#98A2B3", cursor: on ? "pointer" : "not-allowed" });
+    const tb = disabledBtn(!!s.time), pb = disabledBtn(s.patient >= 0 && !expired);
+    const total = (remote ? fee : DEPOSIT) + SERVICE + Math.round(SERVICE * 0.1);
+    const setErr = (err) => this.setState({ err });
+    return {
+      brandText: dev === "desktop" ? "inline" : "none",
+      L, D, maxW: s.step === "pay" ? "1160px" : "760px", photo: "assets/doctors/photos/" + s.doc + ".png",
+      profileHref: "DoctorProfilePage.dc.html?doctor=" + s.doc,
+      showStepper: s.step !== "time",
+      steps: [["ایجاد حساب کاربری", "login"], ["اطلاعات مراجعه‌کننده", "patient"], ["ثبت نوبت", "pay"]].map(([label, k], i) => {
+        const done = i < cur || s.step === "done", now = i === cur && s.step !== "done";
+        return { label, mark: done ? "✓" : "", current: now ? "step" : "false", ring: done || now ? "#3669EE" : "#C9CDD2", fill: done ? "#3669EE" : "#FFFFFF", color: done || now ? "#222222" : "#98A2B3", weight: now ? 700 : 400, lineDisplay: i === 0 ? "none" : "block", lineColor: i <= cur ? "#3669EE" : "#C9CDD2" };
+      }),
+      isTime: s.step === "time", isLogin: s.step === "login", isPatient: s.step === "patient", isPay: s.step === "pay", isDone: s.step === "done",
+      showSummary: holding, expired,
+      timeTitle: "انتخاب " + TYPES[s.type],
+      placeText: PLACE[s.type],
+      typeOpts: types.map((k) => { const on = s.type === k; return { label: TYPES[k], sel: on ? "true" : "false", bg: on ? "#FFFFFF" : "transparent", color: on ? "#3669EE" : "#4A4A4A", shadow: on ? "0 1px 3px rgba(16,24,40,.12)" : "none", pick: () => this.setState({ type: k }) }; }),
+      dayRef: this.dayRef, dayPrev: () => this.scrollDays(-1), dayNext: () => this.scrollDays(1),
+      days: DAYS.map((d) => { const on = s.day === d.i; return { dow: d.dow, date: d.date, count: d.free ? fa(d.free) + " نوبت" : "—", sel: on ? "true" : "false", border: on ? "#3669EE" : "#E4E7EC", bg: on ? "#F5F8FF" : "#FFFFFF", dowColor: on ? "#3669EE" : "#676767", dateColor: on ? "#3669EE" : "#222222", countColor: d.free ? "#15B743" : "#98A2B3", pick: () => this.setState({ day: d.i, time: "" }) }; }),
+      dayEmpty: !dayObj.free, dayHas: dayObj.free > 0,
+      jumpFree: () => this.setState({ day: this.firstFree(s.day), time: "" }),
+      slots: TIMES.map((t, k) => { const taken = dayObj.taken[k], on = s.time === t; return { t: fa(t), taken: taken ? "true" : "false", sel: on ? "true" : "false", border: taken ? "#E4E7EC" : "#15B743", bg: on ? "#15B743" : taken ? "#F8F9FA" : "#FFFFFF", color: on ? "#FFFFFF" : taken ? "#98A2B3" : "#15B743", cursor: taken ? "not-allowed" : "pointer", deco: taken ? "line-through" : "none", hover: taken || on ? "" : "background:#E8F7EC", pick: () => { if (!taken) this.setState({ time: t }); } }; }),
+      noTime: !s.time, timeBtnBg: tb.bg, timeBtnFg: tb.fg, timeBtnCursor: tb.cursor,
+      timeBtnText: s.time ? "ادامه · " + dayObj.dow + " " + dayObj.date + " ساعت " + fa(s.time) : "یک زمان را انتخاب کنید",
+      confirmTime: () => { if (!s.time) return; if (s.user) this.setState({ step: "patient", holdUntil: Date.now() + HOLD, when: "" }); else this.go("login"); },
+      loginPhone: s.login === "phone", loginCode: s.login === "code",
+      phone: s.phone, onPhone: (e) => this.setState({ phone: e.target.value, err: "" }),
+      code: s.code, onCode: (e) => this.setState({ code: e.target.value, err: "" }),
+      phoneShown: fa(en(s.phone)), hasErr: !!s.err, err: s.err, errInvalid: s.err ? "true" : "false", errBorder: s.err ? "#D92D20" : "#D9D9D9",
+      submitPhone: (e) => { e.preventDefault(); if (!/^09\d{9}$/.test(en(this.state.phone))) return setErr("شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود."); this.setState({ login: "code", err: "" }); },
+      submitCode: (e) => { e.preventDefault(); if (en(this.state.code).length !== 5) return setErr("کد تأیید ۵ رقمی را کامل وارد کنید."); const ph = en(this.state.phone); try { localStorage.setItem("nikan-user", ph); } catch (x) {} this.setState({ user: ph, patients: [{ name: "حساب شما", phone: ph, rel: "خودم" }], patient: 0, step: "patient", holdUntil: Date.now() + HOLD, err: "" }); window.scrollTo(0, 0); },
+      editPhone: () => this.setState({ login: "phone", code: "" }),
+      timerText: fa(String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0")), timerBg: left < 120000 ? "#FEF3F2" : "#F5F8FF", timerFg: left < 120000 ? "#D92D20" : "#3669EE",
+      whenText,
+      patients: s.patients.map((p, i) => { const on = s.patient === i; return { name: p.name, phone: fa(p.phone), rel: p.rel, sel: on ? "true" : "false", border: on ? "#3669EE" : "#E4E7EC", bg: on ? "#F5F8FF" : "#FFFFFF", ring: on ? "#3669EE" : "#C9CDD2", dot: on ? "#3669EE" : "#FFFFFF", pick: () => this.setState({ patient: i }) }; }),
+      addOpen: s.addOpen, addClosed: !s.addOpen, addOpenFn: () => this.setState({ addOpen: true, addErr: "" }), addCancel: () => this.setState({ addOpen: false }),
+      newName: s.newName, onNewName: (e) => this.setState({ newName: e.target.value, addErr: "" }),
+      newPhone: s.newPhone, onNewPhone: (e) => this.setState({ newPhone: e.target.value, addErr: "" }),
+      newRel: s.newRel, onNewRel: (e) => this.setState({ newRel: e.target.value }),
+      hasAddErr: !!s.addErr, addErr: s.addErr,
+      addSubmit: (e) => { e.preventDefault(); const st = this.state; if (st.newName.trim().length < 3) return this.setState({ addErr: "نام و نام خانوادگی را وارد کنید." }); if (!/^09\d{9}$/.test(en(st.newPhone))) return this.setState({ addErr: "شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود." }); const patients = [...st.patients, { name: st.newName.trim(), phone: en(st.newPhone), rel: st.newRel }]; this.setState({ patients, patient: patients.length - 1, addOpen: false, newName: "", newPhone: "" }); },
+      noPatient: s.patient < 0 || expired, patBtnBg: pb.bg, patBtnFg: pb.fg, patBtnCursor: pb.cursor,
+      toPay: () => { if (s.patient >= 0 && !expired) this.go("pay"); },
+      facts: [["تخصص", specialty], ["نوع نوبت", TYPES[s.type]], ["زمان نوبت", whenText], [remote ? "شیوه ویزیت" : "آدرس", PLACE[s.type]], ["نام مراجعه‌کننده", (s.patients[s.patient] || {}).name || "—"]].map(([k, v]) => ({ k, v })),
+      lines: [[remote ? "هزینه " + TYPES[s.type] : "پیش‌پرداخت ویزیت", toman(remote ? fee : DEPOSIT)], ["هزینه خدمات رزرو", toman(SERVICE)], ["۱۰٪ مالیات بر ارزش افزوده", toman(Math.round(SERVICE * 0.1))]].map(([k, v]) => ({ k, v })),
+      totalText: toman(total),
+      payNote: remote ? "مبلغ‌ها نمونه هستند." : "باقی‌مانده هزینه ویزیت (" + toman(fee - DEPOSIT) + ") در کلینیک پرداخت می‌شود. مبلغ‌ها نمونه هستند.",
+      promoClosed: !s.promoOpen, promoOpenNow: s.promoOpen, promoOpen: () => this.setState({ promoOpen: true }),
+      promo: s.promo, onPromo: (e) => this.setState({ promo: e.target.value, promoMsg: "" }),
+      promoApply: (e) => { e.preventDefault(); this.setState({ promoMsg: this.state.promo.trim() ? "کد وارد‌شده معتبر نیست." : "کد تخفیف را وارد کنید." }); },
+      promoMsgShow: !!s.promoMsg, promoMsg: s.promoMsg,
+      gateway: s.gateway, onGateway: (e) => this.setState({ gateway: e.target.value }),
+      agree: s.agree, onAgree: (e) => this.setState({ agree: e.target.checked, payErr: false }), payErrShow: s.payErr,
+      payOpacity: expired ? 0.5 : 1,
+      pay: () => { if (expired) return; if (!this.state.agree) return this.setState({ payErr: true });
+        const st = this.state, now = new Date();
+        const appt = { id: "b" + Date.now(), doc: st.doc, type: st.type, when: whenText.replace(" · ساعت ", " | "), status: "booked", code: fa(String(Math.floor(231000000 + Math.random() * 999999))), paid: toman(total), remain: st.type !== "clinic" ? "—" : toman(fee - DEPOSIT) + " · در کلینیک", patient: (st.patients[st.patient] || {}).name || "حساب شما", created: now.toLocaleDateString("fa-IR-u-ca-persian", { day: "numeric", month: "long", year: "numeric" }) };
+        try { const prev = JSON.parse(localStorage.getItem("nikan-appts") || "[]"); localStorage.setItem("nikan-appts", JSON.stringify([appt, ...prev].slice(0, 20))); } catch (x) {}
+        this.go("done"); },
+      backPatient: () => this.go("patient"),
+      restart: () => this.setState({ step: "time", time: "", when: "", holdUntil: 0, day: this.firstFree(0) })
+    };
+  }
+}
+</script>
+</body>
+</html>

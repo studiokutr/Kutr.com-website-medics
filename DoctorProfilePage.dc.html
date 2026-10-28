@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>پروفایل پزشک — کلینیک نیکان</title>
+<style>
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Light.woff2') format('woff2');font-weight:300;font-display:swap}
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-SemiBold.woff2') format('woff2');font-weight:500 600;font-display:swap}
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap}
+@font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-ExtraBlack.woff2') format('woff2');font-weight:900;font-display:swap}
+body{margin:0;font-family:'Yekan Bakh',system-ui,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:#3669EE;text-decoration:none}
+a:hover{color:#2453D4}
+</style>
+</helmet>
+
+<div dir="rtl" lang="fa" style="position:relative; width:{{ L.w }}; height:{{ frameH }}; background:#FFFFFF; color:#222222; font-family:'Yekan Bakh',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow:clip">
+<div ref="{{ scrollRef }}" style="height:100%; overflow-y:{{ scrollY }}; overflow-x:{{ scrollX }}; scrollbar-width:thin">
+
+<header data-screen-label="Header" style="position:sticky; top:0; z-index:20; background:rgba(255,255,255,0.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid #ECEEF0">
+  <div style="max-width:1440px; margin:0 auto; height:{{ L.headerH }}; padding:0 {{ L.padX }}; display:flex; align-items:center; gap:{{ L.headerGap }}">
+    <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuExpanded }}" aria-label="منو" style="display:{{ L.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #DBDBDB; background:#FFFFFF; cursor:pointer; align-items:center; justify-content:center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    <a href="Booking%20platform.dc.html" aria-label="کلینیک نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222; flex:none">
+      <span aria-hidden="true" style="width:{{ L.logo }}; height:{{ L.logo }}; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
+      <span style="display:{{ brandText }}; flex-direction:column; line-height:1.3">
+        <span style="font-size:18px; font-weight:800">کلینیک نیکان</span>
+        <span style="display:{{ L.taglineDisplay }}; font-size:12px; color:#676767">نوبت‌دهی و مشاوره آنلاین</span>
+      </span>
+    </a>
+    <nav aria-label="منوی اصلی" style="flex:1; display:{{ L.navDisplay }}; align-items:center; gap:{{ L.navGap }}; font-size:{{ L.navFs }}">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+        <a href="{{ n.href }}" style="color:{{ n.color }}; padding:8px 0; border-bottom:2px solid {{ n.border }}; white-space:nowrap; transition:color .2s, border-color .2s" style-hover="color:#3669EE; border-color:#3669EE">{{ n.label }}</a>
+      </sc-for>
+    </nav>
+    <div style="margin-right:auto; display:flex; align-items:center; gap:10px; flex:none">
+      <button type="button" onClick="{{ login }}" style="display:{{ L.loginDisplay }}; height:{{ L.btnH }}; padding:0 20px; border-radius:16px; border:0; background:#F2F2F2; color:#222222; font-size:16px; font-weight:600; cursor:pointer; transition:background-color .2s" style-hover="background:#E6E6E6">ورود | ثبت‌نام</button>
+    </div>
+  </div>
+  <nav aria-label="منوی اصلی" style="display:{{ L.navRow }}; align-items:center; gap:28px; height:52px; padding:0 {{ L.padX }}; border-top:1px solid #F0F2F4; overflow-x:auto; scrollbar-width:none; font-size:15px">
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+      <a href="{{ n.href }}" style="flex:none; white-space:nowrap; color:#373A41; padding:14px 0" style-hover="color:#3669EE">{{ n.label }}</a>
+    </sc-for>
+  </nav>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav aria-label="منوی اصلی" style="padding:8px {{ L.padX }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+        <a href="{{ n.href }}" onClick="{{ closeMenu }}" style="min-height:48px; display:flex; align-items:center; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ n.color }}">{{ n.label }}</a>
+      </sc-for>
+      <button type="button" onClick="{{ login }}" style="display:{{ L.menuLoginDisplay }}; margin-top:12px; height:48px; border-radius:16px; border:0; background:#F2F2F2; font-size:16px; font-weight:600; cursor:pointer">ورود | ثبت‌نام</button>
+    </nav>
+  </sc-if>
+</header>
+
+<main style="padding:{{ L.mainPadTop }} {{ L.padX }} {{ L.mainPadBottom }}; display:grid; grid-template-columns:{{ L.cols }}; column-gap:32px; row-gap:{{ L.gap }}; align-items:start">
+
+  <section data-screen-label="Doctor overview" style="grid-column:1; grid-row:1; border:1px solid #E6E6E6; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:20px">
+    <div style="display:flex; flex-direction:{{ L.ovDir }}; align-items:{{ L.ovAlign }}; gap:20px; text-align:{{ L.ovText }}">
+      <span role="img" aria-label="{{ D.name }}" style="flex:none; width:{{ L.avatar }}; height:{{ L.avatar }}; border-radius:28px; border:1px solid #ECEEF0; background-color:#EBF0FE; background-image:url({{ D.photo }}); background-size:cover"></span>
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column; align-items:{{ L.ovItems }}; gap:8px">
+        <h1 style="margin:0; font-size:{{ L.h1 }}; font-weight:800; line-height:1.4">{{ D.name }}</h1>
+        <span style="font-size:17px; color:#4A4A4A">{{ D.specialty }}</span>
+        <span style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:{{ L.ovItems }}; font-size:15px; color:#676767">{{ D.credential }}</span>
+        <div style="display:flex; align-items:center; justify-content:{{ L.ovItems }}; gap:14px; flex-wrap:wrap; margin-top:4px; font-size:14px; color:#4A4A4A">
+          <span style="display:flex; align-items:center; gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#676767" stroke-width="1.8" aria-hidden="true"><path d="M12 22s7-7.8 7-13a7 7 0 0 0-14 0c0 5.2 7 13 7 13z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>کلینیک نیکان، تهران</span>
+          <span aria-hidden="true" style="width:1px; height:16px; background:#DEDEDE"></span>
+          <span style="display:flex; align-items:center; gap:6px"><span style="color:#15B743; font-weight:700">{{ D.recommend }}</span>توصیه شده</span>
+          <span aria-hidden="true" style="display:{{ L.divider3 }}; width:1px; height:16px; background:#DEDEDE"></span>
+          <span style="display:flex; align-items:center; gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="#EAAA08" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"></path></svg><span style="font-weight:700; color:#222222">{{ D.rating }}</span><span style="color:#676767">(از {{ D.reviews }} نظر)</span></span>
+          
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px">
+          <sc-for list="{{ typeTags }}" as="g" hint-placeholder-count="3">
+            <span style="height:28px; padding:0 10px; display:inline-flex; align-items:center; border-radius:8px; background:{{ g.bg }}; color:{{ g.color }}; font-size:13px; font-weight:600">{{ g.label }}</span>
+          </sc-for>
+        </div>
+      </div>
+      <button type="button" onClick="{{ share }}" aria-label="اشتراک‌گذاری پروفایل" style="display:{{ L.shareDisplay }}; flex:none; width:48px; height:48px; border-radius:14px; border:1px solid #DBDBDB; background:#FFFFFF; cursor:pointer; align-items:center; justify-content:center; transition:border-color .2s" style-hover="border-color:#3669EE">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      </button>
+    </div>
+    <nav aria-label="بخش‌های صفحه" style="display:flex; gap:4px; padding:4px; border-radius:16px; background:#F0F2F4; overflow-x:auto; scrollbar-width:none">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+        <a href="{{ t.href }}" onClick="{{ t.go }}" aria-current="{{ t.current }}" style="flex:1 0 auto; height:44px; padding:0 16px; border-radius:12px; background:{{ t.bg }}; color:{{ t.color }}; font-size:15px; font-weight:600; text-decoration:none; white-space:nowrap; display:flex; align-items:center; justify-content:center; transition:background-color .2s, color .2s" style-hover="color:#3669EE">{{ t.label }}</a>
+      </sc-for>
+    </nav>
+  </section>
+
+  <aside id="booking" aria-labelledby="bk-h" data-screen-label="Appointment booking" style="grid-column:{{ L.asideCol }}; grid-row:{{ L.asideRow }}; position:{{ L.asidePos }}; top:{{ L.asideTop }}; border:1px solid #E6E6E6; border-radius:24px; background:#FFFFFF; display:flex; flex-direction:column; max-height:{{ L.asideMax }}; overflow:hidden">
+    <div style="flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:20px">
+      <h2 id="bk-h" style="margin:0; font-size:20px; font-weight:800">نوع ویزیت را انتخاب کنید</h2>
+      <div role="radiogroup" aria-label="نوع ویزیت" style="display:flex; flex-direction:column; gap:12px">
+        <sc-for list="{{ types }}" as="t" hint-placeholder-count="2">
+          <button type="button" role="radio" aria-checked="{{ t.checked }}" onClick="{{ t.pick }}" style="display:flex; gap:14px; align-items:flex-start; padding:16px; border-radius:18px; border:1px solid {{ t.border }}; background:{{ t.bg }}; cursor:pointer; text-align:right; transition:border-color .2s, background-color .2s">
+            <span aria-hidden="true" style="flex:none; width:48px; height:48px; border-radius:14px; background:{{ t.iconBg }}; color:{{ t.accent }}; display:flex; align-items:center; justify-content:center">
+              <sc-if value="{{ t.isClinic }}" hint-placeholder-val="{{ true }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"></path><path d="M12 9v6M9 12h6"></path></svg></sc-if>
+              <sc-if value="{{ t.isPhone }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg></sc-if>
+            <sc-if value="{{ t.isOnline }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="3"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></sc-if>
+            </span>
+            <span style="flex:1; display:flex; flex-direction:column; gap:4px; min-width:0">
+              <span style="font-size:17px; font-weight:700; color:#222222">{{ t.title }}</span>
+              <span style="font-size:14px; color:#676767">{{ t.sub }}</span>
+              <span style="font-size:13px; color:{{ t.nextColor }}; font-weight:600">{{ t.next }}</span>
+            </span>
+            <span aria-hidden="true" style="flex:none; width:22px; height:22px; border-radius:999px; border:2px solid {{ t.ring }}; display:flex; align-items:center; justify-content:center"><span style="width:10px; height:10px; border-radius:999px; background:{{ t.dot }}"></span></span>
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px">
+          <h3 style="margin:0; font-size:16px; font-weight:700">انتخاب روز</h3>
+          <span style="font-size:12px; color:#676767; background:#F0F2F4; padding:4px 10px; border-radius:999px">زمان‌های خالی این هفته</span>
+        </div>
+        <div role="radiogroup" aria-label="روز" style="display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px">
+          <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
+            <button type="button" role="radio" aria-checked="{{ d.checked }}" disabled="{{ d.disabled }}" onClick="{{ d.pick }}" style="flex:none; min-width:76px; height:68px; padding:0 10px; border-radius:16px; border:1px solid {{ d.border }}; background:{{ d.bg }}; color:{{ d.color }}; cursor:{{ d.cursor }}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; transition:border-color .2s, background-color .2s">
+              <span style="font-size:13px">{{ d.w }}</span>
+              <span style="font-size:15px; font-weight:700">{{ d.d }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <h3 style="margin:0; font-size:16px; font-weight:700">انتخاب ساعت</h3>
+        <sc-if value="{{ hasSlots }}" hint-placeholder-val="{{ true }}">
+          <div role="radiogroup" aria-label="ساعت" style="display:grid; grid-template-columns:repeat({{ L.slotCols }}, minmax(0,1fr)); gap:8px">
+            <sc-for list="{{ slots }}" as="s" hint-placeholder-count="4">
+              <button type="button" role="radio" aria-checked="{{ s.checked }}" onClick="{{ s.pick }}" style="height:48px; border-radius:14px; border:1px solid {{ s.border }}; background:{{ s.bg }}; color:{{ s.color }}; font-size:15px; font-weight:600; cursor:pointer; transition:border-color .2s, background-color .2s" style-hover="border-color:#3669EE">{{ s.t }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noSlots }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flex-direction:column; gap:12px; padding:16px; border-radius:16px; border:1px dashed #D9D9D9; background:#F8F9FA">
+            <span style="font-size:14px; color:#4A4A4A">برای این روز نوبت خالی وجود ندارد.</span>
+            <button type="button" onClick="{{ notify }}" style="align-self:flex-start; height:44px; padding:0 16px; border-radius:14px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; font-size:14px; font-weight:600; cursor:pointer">نوبت دار شد خبرم کن</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+    <div style="display:{{ L.cardFooterDisplay }}; flex:none; flex-direction:column; gap:12px; padding:18px {{ L.cardPadX }} {{ L.cardPadB }}; border-top:1px solid #ECEEF0; background:#FFFFFF">
+      <div aria-live="polite" style="display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:14px">
+        <span style="color:#676767">نوبت انتخابی</span>
+        <span style="font-weight:700; color:{{ summaryColor }}">{{ summary }}</span>
+      </div>
+      <button type="button" onClick="{{ proceed }}" aria-disabled="{{ ctaDisabled }}" style="height:56px; border-radius:16px; border:0; background:{{ ctaBg }}; color:{{ ctaColor }}; font-size:17px; font-weight:700; cursor:{{ ctaCursor }}; display:flex; align-items:center; justify-content:center; gap:10px; transition:background-color .2s">ادامه و ورود با شماره موبایل<span aria-hidden="true">←</span></button>
+      <span style="font-size:13px; color:#676767; text-align:center">هزینه {{ feeLabel }}: <b style="color:#222222">{{ feeText }}</b></span>
+    </div>
+  </aside>
+
+  <div style="grid-column:1; grid-row:{{ L.restRow }}; display:flex; flex-direction:column; gap:{{ L.gap }}; min-width:0">
+
+    <section id="sec-about" aria-labelledby="about-h" data-screen-label="About the doctor" style="border:1px solid #E6E6E6; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:18px">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap">
+        <h2 id="about-h" style="margin:0; font-size:22px; font-weight:800">درباره {{ D.name }}</h2>
+        <span style="font-size:13px; color:#676767">پزشک کلینیک نیکان</span>
+      </div>
+      <p style="margin:0; font-size:16px; line-height:2; color:#4A4A4A; max-height:{{ bioMax }}; overflow:hidden; text-wrap:pretty">{{ D.bio }}</p>
+      <button type="button" onClick="{{ toggleBio }}" aria-expanded="{{ bioExpanded }}" style="align-self:center; height:44px; padding:0 16px; border:0; background:transparent; color:#3669EE; font-size:15px; font-weight:600; cursor:pointer">{{ bioLabel }}</button>
+      <div style="display:flex; flex-direction:column; gap:12px; padding-top:18px; border-top:1px solid #ECEEF0">
+        <h3 style="margin:0; font-size:17px; font-weight:700">تحصیلات و سوابق</h3>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px">
+          <sc-for list="{{ D.edu }}" as="e" hint-placeholder-count="3">
+            <li style="display:flex; align-items:center; gap:10px; font-size:15px; color:#373A41"><span aria-hidden="true" style="flex:none; width:8px; height:8px; border-radius:999px; background:#3669EE"></span>{{ e }}</li>
+          </sc-for>
+        </ul>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px; padding-top:18px; border-top:1px solid #ECEEF0">
+        <h3 style="margin:0; font-size:17px; font-weight:700">برای چه بیماری‌هایی به این پزشک مراجعه کنیم</h3>
+        <ul style="list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px">
+          <sc-for list="{{ conditions }}" as="c" hint-placeholder-count="10">
+            <li style="height:40px; padding:0 14px; display:flex; align-items:center; border-radius:999px; border:1px solid #DBDBDB; font-size:14px; color:#373A41">{{ c }}</li>
+          </sc-for>
+        </ul>
+      </div>
+      <div id="sec-services" style="display:flex; flex-direction:column; gap:12px; padding-top:18px; border-top:1px solid #ECEEF0">
+        <h3 style="margin:0; font-size:17px; font-weight:700">خدمات قابل ارائه</h3>
+        <ul style="list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px">
+          <sc-for list="{{ services }}" as="c" hint-placeholder-count="6">
+            <li style="height:40px; padding:0 14px; display:flex; align-items:center; border-radius:999px; background:#F8F9FA; border:1px solid #ECEEF0; font-size:14px; color:#373A41">{{ c }}</li>
+          </sc-for>
+        </ul>
+      </div>
+    </section>
+
+    <section id="sec-contact" aria-labelledby="contact-h" data-screen-label="Consultation details" style="border:1px solid #E6E6E6; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:20px">
+      <h2 id="contact-h" style="margin:0; font-size:22px; font-weight:800">اطلاعات مراجعه</h2>
+      <div style="display:grid; grid-template-columns:{{ L.infoCols }}; gap:16px">
+        <div style="display:flex; flex-direction:column; gap:16px; padding:20px; border-radius:18px; background:#F8F9FA">
+          <span style="display:flex; align-items:center; gap:10px; font-size:17px; font-weight:700"><span aria-hidden="true" style="width:10px; height:10px; border-radius:3px; background:#3669EE"></span>ویزیت حضوری · کلینیک نیکان</span>
+          <dl style="margin:0; display:flex; flex-direction:column; gap:12px; font-size:15px">
+            <div style="display:flex; flex-direction:column; gap:2px"><dt style="font-size:13px; color:#676767">نشانی</dt><dd style="margin:0; line-height:1.8">{{ address }}</dd></div>
+            <div style="display:flex; flex-direction:column; gap:2px"><dt style="font-size:13px; color:#676767">ساعات کاری کلینیک</dt><dd style="margin:0">شنبه تا چهارشنبه: ۸ تا ۲۰ · پنجشنبه: ۸ تا ۱۴</dd></div>
+            <div style="display:flex; flex-direction:column; gap:2px"><dt style="font-size:13px; color:#676767">تلفن پذیرش</dt><dd style="margin:0"><a href="tel:02166778899" dir="ltr" style="color:#222222; font-weight:700; min-height:44px; display:inline-flex; align-items:center">۰۲۱-۶۶۷۷۸۸۹۹</a></dd></div>
+          </dl>
+          <button type="button" onClick="{{ directions }}" style="align-self:flex-start; height:48px; padding:0 20px; border-radius:14px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; font-size:15px; font-weight:600; cursor:pointer">مسیریابی روی نقشه</button>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:16px; padding:20px; border-radius:18px; background:#F8F9FA">
+          <span style="display:flex; align-items:center; gap:10px; font-size:17px; font-weight:700"><span aria-hidden="true" style="width:10px; height:10px; border-radius:3px; background:#15B743"></span>مشاوره آنلاین</span>
+          <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:15px; line-height:1.7; color:#373A41">
+            <li>تماس تصویری یا صوتی در زمان رزروشده</li>
+            <li>امکان ارسال مدارک و جواب آزمایش پیش از جلسه</li>
+            <li>مناسب برای پیگیری درمان و مشاوره اولیه</li>
+          </ul>
+        </div>
+        <sc-if value="{{ hasPhone }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flex-direction:column; gap:16px; padding:20px; border-radius:18px; background:#F8F9FA">
+            <span style="display:flex; align-items:center; gap:10px; font-size:17px; font-weight:700"><span aria-hidden="true" style="width:10px; height:10px; border-radius:3px; background:#0E8F86"></span>نوبت تلفنی</span>
+            <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:15px; line-height:1.7; color:#373A41">
+              <li>پزشک در زمان رزروشده با شماره موبایل شما تماس می‌گیرد</li>
+              <li>بدون نیاز به اینترنت پرسرعت یا نصب برنامه</li>
+              <li>مناسب برای پیگیری درمان و پرسش‌های کوتاه</li>
+            </ul>
+          </div>
+        </sc-if>
+      </div>
+    </section>
+
+    <section id="sec-reviews" aria-labelledby="rev-h" data-screen-label="Reviews" style="border:1px solid #E6E6E6; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:20px">
+      <h2 id="rev-h" style="margin:0; font-size:22px; font-weight:800">نظرات بیماران درباره {{ D.name }}</h2>
+      <div role="tablist" aria-label="نوع ویزیت" style="display:flex; gap:4px; padding:4px; border-radius:16px; background:#F0F2F4">
+        <sc-for list="{{ revTabs }}" as="t" hint-placeholder-count="2">
+          <button type="button" role="tab" aria-selected="{{ t.selected }}" onClick="{{ t.pick }}" style="flex:1; height:44px; border-radius:12px; border:0; background:{{ t.bg }}; color:{{ t.color }}; font-size:15px; font-weight:600; cursor:pointer">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <sc-for list="{{ revList }}" as="r" hint-placeholder-count="2">
+          <article style="padding:18px 20px; border-radius:18px; background:#F8F9FA; display:flex; flex-direction:column; gap:8px">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+              <span style="display:flex; align-items:center; gap:10px"><span aria-hidden="true" style="width:36px; height:36px; border-radius:999px; background:#EBF0FE; color:#3669EE; display:flex; align-items:center; justify-content:center; font-weight:800">{{ r.initial }}</span><span style="font-size:15px; font-weight:700">{{ r.name }}</span></span>
+              <span style="font-size:13px; color:#676767">{{ r.date }} · {{ r.typeLabel }}</span>
+            </div>
+            <p style="margin:0; font-size:15px; line-height:1.9; color:#4A4A4A">{{ r.text }}</p>
+          </article>
+        </sc-for>
+        <sc-if value="{{ revNone }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:32px 20px; border-radius:18px; background:#F8F9FA; text-align:center; font-size:15px; color:#676767">{{ revEmpty }}</div>
+        </sc-if>
+      </div>
+    </section>
+
+    <section id="sec-faq" aria-labelledby="faq-h" data-screen-label="FAQ" style="border:1px solid #E6E6E6; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:14px">
+      <h2 id="faq-h" style="margin:0 0 6px; font-size:22px; font-weight:800">سوالات متداول</h2>
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+        <div style="border:1px solid #ECEEF0; border-radius:16px">
+          <button type="button" onClick="{{ f.toggle }}" aria-expanded="{{ f.expanded }}" style="width:100%; min-height:60px; padding:0 18px; border:0; background:transparent; display:flex; align-items:center; gap:14px; cursor:pointer; text-align:right; font-size:16px; font-weight:600">
+            <span aria-hidden="true" style="flex:none; width:32px; height:32px; border-radius:999px; background:#EBF0FE; color:#3669EE; display:flex; align-items:center; justify-content:center; font-size:20px; line-height:1">{{ f.sign }}</span>
+            <span style="flex:1">{{ f.q }}</span>
+          </button>
+          <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:0; padding:0 64px 18px 18px; font-size:15px; line-height:1.9; color:#4A4A4A">{{ f.a }}</p>
+          </sc-if>
+        </div>
+      </sc-for>
+    </section>
+
+    <nav aria-label="مسیر صفحه" style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-size:14px; color:#676767">
+      <a href="Booking%20platform.dc.html" style="color:#676767; min-height:44px; display:inline-flex; align-items:center">کلینیک نیکان</a><span aria-hidden="true">‹</span>
+      <a href="Booking%20platform.dc.html#doctors" style="color:#676767; min-height:44px; display:inline-flex; align-items:center">پزشکان</a><span aria-hidden="true">‹</span>
+      <a href="Booking%20platform.dc.html#doctors" style="color:#676767; min-height:44px; display:inline-flex; align-items:center">{{ D.specLabel }}</a><span aria-hidden="true">‹</span>
+      <span style="color:#222222">{{ D.name }}</span>
+    </nav>
+  </div>
+</main>
+
+<footer data-screen-label="Footer" style="background:#000000; color:#FFFFFF; border-radius:40px 40px 0 0">
+  <div style="max-width:1440px; margin:0 auto; padding:72px {{ L.padX }} 32px">
+    
+    <div style="display:grid; grid-template-columns:{{ L.footCols }}; gap:{{ L.footGap }}; padding:0 0 48px">
+      <div style="display:flex; flex-direction:column; gap:16px">
+        <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان رزرو نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
+        <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
+        <a href="Booking%20platform.dc.html#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
+      </div>
+      <nav aria-label="تخصص‌ها" style="display:flex; flex-direction:column; gap:14px">
+        <span style="font-size:15px; font-weight:700">تخصص‌ها</span>
+        <sc-for list="{{ footerSpecs }}" as="f" hint-placeholder-count="5">
+          <a href="Booking%20platform.dc.html#doctors" onClick="{{ f.pick }}" style="font-size:14px; color:#BBBBBB; transition:color .2s" style-hover="color:#FFFFFF">{{ f.name }}</a>
+        </sc-for>
+      </nav>
+      <nav aria-label="نوبت‌دهی" style="display:flex; flex-direction:column; gap:14px">
+        <span style="font-size:15px; font-weight:700">نوبت‌دهی</span>
+        <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
+        <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
+        <a href="Booking%20platform.dc.html#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
+        <a href="#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
+      </nav>
+      <nav aria-label="کلینیک" style="display:flex; flex-direction:column; gap:14px">
+        <span style="font-size:15px; font-weight:700">کلینیک</span>
+        <a href="Booking%20platform.dc.html#about" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
+        <a href="Booking%20platform.dc.html#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
+        <a href="Booking%20platform.dc.html#contact" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
+        <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
+      </nav>
+      <div style="display:flex; flex-direction:column; gap:14px">
+        <span style="font-size:15px; font-weight:700">تماس با ما</span>
+        <a href="tel:02166778899" dir="ltr" style="font-size:16px; color:#FFFFFF; text-align:right">۰۲۱-۶۶۷۷۸۸۹۹</a>
+        <a href="mailto:info@nikan-clinic.example" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">info@nikan-clinic.example</a>
+        <div style="display:flex; gap:10px; margin-top:8px">
+          <span style="width:72px; height:72px; border-radius:10px; background:#282828; display:flex; align-items:center; justify-content:center; text-align:center; font-size:11px; line-height:1.5; color:#969696">نماد اعتماد</span>
+          <span style="width:72px; height:72px; border-radius:10px; background:#282828; display:flex; align-items:center; justify-content:center; text-align:center; font-size:11px; line-height:1.5; color:#969696">ساماندهی</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 24px; padding-top:24px; border-top:1px solid #373A41">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; font-size:13px; color:#969696">
+        <span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span>
+        <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
+        <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px">
+        <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+          <a href="#top" aria-label="{{ s }}" style="height:40px; padding:0 14px; border-radius:999px; border:1px solid #373A41; display:flex; align-items:center; font-size:13px; color:#CECFD2; transition:border-color .2s, color .2s" style-hover="border-color:#FFFFFF; color:#FFFFFF">{{ s }}</a>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ showBar }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Mobile booking bar" style="position:sticky; bottom:0; z-index:15; background:#FFFFFF; border-top:1px solid #E6E6E6; padding:12px 16px 16px; display:flex; align-items:center; gap:12px">
+    <span aria-live="polite" style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px">
+      <span style="font-size:12px; color:#676767">نوبت انتخابی</span>
+      <span style="font-size:14px; font-weight:700; color:{{ summaryColor }}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ summary }}</span>
+    </span>
+    <button type="button" onClick="{{ barAction }}" style="flex:none; height:52px; padding:0 20px; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:16px; font-weight:700; cursor:pointer; transition:background-color .2s" style-hover="background:#2453D4; color:#FFFFFF">{{ barLabel }}</button>
+  </div>
+</sc-if>
+</div>
+
+<sc-if value="{{ loginOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" aria-labelledby="login-h" style="position:{{ modalPos }}; inset:0; z-index:60; display:flex; align-items:center; justify-content:center; padding:16px; background:rgba(34,34,34,.45)">
+    <div style="width:100%; max-width:440px; max-height:100%; overflow-y:auto; background:#FFFFFF; border-radius:24px; padding:28px; display:flex; flex-direction:column; gap:18px; box-shadow:0 24px 60px rgba(34,34,34,.18)">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px">
+        <h2 id="login-h" style="margin:0; font-size:22px; font-weight:800">{{ loginTitle }}</h2>
+        <button type="button" onClick="{{ closeLogin }}" aria-label="بستن" style="width:44px; height:44px; border-radius:12px; border:1px solid #E6E6E6; background:#FFFFFF; cursor:pointer; font-size:22px; line-height:1">×</button>
+      </div>
+      <sc-if value="{{ hasBooking }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; align-items:center; gap:12px; padding:14px; border-radius:16px; background:#F5F8FF">
+          <span aria-hidden="true" style="flex:none; width:48px; height:48px; border-radius:14px; background:#EBF0FE; background-image:url({{ D.photo }}); background-size:cover"></span>
+          <div style="display:flex; flex-direction:column; gap:2px; font-size:14px"><b style="font-size:15px">{{ D.name }}</b><span style="color:#4A4A4A">{{ booking }}</span></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ stepPhone }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submitPhone }}" novalidate="" style="display:flex; flex-direction:column; gap:14px">
+          <p style="margin:0; font-size:15px; line-height:1.9; color:#4A4A4A">برای ادامه، شماره موبایل خود را وارد کنید. اگر حساب نداشته باشید، با همین شماره ثبت‌نام می‌شوید.</p>
+          <label style="display:flex; flex-direction:column; gap:8px"><span style="font-size:14px; font-weight:600">شماره موبایل</span>
+            <input type="tel" inputmode="numeric" dir="ltr" value="{{ phone }}" onChange="{{ onPhone }}" placeholder="۰۹۱۲ ۳۴۵ ۶۷۸۹" autocomplete="tel" aria-invalid="{{ loginInvalid }}" style="height:56px; padding:0 16px; border-radius:16px; border:1px solid {{ loginBorder }}; background:#F8F9FA; font-size:18px; text-align:left; outline:none" style-focus="border-color:#3669EE; background:#FFFFFF">
+          </label>
+          <sc-if value="{{ hasLoginErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px; color:#D92D20">{{ loginErr }}</span></sc-if>
+          <button type="submit" style="height:56px; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:17px; font-weight:700; cursor:pointer" style-hover="background:#2453D4">دریافت کد تأیید</button>
+        </form>
+      </sc-if>
+      <sc-if value="{{ stepCode }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ submitCode }}" novalidate="" style="display:flex; flex-direction:column; gap:14px">
+          <p style="margin:0; font-size:15px; line-height:1.9; color:#4A4A4A">کد ۵ رقمی ارسال‌شده به <b dir="ltr">{{ phoneShown }}</b> را وارد کنید. <button type="button" onClick="{{ editPhone }}" style="padding:0; border:0; background:transparent; color:#3669EE; cursor:pointer; font-size:15px">ویرایش شماره</button></p>
+          <label style="display:flex; flex-direction:column; gap:8px"><span style="font-size:14px; font-weight:600">کد تأیید</span>
+            <input type="text" inputmode="numeric" dir="ltr" maxlength="5" value="{{ code }}" onChange="{{ onCode }}" autocomplete="one-time-code" aria-invalid="{{ loginInvalid }}" style="height:56px; padding:0 16px; border-radius:16px; border:1px solid {{ loginBorder }}; background:#F8F9FA; font-size:22px; letter-spacing:.4em; text-align:center; outline:none" style-focus="border-color:#3669EE; background:#FFFFFF">
+          </label>
+          <span style="font-size:13px; color:#676767">نسخه نمایشی: پیامکی ارسال نمی‌شود؛ هر کد ۵ رقمی پذیرفته می‌شود.</span>
+          <sc-if value="{{ hasLoginErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px; color:#D92D20">{{ loginErr }}</span></sc-if>
+          <button type="submit" style="height:56px; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:17px; font-weight:700; cursor:pointer" style-hover="background:#2453D4">{{ codeCta }}</button>
+        </form>
+      </sc-if>
+      <sc-if value="{{ stepDone }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; padding:8px 0">
+          <span aria-hidden="true" style="width:64px; height:64px; border-radius:999px; background:#E8F7EC; color:#15B743; display:flex; align-items:center; justify-content:center; font-size:30px">✓</span>
+          <b style="font-size:19px">{{ doneTitle }}</b>
+          <span style="font-size:14px; line-height:1.9; color:#676767">{{ doneText }}</span>
+          <button type="button" onClick="{{ closeLogin }}" style="margin-top:6px; height:52px; padding:0 28px; border-radius:16px; border:0; background:#F2F2F2; font-size:16px; font-weight:600; cursor:pointer">بستن</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+<div role="status" aria-live="polite" style="position:{{ modalPos }}; left:50%; bottom:{{ toastBottom }}; z-index:40; transform:{{ toastT }}; opacity:{{ toastO }}; transition:opacity .3s, transform .4s cubic-bezier(.2,.7,.2,1); pointer-events:none; max-width:calc(100% - 32px); text-align:center; padding:14px 22px; border-radius:16px; background:#222222; color:#FFFFFF; font-size:14px; text-align:center">{{ toastText }}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;device&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;tsType&quot;:&quot;'desktop' | 'tablet' | 'mobile'&quot;},&quot;fullPage&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const LAYOUT = {
+  desktop: { navRow: "none", navGap: "28px", navFs: "16px", footCols: "minmax(0,1.6fr) repeat(3, minmax(0,1fr)) minmax(0,1.2fr)", footGap: "40px", footTitle: "26px", footBtnPad: "22px", footGrpW: "auto", w: "1440px", h: "900px", padX: "80px", headerH: "88px", headerGap: "40px", logo: "44px", taglineDisplay: "block", navDisplay: "flex", phoneDisplay: "flex", loginDisplay: "block", menuDisplay: "none", menuLoginDisplay: "none", btnH: "52px",
+    mainPadTop: "32px", mainPadBottom: "72px", cols: "minmax(0,1fr) 440px", gap: "24px", cardPad: "32px", cardPadX: "32px", cardPadB: "24px", h1: "28px", avatar: "120px",
+    ovDir: "row", ovAlign: "flex-start", ovText: "right", ovItems: "flex-start", shareDisplay: "flex", divider3: "block",
+    asideCol: "2", asideRow: "1 / span 2", asidePos: "sticky", asideTop: "112px", asideMax: "764px", restRow: "2", slotCols: "4", cardFooterDisplay: "flex",
+    infoCols: "repeat(2, minmax(0,1fr))", footCols: "minmax(0,1.5fr) repeat(3, minmax(0,0.8fr)) minmax(0,1.2fr)", footGap: "48px", footPadTop: "64px", footPadBottom: "32px", bar: false },
+  tablet: { navRow: "none", navGap: "18px", navFs: "15px", footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footTitle: "22px", footBtnPad: "22px", footGrpW: "auto", w: "834px", h: "1194px", padX: "40px", headerH: "80px", headerGap: "24px", logo: "44px", taglineDisplay: "block", navDisplay: "flex", phoneDisplay: "none", loginDisplay: "block", menuDisplay: "none", menuLoginDisplay: "none", btnH: "48px",
+    mainPadTop: "28px", mainPadBottom: "64px", cols: "minmax(0,1fr)", gap: "24px", cardPad: "28px", cardPadX: "28px", cardPadB: "28px", h1: "28px", avatar: "112px",
+    ovDir: "row", ovAlign: "flex-start", ovText: "right", ovItems: "flex-start", shareDisplay: "flex", divider3: "block",
+    asideCol: "1", asideRow: "2", asidePos: "static", asideTop: "auto", asideMax: "none", restRow: "3", slotCols: "5", cardFooterDisplay: "flex",
+    infoCols: "repeat(2, minmax(0,1fr))", footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footPadTop: "56px", footPadBottom: "32px", bar: false },
+  mobile: { navRow: "none", navGap: "18px", navFs: "15px", footCols: "minmax(0,1fr)", footGap: "28px", footTitle: "19px", footBtnPad: "12px", footGrpW: "100%", w: "390px", h: "844px", padX: "16px", headerH: "64px", headerGap: "12px", logo: "40px", taglineDisplay: "none", navDisplay: "none", phoneDisplay: "none", loginDisplay: "none", menuDisplay: "flex", menuLoginDisplay: "block", btnH: "44px",
+    mainPadTop: "16px", mainPadBottom: "40px", cols: "minmax(0,1fr)", gap: "16px", cardPad: "20px", cardPadX: "20px", cardPadB: "20px", h1: "24px", avatar: "96px",
+    ovDir: "column", ovAlign: "center", ovText: "center", ovItems: "center", shareDisplay: "none", divider3: "none",
+    asideCol: "1", asideRow: "2", asidePos: "static", asideTop: "auto", asideMax: "none", restRow: "3", slotCols: "3", cardFooterDisplay: "none",
+    infoCols: "minmax(0,1fr)", footCols: "minmax(0,1fr)", footGap: "28px", footPadTop: "40px", footPadBottom: "24px", bar: true }
+};
+const DOCS = {
+  sara: { name: "دکتر سارا محمدی", spec: "cardio", specLabel: "قلب و عروق", specialty: "متخصص قلب و عروق", credential: "فلوشیپ اکوکاردیوگرافی · ۱۵ سال سابقه", recommend: "۹۶٪", rating: "۴٫۸", reviews: "۱۲۴", types: ["clinic", "phone", "online"], fee: { clinic: "۶۵۰٬۰۰۰", phone: "۴۰۰٬۰۰۰", online: "۴۵۰٬۰۰۰" },
+    bio: "دکتر سارا محمدی، متخصص قلب و عروق در کلینیک نیکان است و در زمینه تشخیص و پیگیری بیماری‌های قلبی، فشار خون بالا، تپش قلب و ارزیابی‌های پیش از جراحی فعالیت دارند. ارزیابی با معاینه دقیق، نوار قلب و در صورت نیاز اکوکاردیوگرافی انجام می‌شود. مشاوره آنلاین برای پیگیری درمان و بررسی نتایج آزمایش‌ها امکان‌پذیر است.",
+    edu: ["دکترای حرفه‌ای پزشکی", "تخصص بیماری‌های قلب و عروق", "فلوشیپ اکوکاردیوگرافی"],
+    conditions: ["فشار خون بالا", "تپش قلب", "درد قفسه سینه", "نارسایی قلب", "بیماری عروق کرونر", "آریتمی", "چربی خون بالا", "تنگی نفس"],
+    services: ["نوار قلب (ECG)", "اکوکاردیوگرافی", "تست ورزش", "هولتر مانیتورینگ", "مشاوره پیش از جراحی"] },
+  amir: { name: "دکتر امیر رضایی", spec: "derm", specLabel: "پوست و مو", specialty: "متخصص پوست، مو و زیبایی", credential: "بورد تخصصی پوست · ۱۰ سال سابقه", recommend: "۹۳٪", rating: "۴٫۷", reviews: "۸۸", types: ["clinic", "phone", "online"], fee: { clinic: "۵۵۰٬۰۰۰", phone: "۳۳۰٬۰۰۰", online: "۳۸۰٬۰۰۰" },
+    bio: "دکتر امیر رضایی، متخصص پوست، مو و زیبایی در کلینیک نیکان است. تمرکز ایشان بر درمان آکنه، اگزما، ریزش مو و بیماری‌های التهابی پوست و همچنین مراقبت‌های پیشگیرانه پوست است. برای پیگیری درمان و بررسی تغییرات پوست، مشاوره آنلاین با ارسال تصویر نیز امکان‌پذیر است.",
+    edu: ["دکترای حرفه‌ای پزشکی", "تخصص بیماری‌های پوست و مو", "دوره تکمیلی لیزر و درماتوسکوپی"],
+    conditions: ["آکنه", "اگزما", "پسوریازیس", "ریزش مو", "لک و تیرگی پوست", "خال و ضایعات پوستی", "کهیر", "قارچ پوست و ناخن"],
+    services: ["درماتوسکوپی", "لیزر درمانی", "پی‌آر‌پی مو", "برداشتن ضایعات پوستی", "مشاوره مراقبت پوست"] },
+  narges: { name: "دکتر نرگس کریمی", spec: "gyn", specLabel: "زنان و زایمان", specialty: "متخصص زنان، زایمان و نازایی", credential: "فلوشیپ نازایی · ۱۸ سال سابقه", recommend: "۹۵٪", rating: "۴٫۹", reviews: "۲۱۰", types: ["clinic"], fee: { clinic: "۷۰۰٬۰۰۰", phone: "—", online: "—" },
+    bio: "دکتر نرگس کریمی، متخصص زنان، زایمان و نازایی در کلینیک نیکان است و مراقبت‌های دوران بارداری، معاینات دوره‌ای زنان و بررسی و درمان ناباروری را انجام می‌دهند. ویزیت ایشان فقط به‌صورت حضوری در کلینیک ارائه می‌شود.",
+    edu: ["دکترای حرفه‌ای پزشکی", "تخصص زنان و زایمان", "فلوشیپ نازایی و آی‌وی‌اف"],
+    conditions: ["مراقبت بارداری", "ناباروری", "تنبلی تخمدان", "اختلالات قاعدگی", "یائسگی", "عفونت‌های زنان", "کیست تخمدان", "معاینه دوره‌ای"],
+    services: ["سونوگرافی زنان", "پاپ اسمیر", "مشاوره پیش از بارداری", "پایش بارداری", "مشاوره باروری"] },
+  hamid: { name: "دکتر حمید احمدی", spec: "ortho", specLabel: "ارتوپدی", specialty: "متخصص ارتوپدی", credential: "فلوشیپ زانو و آرتروسکوپی · ۱۲ سال سابقه", recommend: "۹۱٪", rating: "۴٫۶", reviews: "۷۶", types: ["clinic", "phone"], fee: { clinic: "۶۰۰٬۰۰۰", phone: "۴۰۰٬۰۰۰", online: "—" },
+    bio: "دکتر حمید احمدی، متخصص ارتوپدی در کلینیک نیکان است و در زمینه آسیب‌های ورزشی، دردهای مفصلی و بیماری‌های زانو و شانه فعالیت دارند. ارزیابی با معاینه بالینی و بررسی تصویربرداری‌ها انجام می‌شود. ویزیت ایشان به‌صورت حضوری و برای پیگیری درمان به‌صورت تلفنی ارائه می‌شود.",
+    edu: ["دکترای حرفه‌ای پزشکی", "تخصص جراحی ارتوپدی", "فلوشیپ زانو و آرتروسکوپی"],
+    conditions: ["درد زانو", "آسیب رباط صلیبی", "آرتروز", "درد شانه", "کمردرد", "آسیب‌های ورزشی", "پیچ‌خوردگی مچ", "شکستگی‌ها"],
+    services: ["آرتروسکوپی", "تزریق مفصلی", "گچ‌گیری و آتل", "مشاوره پیش از جراحی", "برنامه توانبخشی"] },
+  maryam: { name: "دکتر مریم حسینی", spec: "gp", specLabel: "پزشک عمومی", specialty: "پزشک عمومی", credential: "پزشک خانواده · ۸ سال سابقه", recommend: "۹۴٪", rating: "۴٫۷", reviews: "۱۵۲", types: ["clinic", "phone", "online"], fee: { clinic: "۳۵۰٬۰۰۰", phone: "۲۲۰٬۰۰۰", online: "۲۵۰٬۰۰۰" },
+    bio: "دکتر مریم حسینی، پزشک عمومی و پزشک خانواده در کلینیک نیکان است. ویزیت‌های عمومی، چک‌آپ دوره‌ای، پیگیری بیماری‌های مزمن و ارجاع به متخصص مناسب از خدمات ایشان است. مشاوره آنلاین برای تفسیر آزمایش‌ها و پیگیری درمان امکان‌پذیر است.",
+    edu: ["دکترای حرفه‌ای پزشکی", "دوره پزشک خانواده"],
+    conditions: ["سرماخوردگی و آنفلوانزا", "چک‌آپ سالانه", "دیابت", "فشار خون", "خستگی مزمن", "مشکلات گوارشی", "عفونت ادراری", "تفسیر آزمایش"],
+    services: ["ویزیت عمومی", "چک‌آپ دوره‌ای", "تفسیر آزمایش", "نسخه و پیگیری درمان", "ارجاع به متخصص"] },
+  peyman: { name: "دکتر پیمان راد", spec: "neuro", specLabel: "مغز و اعصاب", specialty: "متخصص مغز و اعصاب (نورولوژی)", credential: "بورد تخصصی نورولوژی · ۲۰ سال سابقه", recommend: "۹۳٪", rating: "۴٫۷", reviews: "۷۰", types: ["clinic", "phone", "online"], fee: { clinic: "۶۵۰٬۰۰۰", phone: "۴۰۰٬۰۰۰", online: "۴۵۰٬۰۰۰" },
+    bio: "دکتر پیمان راد، متخصص مغز و اعصاب (نورولوژی) در کلینیک نیکان است. ایشان در زمینه بررسی و درمان بیماری‌هایی مانند سردردهای مزمن، میگرن، سرگیجه، تشنج، اختلالات حرکتی، بی‌حسی اندام‌ها و مشکلات عصبی فعالیت دارند و با ارزیابی دقیق علائم و در صورت نیاز انجام بررسی‌های تکمیلی، به تشخیص بهتر بیماری‌های مغز و اعصاب کمک می‌کنند. ویزیت حضوری در کلینیک و مشاوره آنلاین برای پیگیری درمان و بررسی نتایج آزمایش‌ها امکان‌پذیر است.",
+    edu: ["دکترای حرفه‌ای پزشکی", "تخصص بیماری‌های مغز و اعصاب", "دوره تکمیلی نوار عصب و عضله"],
+    conditions: ["میگرن", "سردرد مزمن", "سرگیجه", "تشنج و صرع", "لرزش دست", "بی‌حسی اندام‌ها", "پارکینسون", "ام اس (MS)", "سکته مغزی", "نوروپاتی", "اختلالات حرکتی", "فلج صورت (بل)"],
+    services: ["نوار مغز (EEG)", "نوار عصب و عضله", "تحریک مغناطیسی مغز (TMS)", "تزریق بوتاکس برای سردرد", "نوروفیدبک", "توانبخشی سکته مغزی"] }
+};
+const REVIEWS = [
+  { name: "ز. احمدی", type: "clinic", date: "مهر ۱۴۰۵", text: "نوبت سر ساعت انجام شد و پزشک با حوصله توضیح دادند. مسیر درمان کاملاً روشن بود." },
+  { name: "م. کاظمی", type: "clinic", date: "شهریور ۱۴۰۵", text: "فضای کلینیک آرام بود و پیامک یادآوری نوبت خیلی کمک کرد." },
+  { name: "ن. صادقی", type: "phone", date: "مهر ۱۴۰۵", text: "پزشک سر ساعت تماس گرفتند و برای ادامه درمان راهنمایی کامل کردند." },
+  { name: "ر. نوری", type: "online", date: "مهر ۱۴۰۵", text: "تماس تصویری بدون مشکل برقرار شد و جواب آزمایش‌هایم را کامل بررسی کردند." },
+  { name: "س. یزدانی", type: "online", date: "مرداد ۱۴۰۵", text: "برای پیگیری درمان نیازی به رفت‌وآمد نبود. بسیار راضی بودم." }
+];
+const ADDRESS = "تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم";
+const SECS = [["about", "معرفی", "sec-about"], ["services", "خدمات", "sec-services"], ["contact", "اطلاعات مراجعه", "sec-contact"], ["reviews", "نظرات", "sec-reviews"], ["faq", "سوالات متداول", "sec-faq"]];
+const DAYS = [
+  { id: "d1", w: "شنبه", d: "۹ آبان", clinic: ["۱۶:۰۰", "۱۶:۳۰", "۱۷:۰۰", "۱۸:۳۰"], phone: ["۱۳:۰۰", "۱۳:۳۰"], online: ["۲۰:۰۰", "۲۰:۳۰"] },
+  { id: "d2", w: "یکشنبه", d: "۱۰ آبان", clinic: [], phone: ["۱۱:۰۰", "۱۱:۳۰", "۱۲:۰۰"], online: ["۱۹:۰۰"] },
+  { id: "d3", w: "دوشنبه", d: "۱۱ آبان", clinic: ["۱۰:۰۰", "۱۰:۳۰", "۱۱:۰۰", "۱۱:۳۰", "۱۲:۰۰"], phone: [], online: [] },
+  { id: "d4", w: "سه‌شنبه", d: "۱۲ آبان", clinic: [], phone: ["۱۸:۰۰"], online: [] },
+  { id: "d5", w: "چهارشنبه", d: "۱۳ آبان", clinic: ["۱۵:۰۰", "۱۵:۳۰", "۱۶:۰۰"], phone: ["۱۲:۰۰", "۱۲:۳۰"], online: ["۲۱:۰۰", "۲۱:۳۰"] }
+];
+const TYPES = {
+  clinic: { title: "نوبت حضوری", sub: "کلینیک نیکان، تهران", accent: "#3669EE", iconBg: "#EBF0FE", label: "حضوری" },
+  phone: { title: "نوبت تلفنی", sub: "تماس تلفنی پزشک با شما", accent: "#0E8F86", iconBg: "#E3F5F3", label: "تلفنی" },
+  online: { title: "مشاوره آنلاین", sub: "تماس تصویری یا صوتی", accent: "#15B743", iconBg: "#E8F7EC", label: "آنلاین" }
+};
+const firstSlot = (t) => { const d = DAYS.find((x) => x[t].length); return d ? "اولین نوبت خالی: " + d.w + " " + d.d + "، " + d[t][0] : "نوبت خالی ندارد"; };
+const FAQS = (D) => [
+  ["نزدیک‌ترین نوبت " + D.name + " چه زمانی است؟", "اولین زمان خالی هر نوع ویزیت در بخش «نوع ویزیت را انتخاب کنید» نمایش داده می‌شود."],
+  [D.types.includes("online") ? "امکان مشاوره آنلاین با " + D.name + " وجود دارد؟" : "آیا " + D.name + " مشاوره آنلاین دارند؟", D.types.includes("online") ? "بله، با انتخاب «مشاوره آنلاین» می‌توانید زمان تماس تصویری یا صوتی را رزرو کنید." : "خیر، " + D.name + " مشاوره آنلاین ارائه نمی‌کنند."],
+  [D.types.includes("phone") ? "نوبت تلفنی با " + D.name + " چگونه انجام می‌شود؟" : "آیا " + D.name + " نوبت تلفنی دارند؟", D.types.includes("phone") ? "با انتخاب «نوبت تلفنی» زمان تماس را رزرو کنید؛ پزشک در همان ساعت با شماره موبایلی که با آن وارد شده‌اید تماس می‌گیرد." : "خیر، " + D.name + " نوبت تلفنی ارائه نمی‌کنند."],
+  ["هزینه ویزیت چگونه پرداخت می‌شود؟", "هزینه ویزیت حضوری " + D.fee.clinic + " تومان است" + (D.types.includes("phone") ? "، نوبت تلفنی " + D.fee.phone + " تومان" : "") + (D.types.includes("online") ? " و مشاوره آنلاین " + D.fee.online + " تومان" : "") + ". مبلغ پیش از تأیید نهایی نمایش داده می‌شود."],
+  ["نشانی محل ویزیت حضوری کجاست؟", "ویزیت حضوری در کلینیک نیکان به نشانی " + ADDRESS + " انجام می‌شود."]
+];
+
+class Component extends DCLogic {
+  state = { doc: "peyman", vw: 1440, login: null, phone: "", code: "", loginErr: "", booking: "", type: "clinic", day: "d1", slot: null, bio: false, faq: 0, rev: "clinic", menu: false, toast: "", tab: "about" };
+  scrollRef = React.createRef();
+
+  componentDidUpdate() { const full = this.isFull(); if (full !== this.lastFull) { this.lastFull = full; this.bindScroll(); } }
+  componentWillUnmount() { clearTimeout(this.tt); cancelAnimationFrame(this.scrollRaf); window.removeEventListener("resize", this.onResize); window.removeEventListener("hashchange", this.onHash); window.removeEventListener("popstate", this.onHash); if (this.spyTarget) this.spyTarget.removeEventListener("scroll", this.onSpy); }
+  dev() { if (LAYOUT[this.props.device]) return this.props.device; const w = this.state.vw || 1440; return w >= 1100 ? "desktop" : w >= 700 ? "tablet" : "mobile"; }
+  auto() { return !LAYOUT[this.props.device]; }
+  componentDidMount() {
+    const p = new URLSearchParams(location.search).get("doctor");
+    this.onResize = () => this.setState({ vw: window.innerWidth });
+    window.addEventListener("resize", this.onResize);
+    this.onSpy = () => { if (!this.spyRaf) this.spyRaf = requestAnimationFrame(() => { this.spyRaf = 0; this.spy(); }); };
+    this.onHash = () => this.fromHash(false);
+    window.addEventListener("hashchange", this.onHash);
+    window.addEventListener("popstate", this.onHash);
+    setTimeout(() => { this.bindScroll(); this.fromHash(true); }, 120);
+    window.addEventListener("load", () => this.fromHash(true), { once: true });
+    this.setState({ vw: window.innerWidth, doc: DOCS[p] ? p : (DOCS[this.props.doctor] ? this.props.doctor : "peyman") });
+  }
+  toast(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: "" }), 2600); }
+  isFull() { return this.auto() || (this.props.fullPage ?? false); }
+  scroller() { return this.isFull() ? null : this.scrollRef.current; }
+  headOffset() {
+    const root = this.scrollRef.current, h = root && root.querySelector("header");
+    return (h ? h.getBoundingClientRect().height : parseInt(LAYOUT[this.dev()].headerH, 10)) + 16;
+  }
+  secTop(el) {
+    const sc = this.scroller();
+    return sc ? el.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop : el.getBoundingClientRect().top + window.scrollY;
+  }
+  scrollToId(id, instant) {
+    const root = this.scrollRef.current, el = root && root.querySelector("#" + id);
+    if (!el) return;
+    const reduce = instant || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const sec = SECS.find((x) => x[2] === id);
+    const sc = this.scroller(), target = () => Math.max(0, Math.round(this.secTop(el) - this.headOffset()));
+    const pos = () => (sc ? sc.scrollTop : window.scrollY);
+    const max = () => sc ? sc.scrollHeight - sc.clientHeight : document.documentElement.scrollHeight - window.innerHeight;
+    cancelAnimationFrame(this.scrollRaf);
+    this.spyLocked = true;
+    if (sec && sec[0] !== this.state.tab) this.setState({ tab: sec[0] });
+    const go = (top, smooth) => (sc || window).scrollTo({ top, behavior: smooth ? "smooth" : "auto" });
+    let goal = target(), last = -1, still = 0, tries = 0, t0 = performance.now();
+    go(goal, !reduce);
+    const watch = () => {
+      const p = pos(), now = performance.now();
+      still = Math.abs(p - last) < 1 ? still + 1 : 0; last = p;
+      const want = Math.min(target(), Math.max(0, max()));
+      if (still >= 6 || now - t0 > 1600) {
+        if (Math.abs(p - want) > 4 && tries < 2) { tries++; goal = want; still = 0; t0 = now; go(goal, false); this.scrollRaf = requestAnimationFrame(watch); return; }
+        this.spyLocked = false; return;
+      }
+      this.scrollRaf = requestAnimationFrame(watch);
+    };
+    this.scrollRaf = requestAnimationFrame(watch);
+  }
+  spy() {
+    if (this.spyLocked || !this.scrollRef.current) return;
+    const line = (this.scroller() ? this.scroller().scrollTop : window.scrollY) + this.headOffset() + 24;
+    let cur = SECS[0][0];
+    for (const [key, , id] of SECS) { const el = this.scrollRef.current.querySelector("#" + id); if (el && this.secTop(el) <= line) cur = key; }
+    const sc = this.scroller(), atEnd = sc ? sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 4 : window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    if (atEnd) cur = SECS[SECS.length - 1][0];
+    if (cur !== this.state.tab) this.setState({ tab: cur });
+  }
+  fromHash(instant) {
+    const id = decodeURIComponent((location.hash || "").slice(1));
+    if (id && (SECS.some((x) => x[2] === id) || id === "booking")) this.scrollToId(id, instant);
+  }
+  bindScroll() {
+    const t = this.isFull() ? window : this.scrollRef.current;
+    if (t === this.spyTarget) return;
+    if (this.spyTarget) this.spyTarget.removeEventListener("scroll", this.onSpy);
+    this.spyTarget = t; if (t) t.addEventListener("scroll", this.onSpy, { passive: true });
+  }
+
+
+  loginVals(D) {
+    const { login, phone, code, loginErr, booking } = this.state;
+    const en = (v) => v.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/\D/g, "");
+    const faD = (v) => v.replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+    return {
+      loginOpen: !!login, stepPhone: login === "phone", stepCode: login === "code", stepDone: login === "done",
+      loginTitle: login === "done" ? (booking ? "نوبت ثبت شد" : "خوش آمدید") : "ورود | ثبت‌نام",
+      hasBooking: !!booking && login !== "done", booking,
+      phone, onPhone: (e) => this.setState({ phone: e.target.value, loginErr: "" }),
+      code, onCode: (e) => this.setState({ code: e.target.value, loginErr: "" }),
+      phoneShown: faD(en(phone)), hasLoginErr: !!loginErr, loginErr, loginInvalid: loginErr ? "true" : "false", loginBorder: loginErr ? "#D92D20" : "#D9D9D9",
+      codeCta: booking ? "تأیید و ثبت نوبت" : "ورود",
+      submitPhone: (e) => { e.preventDefault(); if (!/^09\d{9}$/.test(en(this.state.phone))) { this.setState({ loginErr: "شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود." }); return; } this.setState({ login: "code", loginErr: "" }); },
+      submitCode: (e) => { e.preventDefault(); if (en(this.state.code).length !== 5) { this.setState({ loginErr: "کد تأیید ۵ رقمی را کامل وارد کنید." }); return; } this.setState({ login: "done", loginErr: "" }); },
+      editPhone: () => this.setState({ login: "phone", code: "" }),
+      closeLogin: () => this.setState({ login: null }),
+      doneTitle: booking ? D.name + " · " + booking : "با شماره " + faD(en(phone)) + " وارد شدید.",
+      doneText: booking ? "این نسخه نمایشی است: نوبتی در سامانه ثبت نشده، پرداختی انجام نشده و پیامک یادآوری ارسال نمی‌شود." : "این نسخه نمایشی است و حساب کاربری واقعی ساخته نشده است."
+    };
+  }
+  renderVals() {
+    const dev = this.dev(), auto = this.auto(), L = auto ? { ...LAYOUT[dev], w: "100%" } : LAYOUT[dev];
+    const full = auto ? true : (this.props.fullPage ?? false);
+    const dk = DOCS[this.state.doc] ? this.state.doc : "peyman";
+    const D = { ...DOCS[dk], photo: "assets/doctors/photos/" + dk + ".png" };
+    const { day, slot, bio, faq, menu, toast, tab } = this.state;
+    const type = D.types.includes(this.state.type) ? this.state.type : D.types[0];
+    const rev = D.types.includes(this.state.rev) ? this.state.rev : D.types[0];
+    const dayObj = DAYS.find((d) => d.id === day) || DAYS[0];
+    const slots = dayObj[type];
+    const summary = slot ? TYPES[type].label + " · " + dayObj.w + " " + dayObj.d + " · ساعت " + slot : "هنوز زمانی انتخاب نشده";
+    const proceed = () => {
+      if (!slot) { this.toast("ابتدا روز و ساعت نوبت را انتخاب کنید."); return; }
+      location.href = "Booking%20Flow.dc.html?doctor=" + dk + "&type=" + type + "&when=" + encodeURIComponent(dayObj.w + " " + dayObj.d + " · ساعت " + slot);
+    };
+    return {
+      L, frameH: full ? "auto" : L.h, scrollY: full ? "visible" : "auto", scrollX: full ? "clip" : "hidden", scrollRef: this.scrollRef,
+      toTop: (e) => { e.preventDefault(); const sc = this.scrollRef.current; if (sc) sc.scrollTo({ top: 0, behavior: "smooth" }); },
+      nav: [["پزشکان و تخصص‌ها", "#doctors"], ["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, h], i) => ({ label, href: "Booking%20platform.dc.html" + h, color: i === 0 ? "#3669EE" : "#373A41", border: i === 0 ? "#3669EE" : "transparent" })),
+      menuOpen: menu && dev === "mobile", menuExpanded: menu ? "true" : "false",
+      toggleMenu: () => this.setState((s) => ({ menu: !s.menu })), closeMenu: () => this.setState({ menu: false }),
+      login: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "" }),
+      share: () => this.toast("پیوند پروفایل کپی شد."),
+      tabs: SECS.map(([id, label, target]) => ({ href: "#" + target, current: tab === id ? "location" : "false",
+        label, bg: tab === id ? "#FFFFFF" : "transparent", color: tab === id ? "#3669EE" : "#4A4A4A", go: (e) => { e.preventDefault(); if (location.hash !== "#" + target) history.pushState(null, "", location.pathname + location.search + "#" + target); this.scrollToId(target); } })),
+      types: Object.keys(TYPES).filter((k) => D.types.includes(k)).map((k) => {
+        const on = type === k, t = TYPES[k], has = DAYS.some((d) => d[k].length);
+        return { title: t.title, sub: t.sub, next: firstSlot(k), nextColor: has ? "#15B743" : "#676767", isClinic: k === "clinic", isPhone: k === "phone", isOnline: k === "online", accent: t.accent, iconBg: t.iconBg,
+          checked: on ? "true" : "false", border: on ? "#3669EE" : "#E6E6E6", bg: on ? "#F5F8FF" : "#FFFFFF", ring: on ? "#3669EE" : "#CFCFCF", dot: on ? "#3669EE" : "transparent",
+          pick: () => this.setState({ type: k, slot: null }) };
+      }),
+      days: DAYS.map((d) => {
+        const on = d.id === day, has = d[type].length > 0;
+        return { w: d.w, d: d.d, checked: on ? "true" : "false", disabled: false,
+          border: on ? "#3669EE" : "#E6E6E6", bg: on ? "#3669EE" : has ? "#FFFFFF" : "#F8F9FA", color: on ? "#FFFFFF" : has ? "#222222" : "#94979C", cursor: "pointer",
+          pick: () => this.setState({ day: d.id, slot: null }) };
+      }),
+      hasSlots: slots.length > 0, noSlots: slots.length === 0,
+      slots: slots.map((t) => { const on = slot === t; return { t, checked: on ? "true" : "false", border: on ? "#3669EE" : "#E6E6E6", bg: on ? "#EBF0FE" : "#FFFFFF", color: on ? "#2453D4" : "#222222", pick: () => this.setState({ slot: t }) }; }),
+      notify: () => this.toast("اطلاع‌رسانی نوبت خالی در گام بعد طراحی می‌شود."),
+      summary, summaryColor: slot ? "#222222" : "#94979C",
+      proceed, ctaDisabled: slot ? "false" : "true", ctaBg: slot ? "#3669EE" : "#E6E6E6", ctaColor: slot ? "#FFFFFF" : "#94979C", ctaCursor: slot ? "pointer" : "not-allowed",
+      showBar: L.bar, barLabel: slot ? "ادامه" : "انتخاب زمان",
+      barAction: () => { if (slot) proceed(); else this.scrollToId("booking"); },
+      bioMax: bio ? "none" : "96px", bioLabel: bio ? "نمایش کمتر" : "مشاهده بیشتر", bioExpanded: bio ? "true" : "false",
+      toggleBio: () => this.setState((s) => ({ bio: !s.bio })),
+      conditions: D.conditions,
+      brandText: dev === "desktop" ? "flex" : "none",
+      hasPhone: D.types.includes("phone"),
+      typeTags: D.types.map((k) => ({ clinic: { label: "ویزیت حضوری", bg: "#EBF0FE", color: "#2453D4" }, phone: { label: "نوبت تلفنی", bg: "#E3F5F3", color: "#0B6F68" }, online: { label: "مشاوره آنلاین", bg: "#E8F7EC", color: "#0E7A2E" } })[k]),
+      services: D.services, D, address: ADDRESS, feeLabel: TYPES[type].title, feeText: (D.fee[type] === "—" ? "ارائه نمی‌شود" : D.fee[type] + " تومان"),
+      directions: () => this.toast("مسیریابی پس از اتصال نقشه فعال می‌شود."),
+      revTabs: [["clinic", "ویزیت حضوری"], ["phone", "نوبت تلفنی"], ["online", "مشاوره آنلاین"]].filter(([k]) => D.types.includes(k)).map(([k, label]) => ({ label, selected: rev === k ? "true" : "false", bg: rev === k ? "#FFFFFF" : "transparent", color: rev === k ? "#3669EE" : "#4A4A4A", pick: () => this.setState({ rev: k }) })),
+      revList: REVIEWS.filter((r) => r.type === rev && D.types.includes(r.type)).map((r) => ({ ...r, initial: r.name[0], typeLabel: TYPES[r.type].title })),
+      revNone: !REVIEWS.some((r) => r.type === rev && D.types.includes(r.type)),
+      modalPos: full ? "fixed" : "absolute",
+      ...this.loginVals(D),
+      revEmpty: "هنوز نظری برای " + TYPES[rev].title + " ثبت نشده است.",
+      socials: ["اینستاگرام", "تلگرام", "لینکدین", "آپارات"],
+      footerSpecs: [["قلب و عروق", "sara"], ["پوست و مو", "amir"], ["زنان و زایمان", "narges"], ["ارتوپدی", "hamid"], ["پزشک عمومی", "maryam"], ["مغز و اعصاب", "peyman"]].map(([name, k]) => ({ name, pick: () => { location.href = "DoctorProfilePage.dc.html?doctor=" + k; } })),
+      openLogin: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "" }),
+      openLoginLink: (e) => { e.preventDefault(); this.setState({ login: "phone", loginErr: "", code: "", booking: "" }); },
+      faqs: FAQS(D).map(([q, a], i) => ({ q, a, open: faq === i, expanded: faq === i ? "true" : "false", sign: faq === i ? "−" : "+", toggle: () => this.setState({ faq: faq === i ? -1 : i }) })),
+      footerCols: [
+        { title: "تخصص‌ها", links: [["قلب و عروق", "sara"], ["پوست و مو", "amir"], ["زنان و زایمان", "narges"], ["ارتوپدی", "hamid"], ["پزشک عمومی", "maryam"], ["مغز و اعصاب", "peyman"]].map(([label, k]) => ({ label, href: "DoctorProfilePage.dc.html?doctor=" + k })) },
+        { title: "نوبت‌دهی", links: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"], ["پیگیری نوبت", "#contact"]].map(([label, h]) => ({ label, href: "Booking%20platform.dc.html" + h })) },
+        { title: "کلینیک", links: [["درباره ما", "#about"], ["مجله سلامت", "#magazine"], ["تماس با ما", "#contact"]].map(([label, h]) => ({ label, href: "Booking%20platform.dc.html" + h })) }
+      ],
+      toastText: toast, toastO: toast ? 1 : 0, toastT: toast ? "translate(-50%,0)" : "translate(-50%,12px)", toastBottom: L.bar ? "96px" : "28px"
+    };
+  }
+}
+</script>
+</body>
+</html>
