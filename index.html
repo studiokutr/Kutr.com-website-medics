@@ -383,21 +383,19 @@ a:hover{color:#2453D4}
   </div>
 </section>
 
-<section aria-labelledby="cta-h" data-screen-label="CTA band" style="max-width:1440px; margin:0 auto; padding:{{ L.sy }} {{ L.px }}">
-  <div style="border-radius:32px; background:linear-gradient(180deg,#F5F8FF 0%,#FBF7FD 100%); border:1px solid #ECEEF0; padding:{{ L.cardPad }}; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:28px">
-    <div style="display:flex; flex-direction:column; gap:14px">
-      <h2 id="cta-h" style="margin:0; font-size:{{ L.h2 }}; font-weight:800">خدمات پزشکی با طعم تکنولوژی</h2>
-      <p style="margin:0; font-size:22px; color:#4A4A4A">نوبت‌دهی اینترنتی و مشاوره آنلاین با پزشکان کلینیک نیکان</p>
-    </div>
-    <div style="display:flex; gap:12px; flex:{{ L.ctaFlex }}; width:{{ L.footGrpW }}; min-width:0">
-      <button type="button" onClick="{{ goDoctorsCta }}" style="flex:1 1 auto; min-width:0; white-space:nowrap; height:56px; padding:0 {{ L.ctaBtnPad }}; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:17px; font-weight:700; cursor:pointer; transition:background-color .2s" style-hover="background:#2453D4">دریافت نوبت</button>
-    </div>
-  </div>
-</section>
 </main>
 
 <footer data-screen-label="Footer" style="background:#000000; color:#FFFFFF; border-radius:40px 40px 0 0">
   <div style="max-width:1440px; margin:0 auto; padding:72px {{ L.px }} 32px">
+    <section aria-labelledby="cta-h" data-screen-label="CTA band" style="border-radius:28px; background:#141414; border:1px solid #282828; padding:{{ L.cardPad }}; margin:0 0 56px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px">
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <h2 id="cta-h" style="margin:0; font-size:{{ L.footTitle }}; font-weight:800; color:#FFFFFF">خدمات پزشکی با طعم تکنولوژی</h2>
+        <p style="margin:0; font-size:16px; line-height:1.9; color:#CECFD2">نوبت‌دهی اینترنتی و مشاوره آنلاین با پزشکان کلینیک نیکان</p>
+      </div>
+      <div style="display:flex; gap:12px; flex:{{ L.ctaFlex }}; width:{{ L.footGrpW }}; min-width:0">
+        <button type="button" onClick="{{ goDoctorsCta }}" style="flex:1 1 auto; min-width:0; white-space:nowrap; height:56px; padding:0 {{ L.ctaBtnPad }}; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:17px; font-weight:700; cursor:pointer; transition:background-color .2s" style-hover="background:#2453D4">دریافت نوبت</button>
+      </div>
+    </section>
     <div style="display:grid; grid-template-columns:{{ L.footCols }}; gap:{{ L.footGap }}; padding:0 0 48px">
       <div style="display:flex; flex-direction:column; gap:16px">
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان رزرو نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
