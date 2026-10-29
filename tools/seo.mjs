@@ -49,6 +49,9 @@ const SPECIALTY = {
   neuro: ["Neurologic"]
 };
 
+// Pages that keep their own hand-written <head> (title, canonical, structured data).
+const STATIC_PAGES = ["online-booking-discount.html", "magazine/neurotherapy-benefits.html"];
+
 const HOME_TITLE = "کلینیک تخصصی نیکان — نوبت‌دهی اینترنتی";
 const HOME_DESC = "نوبت‌دهی اینترنتی کلینیک تخصصی نیکان در تهران، ونک: رزرو نوبت حضوری، تلفنی و مشاوره آنلاین با پزشکان قلب و عروق، پوست و مو، زنان و زایمان، ارتوپدی، مغز و اعصاب و پزشک عمومی.";
 const OG_IMAGE = "assets/brand/og-image.png";
@@ -195,7 +198,11 @@ function today() { return new Date().toISOString().slice(0, 10); }
 
 const urls = [
   { loc: SITE_URL, lastmod: lastmod("index.html") },
-  ...Object.keys(DOCS).map((k) => ({ loc: abs(doctorUrl(k)), lastmod: lastmod("DoctorProfilePage.dc.html") }))
+  ...Object.keys(DOCS).map((k) => ({ loc: abs(doctorUrl(k)), lastmod: lastmod("DoctorProfilePage.dc.html") })),
+  // Stand-alone pages with their own <head>. Each joins the sitemap once its
+  // <meta name="robots" content="noindex..."> is removed.
+  ...STATIC_PAGES.filter((f) => !/<meta name="robots" content="[^"]*noindex/i.test(read(f)))
+    .map((f) => ({ loc: abs(f), lastmod: lastmod(f) }))
 ];
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
   urls.map((u) => `  <url>\n    <loc>${esc(u.loc)}</loc>\n    <lastmod>${u.lastmod}</lastmod>\n  </url>`).join("\n") + "\n</urlset>\n");
