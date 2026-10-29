@@ -95,10 +95,20 @@ a:hover{color:#2453D4}
   </nav>
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
     <nav aria-label="منوی اصلی" style="padding:8px {{ L.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
-      <sc-for list="{{ mobileNav }}" as="n" hint-placeholder-count="5">
-        <a href="{{ n.href }}" onClick="{{ closeMenu }}" style="min-height:52px; display:flex; align-items:center; border-bottom:1px solid #F0F2F4; font-size:16px; color:#373A41">{{ n.label }}</a>
+      <sc-for list="{{ burger }}" as="b" hint-placeholder-count="6">
+        <a href="{{ b.href }}" onClick="{{ b.go }}" aria-disabled="{{ b.disabled }}" style="min-height:52px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ b.color }}; cursor:{{ b.cursor }}">
+          <span aria-hidden="true" style="flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:{{ b.iconColor }}">
+            <sc-if value="{{ b.iUser }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></sc-if>
+            <sc-if value="{{ b.iCal }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg></sc-if>
+            <sc-if value="{{ b.iSearch }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></sc-if>
+            <sc-if value="{{ b.iInfo }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg></sc-if>
+            <sc-if value="{{ b.iPhone }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg></sc-if>
+            <sc-if value="{{ b.iFaq }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.2M12 17h.01"></path></svg></sc-if>
+          </span>
+          <span style="flex:1">{{ b.label }}</span>
+          <sc-if value="{{ b.soon }}" hint-placeholder-val="{{ false }}"><span style="flex:none; padding:2px 10px; border-radius:999px; background:#F2F4F7; color:#676767; font-size:12px">به‌زودی</span></sc-if>
+        </a>
       </sc-for>
-      <a href="tel:02166778899" style="min-height:52px; display:flex; align-items:center; gap:8px; font-size:16px; color:#3669EE">تماس با پذیرش <span dir="ltr">۰۲۱-۶۶۷۷۸۸۹۹</span></a>
     </nav>
   </sc-if>
 </header>
@@ -520,6 +530,20 @@ const DOCTORS = [
 ];
 const TYPE_TAG = { clinic: { label: "ویزیت حضوری", bg: "#EBF0FE", color: "#2453D4" }, phone: { label: "نوبت تلفنی", bg: "#E3F5F3", color: "#0B6F68" }, online: { label: "مشاوره آنلاین", bg: "#E8F7EC", color: "#0E7A2E" } };
 const fa = (n) => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+// Hamburger menu (mobile): profile/appointments need login; FAQ has no page yet, so it is shown as "coming soon".
+const BURGER = (home, authed, openLogin, close) => [
+  ["پروفایل من", "iUser", "Patient%20Dashboard.dc.html#profile", true],
+  ["نوبت‌های من", "iCal", "Patient%20Dashboard.dc.html#appointments", true],
+  ["جستجوی پزشک", "iSearch", home + "#doctors"],
+  ["درباره ما", "iInfo", home + "#about"],
+  ["تماس با ما", "iPhone", home + "#contact"],
+  ["سؤالات متداول", "iFaq", ""]
+].map(([label, icon, href, auth]) => {
+  const soon = !href;
+  return { label, href: href || "#", soon, disabled: soon ? "true" : "false", color: soon ? "#94979C" : "#373A41", iconColor: soon ? "#94979C" : "#3669EE", cursor: soon ? "default" : "pointer",
+    iUser: icon === "iUser", iCal: icon === "iCal", iSearch: icon === "iSearch", iInfo: icon === "iInfo", iPhone: icon === "iPhone", iFaq: icon === "iFaq",
+    go: (e) => { if (soon) { e.preventDefault(); return; } if (auth && !authed) { e.preventDefault(); openLogin(); return; } close(); } };
+});
 
 class Component extends DCLogic {
   heroTimer = null;
@@ -627,6 +651,7 @@ class Component extends DCLogic {
       openLoginLink: (e) => { e.preventDefault(); this.setState({ login: "phone", loginErr: "", code: "", booking: "", menu: false }); },
       menuOpen: this.state.menu && dev === "mobile", menuExpanded: this.state.menu ? "true" : "false",
       toggleMenu: () => this.setState((st) => ({ menu: !st.menu })), closeMenu: () => this.setState({ menu: false }),
+      burger: BURGER("", !!this.state.user, () => this.setState({ login: "phone", loginErr: "", code: "", booking: "", menu: false }), () => this.setState({ menu: false })),
       modalPos: "fixed", D: { name: "", photo: "" },
       headerBorder: scrolled ? "#ECEEF0" : "transparent",
       headerShadow: scrolled ? "0 6px 24px rgba(34,34,34,.05)" : "none",
