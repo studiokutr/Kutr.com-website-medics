@@ -27,7 +27,7 @@ a:hover{color:#2453D4}
 
 <div dir="rtl" lang="fa" data-screen-label="Booking flow" style="min-height:100vh; overflow-x:clip">
 
-<header data-screen-label="Header" style="position:sticky; top:0; z-index:20; background:rgba(255,255,255,0.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid #ECEEF0">
+<header data-screen-label="Header" style="position:sticky; top:0; z-index:20; background:rgba(255,255,255,0.97); border-bottom:1px solid #ECEEF0">
   <div style="max-width:1440px; margin:0 auto; padding:0 {{ L.px }}; height:{{ L.headerH }}; display:flex; align-items:center; justify-content:space-between; gap:16px">
     <a href="Booking%20platform.dc.html" aria-label="کلینیک نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222">
       <span aria-hidden="true" style="width:44px; height:44px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
@@ -297,11 +297,12 @@ class Component extends DCLogic {
     const when = q.get("when") || "";
     let user = ""; try { user = localStorage.getItem("nikan-user") || ""; } catch (e) {}
     const patients = user ? [{ name: "حساب شما", phone: user, rel: "خودم" }] : [];
-    const st = { vw: window.innerWidth, doc, type, when, user, patients, patient: patients.length ? 0 : -1, day: this.firstFree(-1) };
+    const st = { vw: document.documentElement.clientWidth, doc, type, when, user, patients, patient: patients.length ? 0 : -1, day: this.firstFree(-1) };
     if (when) Object.assign(st, user ? { step: "patient", holdUntil: Date.now() + HOLD } : { step: "login" });
     const forced = q.get("step"); if (["time", "login", "patient", "pay", "done"].includes(forced)) Object.assign(st, { step: forced, holdUntil: Date.now() + HOLD, when: when || DAYS[2].full + " · ساعت " + fa("17:30"), patients: patients.length ? patients : [{ name: "حساب شما", phone: "09121234567", rel: "خودم" }], patient: 0 });
     this.setState(st);
-    this.onResize = () => this.setState({ vw: window.innerWidth });
+    // clientWidth ignores iOS Safari's toolbar show/hide while scrolling, which fires resize with the same width.
+    this.onResize = () => { const w = document.documentElement.clientWidth; if (w !== this.state.vw) this.setState({ vw: w }); };
     window.addEventListener("resize", this.onResize);
     this.tick = setInterval(() => this.setState({ now: Date.now() }), 1000);
   }

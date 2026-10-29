@@ -26,7 +26,7 @@ a:hover{color:#2453D4}
 <div dir="rtl" lang="fa" style="position:relative; width:{{ L.w }}; height:{{ frameH }}; background:#FFFFFF; color:#222222; font-family:'Yekan Bakh',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow:clip">
 <div ref="{{ scrollRef }}" style="height:100%; overflow-y:{{ scrollY }}; overflow-x:{{ scrollX }}; scrollbar-width:thin">
 
-<header data-screen-label="Header" style="position:sticky; top:0; z-index:20; background:rgba(255,255,255,0.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid #ECEEF0">
+<header data-screen-label="Header" style="position:sticky; top:0; z-index:20; background:rgba(255,255,255,0.97); border-bottom:1px solid #ECEEF0">
   <div style="max-width:1440px; margin:0 auto; height:{{ L.headerH }}; padding:0 {{ L.padX }}; display:flex; align-items:center; gap:{{ L.headerGap }}">
     <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuExpanded }}" aria-label="منو" style="display:{{ L.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #DBDBDB; background:#FFFFFF; cursor:pointer; align-items:center; justify-content:center">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
@@ -504,7 +504,8 @@ class Component extends DCLogic {
   auto() { return !LAYOUT[this.props.device]; }
   componentDidMount() {
     const p = new URLSearchParams(location.search).get("doctor");
-    this.onResize = () => this.setState({ vw: window.innerWidth });
+    // clientWidth ignores iOS Safari's toolbar show/hide while scrolling, which fires resize with the same width.
+    this.onResize = () => { const w = document.documentElement.clientWidth; if (w !== this.state.vw) this.setState({ vw: w }); };
     window.addEventListener("resize", this.onResize);
     this.onSpy = () => { if (!this.spyRaf) this.spyRaf = requestAnimationFrame(() => { this.spyRaf = 0; this.spy(); }); };
     this.onHash = () => this.fromHash(false);
@@ -513,7 +514,7 @@ class Component extends DCLogic {
     setTimeout(() => { this.bindScroll(); this.fromHash(true); }, 120);
     window.addEventListener("load", () => this.fromHash(true), { once: true });
     let user = ""; try { user = localStorage.getItem("nikan-user") || ""; } catch (e) {}
-    this.setState({ vw: window.innerWidth, user, doc: DOCS[p] ? p : (DOCS[this.props.doctor] ? this.props.doctor : "peyman") });
+    this.setState({ vw: document.documentElement.clientWidth, user, doc: DOCS[p] ? p : (DOCS[this.props.doctor] ? this.props.doctor : "peyman") });
   }
   toast(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: "" }), 2600); }
   isFull() { return this.auto() || (this.props.fullPage ?? false); }

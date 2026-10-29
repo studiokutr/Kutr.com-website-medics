@@ -27,7 +27,7 @@ a:hover{color:#2453D4}
 
 <div dir="rtl" lang="fa" data-screen-label="Patient dashboard" style="min-height:100vh; overflow-x:clip; display:flex; flex-direction:column">
 
-<header data-screen-label="Header · logged in" style="position:sticky; top:0; z-index:30; background:rgba(255,255,255,0.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid #ECEEF0">
+<header data-screen-label="Header · logged in" style="position:sticky; top:0; z-index:30; background:rgba(255,255,255,0.97); border-bottom:1px solid #ECEEF0">
   <div style="max-width:1440px; margin:0 auto; padding:0 {{ L.px }}; height:{{ L.headerH }}; display:flex; align-items:center; gap:{{ L.headerGap }}">
     <a href="Booking%20platform.dc.html" aria-label="کلینیک نیکان — صفحه اصلی" style="flex:none; display:flex; align-items:center; gap:12px; color:#222222" style-hover="color:#222222">
       <span aria-hidden="true" style="width:44px; height:44px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
@@ -360,8 +360,9 @@ class Component extends DCLogic {
     let phone = "09121234567", authed = false; try { authed = !!localStorage.getItem("nikan-user"); phone = localStorage.getItem("nikan-user") || phone; } catch (e) {}
     const profile = { ...DEFAULT_PROFILE, ...read("nikan-profile", {}) };
     const hash = (location.hash || "").slice(1);
-    this.setState({ vw: window.innerWidth, phone, authed, profile, draft: profile, booked: read("nikan-appts", []), over: read("nikan-appt-state", {}), tab: ["profile", "appointments", "chat"].includes(hash) ? hash : "appointments" });
-    this.onResize = () => this.setState({ vw: window.innerWidth });
+    this.setState({ vw: document.documentElement.clientWidth, phone, authed, profile, draft: profile, booked: read("nikan-appts", []), over: read("nikan-appt-state", {}), tab: ["profile", "appointments", "chat"].includes(hash) ? hash : "appointments" });
+    // clientWidth ignores iOS Safari's toolbar show/hide while scrolling, which fires resize with the same width.
+    this.onResize = () => { const w = document.documentElement.clientWidth; if (w !== this.state.vw) this.setState({ vw: w }); };
     this.onHash = () => { const h = location.hash.slice(1); if (["profile", "appointments", "chat"].includes(h)) this.setState({ tab: h }); };
     this.onKey = (e) => { if (e.key === "Escape") this.setState({ menu: false }); };
     window.addEventListener("resize", this.onResize); window.addEventListener("hashchange", this.onHash); window.addEventListener("keydown", this.onKey);
