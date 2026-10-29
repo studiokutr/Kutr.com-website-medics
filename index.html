@@ -34,7 +34,7 @@ a:hover{color:#2453D4}
 
 <div dir="rtl" lang="fa" data-screen-label="Clinic Homepage" style="width:100%; max-width:1440px; margin:0 auto; overflow-x:clip">
 
-<header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid {{ headerBorder }}; box-shadow:{{ headerShadow }}; transition:box-shadow .3s, border-color .3s">
+<header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.97); border-bottom:1px solid {{ headerBorder }}; box-shadow:{{ headerShadow }}; transition:box-shadow .3s, border-color .3s">
   <div style="max-width:1440px; margin:0 auto; padding:0 {{ L.px }}; height:{{ L.headerH }}; display:flex; align-items:center; gap:{{ L.headerGap }}">
     <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuExpanded }}" aria-label="منو" style="display:{{ L.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
@@ -335,11 +335,11 @@ a:hover{color:#2453D4}
 
 <section id="magazine" aria-labelledby="mag-h" data-screen-label="Health magazine" style="max-width:1440px; margin:0 auto; padding:120px {{ L.px }} 0">
   <div style="display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:28px">
-    <h2 id="mag-h" style="margin:0; font-size:{{ L.h2 }}; font-weight:800">مجله سلامت</h2>
+    <h2 id="mag-h" style="margin:0; font-size:{{ L.h2 }}; font-weight:800; white-space:nowrap">مجله سلامت</h2>
     <div style="display:flex; align-items:center; gap:12px">
-      <button type="button" onClick="{{ magPrev }}" aria-label="مطالب قبلی" style="width:48px; height:48px; border-radius:14px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer; font-size:18px; transition:border-color .2s, color .2s" style-hover="border-color:#3669EE; color:#3669EE">→</button>
-      <button type="button" onClick="{{ magNext }}" aria-label="مطالب بعدی" style="width:48px; height:48px; border-radius:14px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer; font-size:18px; transition:border-color .2s, color .2s" style-hover="border-color:#3669EE; color:#3669EE">←</button>
-      <a href="#magazine" style="font-size:17px; font-weight:600; color:#3669EE; padding:0 8px">مشاهده همه</a>
+      <button type="button" onClick="{{ magPrev }}" aria-label="مطالب قبلی" style="display:{{ magArrows }}; width:48px; height:48px; border-radius:14px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer; font-size:18px; transition:border-color .2s, color .2s" style-hover="border-color:#3669EE; color:#3669EE">→</button>
+      <button type="button" onClick="{{ magNext }}" aria-label="مطالب بعدی" style="display:{{ magArrows }}; width:48px; height:48px; border-radius:14px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer; font-size:18px; transition:border-color .2s, color .2s" style-hover="border-color:#3669EE; color:#3669EE">←</button>
+      <a href="#magazine" style="font-size:17px; font-weight:600; color:#3669EE; padding:0 8px; white-space:nowrap">مشاهده همه</a>
     </div>
   </div>
   <div ref="{{ magRef }}" style="display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; padding-bottom:8px">
@@ -554,10 +554,11 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.startHero();
-    this.onResize = () => this.setState({ vw: window.innerWidth });
+    // clientWidth ignores iOS Safari's toolbar show/hide while scrolling, which fires resize with the same width.
+    this.onResize = () => { const w = document.documentElement.clientWidth; if (w !== this.state.vw) this.setState({ vw: w }); };
     window.addEventListener("resize", this.onResize);
     let user = "", pname = ""; try { user = localStorage.getItem("nikan-user") || ""; const p = JSON.parse(localStorage.getItem("nikan-profile") || "null"); if (p) pname = (p.first + " " + p.last).trim(); } catch (e) {}
-    this.setState({ vw: window.innerWidth, user, pname });
+    this.setState({ vw: document.documentElement.clientWidth, user, pname });
     this.fillPoll = setInterval(() => { const f = this.filledSlides(); if (f.join() !== (this.state.filled || []).join()) this.setState((st) => ({ filled: f, slide: f.includes(st.slide) ? st.slide : f[0] })); }, 1000);
     this.onScroll = () => { const s = window.scrollY > 8; if (s !== this.state.scrolled) this.setState({ scrolled: s }); };
     window.addEventListener("scroll", this.onScroll, { passive: true });
@@ -615,6 +616,7 @@ class Component extends DCLogic {
         ? { stepDir: "row", stepNumDir: "column", stepInner: "14px", stepLineGap: "6px", stepNum: "40px", stepNumFs: "16px", stepLineW: "0", stepLineH: "auto", stepLineMin: "20px", stepLineTop: "0", stepLineRight: "2px dashed #D9D9D9", stepPadB: "14px", stepTitleFs: "16px", stepDescFs: "14px", stepHeadGap: "24px" }
         : { stepDir: "column", stepNumDir: "row", stepInner: dev === "desktop" ? "16px" : "12px", stepLineGap: "10px", stepNum: dev === "desktop" ? "52px" : "40px", stepNumFs: dev === "desktop" ? "20px" : "16px", stepLineW: "auto", stepLineH: "0", stepLineMin: "0", stepLineTop: "2px dashed #D9D9D9", stepLineRight: "0", stepPadB: "0", stepTitleFs: dev === "desktop" ? "18px" : "15px", stepDescFs: dev === "desktop" ? "15px" : "13px", stepHeadGap: dev === "desktop" ? "44px" : "28px" }),
       brandText: dev === "desktop" ? "flex" : "none",
+      magArrows: dev === "mobile" ? "none" : "block",
       goDoctorsCta: () => this.goDoctors(),
       bannerPad: dev === "desktop" ? "56px 64px" : dev === "tablet" ? "44px 36px" : "32px 16px", bannerGap: dev === "desktop" ? "48px" : "28px",
       bannerDir: dev === "desktop" ? "row" : "column", bannerAlign: dev === "desktop" ? "start" : "center", bannerItems: dev === "desktop" ? "start" : "center",
