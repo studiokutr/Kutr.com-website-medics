@@ -644,7 +644,7 @@ class Component extends DCLogic {
       conditions: D.conditions,
       brandText: dev === "desktop" ? "flex" : "none",
       hasPhone: D.types.includes("phone"),
-      typeTags: D.types.map((k) => ({ clinic: { label: "ویزیت حضوری", bg: "#EBF0FE", color: "#2453D4" }, phone: { label: "نوبت تلفنی", bg: "#E3F5F3", color: "#0B6F68" }, online: { label: "مشاوره آنلاین", bg: "#E8F7EC", color: "#0E7A2E" } })[k]),
+      typeTags: D.types.map((k) => ({ clinic: { label: "ویزیت حضوری", bg: "#EBF0FE", color: "#2453D4" }, phone: { label: "نوبت تلفنی", bg: "#EBF0FE", color: "#2453D4" }, online: { label: "مشاوره آنلاین", bg: "#EBF0FE", color: "#2453D4" } })[k]),
       services: D.services, D, address: ADDRESS, feeLabel: TYPES[type].title, feeText: (D.fee[type] === "—" ? "ارائه نمی‌شود" : D.fee[type] + " تومان"),
       directions: () => this.toast("مسیریابی پس از اتصال نقشه فعال می‌شود."),
       revTabs: [["clinic", "ویزیت حضوری"], ["phone", "نوبت تلفنی"], ["online", "مشاوره آنلاین"]].filter(([k]) => D.types.includes(k)).map(([k, label]) => ({ label, selected: rev === k ? "true" : "false", bg: rev === k ? "#FFFFFF" : "transparent", color: rev === k ? "#3669EE" : "#4A4A4A", pick: () => this.setState({ rev: k }) })),
