@@ -244,6 +244,22 @@ a:hover{color:#2453D4}
           <button type="submit" style="grid-column:1 / -1; margin-top:8px; height:52px; border-radius:14px; border:0; background:#3669EE; color:#FFFFFF; font-size:16px; font-weight:700; cursor:pointer; transition:background-color .2s" style-hover="background:#2453D4">ثبت اطلاعات</button>
         </form>
       </section>
+      <section aria-labelledby="acct-h" data-screen-label="Dashboard · Account" style="margin-top:16px; background:#FFFFFF; border:1px solid #ECEEF0; border-radius:20px; padding:{{ L.formPad }}">
+        <h2 id="acct-h" style="margin:0 0 8px; font-size:18px; font-weight:800">حساب کاربری</h2>
+        <div style="display:flex; flex-direction:column; max-width:760px">
+          <sc-for list="{{ acctItems }}" as="m" hint-placeholder-count="3">
+            <button type="button" onClick="{{ m.go }}" aria-disabled="{{ m.disabled }}" style="min-height:52px; padding:0; border:0; border-bottom:1px solid #F0F2F4; background:transparent; color:{{ m.color }}; display:flex; align-items:center; gap:12px; cursor:{{ m.cursor }}; font-size:15px; text-align:right">
+              <span aria-hidden="true" style="flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:{{ m.iconColor }}">
+                <sc-if value="{{ m.iShield }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.4-7 10-4-1.6-7-5.5-7-10V6z"></path></svg></sc-if>
+                <sc-if value="{{ m.iDoc }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"></path><path d="M14 3v5h5M10 13h6M10 17h6"></path></svg></sc-if>
+                <sc-if value="{{ m.iOut }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10"></path></svg></sc-if>
+              </span>
+              <span style="flex:1">{{ m.label }}</span>
+              <sc-if value="{{ m.soon }}" hint-placeholder-val="{{ false }}"><span style="flex:none; padding:2px 10px; border-radius:999px; background:#F2F4F7; color:#676767; font-size:12px">به‌زودی</span></sc-if>
+            </button>
+          </sc-for>
+        </div>
+      </section>
     </sc-if>
 
     <sc-if value="{{ isChat }}" hint-placeholder-val="{{ false }}">
@@ -341,10 +357,10 @@ const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } ca
 class Component extends DCLogic {
   state = { vw: 1440, tab: "appointments", filter: "all", phone: "09121234567", profile: DEFAULT_PROFILE, draft: DEFAULT_PROFILE, errs: {}, booked: [], over: {}, open: "", review: "", stars: 0, reviewText: "", reviewErr: false, cancelAsk: "", menu: false, toast: "" };
   componentDidMount() {
-    let phone = "09121234567"; try { phone = localStorage.getItem("nikan-user") || phone; } catch (e) {}
+    let phone = "09121234567", authed = false; try { authed = !!localStorage.getItem("nikan-user"); phone = localStorage.getItem("nikan-user") || phone; } catch (e) {}
     const profile = { ...DEFAULT_PROFILE, ...read("nikan-profile", {}) };
     const hash = (location.hash || "").slice(1);
-    this.setState({ vw: window.innerWidth, phone, profile, draft: profile, booked: read("nikan-appts", []), over: read("nikan-appt-state", {}), tab: ["profile", "appointments", "chat"].includes(hash) ? hash : "appointments" });
+    this.setState({ vw: window.innerWidth, phone, authed, profile, draft: profile, booked: read("nikan-appts", []), over: read("nikan-appt-state", {}), tab: ["profile", "appointments", "chat"].includes(hash) ? hash : "appointments" });
     this.onResize = () => this.setState({ vw: window.innerWidth });
     this.onHash = () => { const h = location.hash.slice(1); if (["profile", "appointments", "chat"].includes(h)) this.setState({ tab: h }); };
     this.onKey = (e) => { if (e.key === "Escape") this.setState({ menu: false }); };
@@ -381,6 +397,12 @@ class Component extends DCLogic {
       menuToggle: () => this.setState((st) => ({ menu: !st.menu })),
       menuItems: ITEMS.map((it) => ({ ...item(it), color: it[0] === "logout" ? "#D92D20" : "#222222" })),
       sideItems: ITEMS.map((it) => { const on = s.tab === it[0], out = it[0] === "logout"; return { ...item(it), current: on ? "page" : "false", bg: on && dev === "desktop" ? "#F2F4F7" : "transparent", color: out ? "#D92D20" : on ? "#222222" : "#373A41", iconColor: out ? "#D92D20" : "#3669EE", weight: on ? 700 : 500, underline: dev !== "desktop" ? "2px solid " + (on ? "#3669EE" : "transparent") : "0" }; }),
+      // Privacy and terms pages don't exist yet, so they are shown as "coming soon"; log out only appears when signed in.
+      acctItems: [["حریم خصوصی", "iShield"], ["قوانین و شرایط", "iDoc"], ...(s.authed ? [["خروج از حساب", "iOut"]] : [])].map(([label, icon]) => {
+        const out = icon === "iOut";
+        return { label, iShield: icon === "iShield", iDoc: icon === "iDoc", iOut: out, soon: !out, disabled: out ? "false" : "true", cursor: out ? "pointer" : "default",
+          color: out ? "#D92D20" : "#94979C", iconColor: out ? "#D92D20" : "#94979C", go: () => { if (out) this.logout(); } };
+      }),
       isAppts: s.tab === "appointments", isProfile: s.tab === "profile", isChat: s.tab === "chat",
       filters: [["all", "همه"], ["clinic", "ویزیت حضوری"], ["phone", "نوبت تلفنی"], ["online", "مشاوره آنلاین"]].map(([k, label]) => { const on = s.filter === k; return { label, count: fa(counts[k]), sel: on ? "true" : "false", line: on ? "#3669EE" : "transparent", color: on ? "#222222" : "#676767", weight: on ? 700 : 500, pick: () => this.setState({ filter: k }) }; }),
       apptsEmpty: list.length === 0,

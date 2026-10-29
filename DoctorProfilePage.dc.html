@@ -54,10 +54,23 @@ a:hover{color:#2453D4}
   </nav>
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
     <nav aria-label="منوی اصلی" style="padding:8px {{ L.padX }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
-      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
-        <a href="{{ n.href }}" onClick="{{ closeMenu }}" style="min-height:48px; display:flex; align-items:center; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ n.color }}">{{ n.label }}</a>
+      <sc-for list="{{ burger }}" as="b" hint-placeholder-count="6">
+        <a href="{{ b.href }}" onClick="{{ b.go }}" aria-disabled="{{ b.disabled }}" style="min-height:48px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ b.color }}; cursor:{{ b.cursor }}">
+          <span aria-hidden="true" style="flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:{{ b.iconColor }}">
+            <sc-if value="{{ b.iUser }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></sc-if>
+            <sc-if value="{{ b.iCal }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg></sc-if>
+            <sc-if value="{{ b.iSearch }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></sc-if>
+            <sc-if value="{{ b.iInfo }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg></sc-if>
+            <sc-if value="{{ b.iPhone }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg></sc-if>
+            <sc-if value="{{ b.iFaq }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.2M12 17h.01"></path></svg></sc-if>
+          </span>
+          <span style="flex:1">{{ b.label }}</span>
+          <sc-if value="{{ b.soon }}" hint-placeholder-val="{{ false }}"><span style="flex:none; padding:2px 10px; border-radius:999px; background:#F2F4F7; color:#676767; font-size:12px">به‌زودی</span></sc-if>
+        </a>
       </sc-for>
+      <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
       <button type="button" onClick="{{ login }}" style="display:{{ L.menuLoginDisplay }}; margin-top:12px; height:48px; border-radius:16px; border:0; background:#F2F2F2; font-size:16px; font-weight:600; cursor:pointer">ورود | ثبت‌نام</button>
+      </sc-if>
     </nav>
   </sc-if>
 </header>
@@ -445,6 +458,20 @@ const REVIEWS = [
   { name: "س. یزدانی", type: "online", date: "مرداد ۱۴۰۵", text: "برای پیگیری درمان نیازی به رفت‌وآمد نبود. بسیار راضی بودم." }
 ];
 const ADDRESS = "تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم";
+// Hamburger menu (mobile): profile/appointments need login; FAQ has no page yet, so it is shown as "coming soon".
+const BURGER = (home, authed, openLogin, close) => [
+  ["پروفایل من", "iUser", "Patient%20Dashboard.dc.html#profile", true],
+  ["نوبت‌های من", "iCal", "Patient%20Dashboard.dc.html#appointments", true],
+  ["جستجوی پزشک", "iSearch", home + "#doctors"],
+  ["درباره ما", "iInfo", home + "#about"],
+  ["تماس با ما", "iPhone", home + "#contact"],
+  ["سؤالات متداول", "iFaq", ""]
+].map(([label, icon, href, auth]) => {
+  const soon = !href;
+  return { label, href: href || "#", soon, disabled: soon ? "true" : "false", color: soon ? "#94979C" : "#373A41", iconColor: soon ? "#94979C" : "#3669EE", cursor: soon ? "default" : "pointer",
+    iUser: icon === "iUser", iCal: icon === "iCal", iSearch: icon === "iSearch", iInfo: icon === "iInfo", iPhone: icon === "iPhone", iFaq: icon === "iFaq",
+    go: (e) => { if (soon) { e.preventDefault(); return; } if (auth && !authed) { e.preventDefault(); openLogin(); return; } close(); } };
+});
 const SECS = [["about", "معرفی", "sec-about"], ["services", "خدمات", "sec-services"], ["contact", "اطلاعات مراجعه", "sec-contact"], ["reviews", "نظرات", "sec-reviews"], ["faq", "سوالات متداول", "sec-faq"]];
 const DAYS = [
   { id: "d1", w: "شنبه", d: "۹ آبان", clinic: ["۱۶:۰۰", "۱۶:۳۰", "۱۷:۰۰", "۱۸:۳۰"], phone: ["۱۳:۰۰", "۱۳:۳۰"], online: ["۲۰:۰۰", "۲۰:۳۰"] },
@@ -485,7 +512,8 @@ class Component extends DCLogic {
     window.addEventListener("popstate", this.onHash);
     setTimeout(() => { this.bindScroll(); this.fromHash(true); }, 120);
     window.addEventListener("load", () => this.fromHash(true), { once: true });
-    this.setState({ vw: window.innerWidth, doc: DOCS[p] ? p : (DOCS[this.props.doctor] ? this.props.doctor : "peyman") });
+    let user = ""; try { user = localStorage.getItem("nikan-user") || ""; } catch (e) {}
+    this.setState({ vw: window.innerWidth, user, doc: DOCS[p] ? p : (DOCS[this.props.doctor] ? this.props.doctor : "peyman") });
   }
   toast(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: "" }), 2600); }
   isFull() { return this.auto() || (this.props.fullPage ?? false); }
@@ -558,7 +586,7 @@ class Component extends DCLogic {
       phoneShown: faD(en(phone)), hasLoginErr: !!loginErr, loginErr, loginInvalid: loginErr ? "true" : "false", loginBorder: loginErr ? "#D92D20" : "#D9D9D9",
       codeCta: booking ? "تأیید و ثبت نوبت" : "ورود",
       submitPhone: (e) => { e.preventDefault(); if (!/^09\d{9}$/.test(en(this.state.phone))) { this.setState({ loginErr: "شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود." }); return; } this.setState({ login: "code", loginErr: "" }); },
-      submitCode: (e) => { e.preventDefault(); if (en(this.state.code).length !== 5) { this.setState({ loginErr: "کد تأیید ۵ رقمی را کامل وارد کنید." }); return; } this.setState({ login: "done", loginErr: "" }); },
+      submitCode: (e) => { e.preventDefault(); if (en(this.state.code).length !== 5) { this.setState({ loginErr: "کد تأیید ۵ رقمی را کامل وارد کنید." }); return; } try { localStorage.setItem("nikan-user", en(this.state.phone)); } catch (x) {} this.setState({ login: "done", loginErr: "", user: en(this.state.phone) }); },
       editPhone: () => this.setState({ login: "phone", code: "" }),
       closeLogin: () => this.setState({ login: null }),
       doneTitle: booking ? D.name + " · " + booking : "با شماره " + faD(en(phone)) + " وارد شدید.",
@@ -587,6 +615,8 @@ class Component extends DCLogic {
       menuOpen: menu && dev === "mobile", menuExpanded: menu ? "true" : "false",
       toggleMenu: () => this.setState((s) => ({ menu: !s.menu })), closeMenu: () => this.setState({ menu: false }),
       login: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "" }),
+      burger: BURGER("Booking%20platform.dc.html", !!this.state.user, () => this.setState({ login: "phone", loginErr: "", code: "", booking: "", menu: false }), () => this.setState({ menu: false })),
+      loggedOut: !this.state.user,
       share: () => this.toast("پیوند پروفایل کپی شد."),
       tabs: SECS.map(([id, label, target]) => ({ href: "#" + target, current: tab === id ? "location" : "false",
         label, bg: tab === id ? "#FFFFFF" : "transparent", color: tab === id ? "#3669EE" : "#4A4A4A", go: (e) => { e.preventDefault(); if (location.hash !== "#" + target) history.pushState(null, "", location.pathname + location.search + "#" + target); this.scrollToId(target); } })),
