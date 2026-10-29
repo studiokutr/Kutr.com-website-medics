@@ -384,7 +384,12 @@ a:hover{color:#2453D4}
       </div>
       <div style="display:flex; flex-wrap:wrap; gap:8px">
         <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
-          <a href="#top" aria-label="{{ s }}" style="height:40px; padding:0 14px; border-radius:999px; border:1px solid #373A41; display:flex; align-items:center; font-size:13px; color:#CECFD2; transition:border-color .2s, color .2s" style-hover="border-color:#FFFFFF; color:#FFFFFF">{{ s }}</a>
+          <a href="{{ s.href }}" aria-label="{{ s.label }}" title="{{ s.label }}" style="width:44px; height:44px; border-radius:999px; border:1px solid #373A41; display:flex; align-items:center; justify-content:center; color:#CECFD2; transition:border-color .2s, color .2s" style-hover="border-color:#FFFFFF; color:#FFFFFF">
+            <sc-if value="{{ s.ig }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg></sc-if>
+            <sc-if value="{{ s.tg }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4 3 11l6.5 2.5L12 20l3-4.5 5 3.5z"></path><path d="m9.5 13.5 11.5-9.5"></path></svg></sc-if>
+            <sc-if value="{{ s.li }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"></rect><path d="M8 10.5V17M8 7.5v.01M12 17v-6.5M12 13.5a2.5 2.5 0 0 1 5 0V17"></path></svg></sc-if>
+            <sc-if value="{{ s.ap }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><circle cx="9" cy="9" r="1.6" fill="currentColor" stroke="none"></circle><circle cx="15" cy="9" r="1.6" fill="currentColor" stroke="none"></circle><circle cx="9" cy="15" r="1.6" fill="currentColor" stroke="none"></circle><circle cx="15" cy="15" r="1.6" fill="currentColor" stroke="none"></circle></svg></sc-if>
+          </a>
         </sc-for>
       </div>
     </div>
@@ -640,7 +645,7 @@ class Component extends DCLogic {
       ].map(r => ({ ...r, initial: r.name[0], stars: [1, 2, 3, 4, 5], starsLabel: "امتیاز ۵ از ۵" })),
       articles: ARTICLES.map((a, i) => ({ ...a, slotId: "magazine-" + (i + 1), slotHint: "عکس مقاله: " + a.title })),
       magRef: this.magRef, magPrev: () => this.scrollMag(1), magNext: () => this.scrollMag(-1),
-      socials: ["اینستاگرام", "تلگرام", "لینکدین", "آپارات"],
+      socials: [["اینستاگرام", "ig"], ["تلگرام", "tg"], ["لینکدین", "li"], ["آپارات", "ap"]].map(([label, k]) => ({ label, href: "#top", ig: k === "ig", tg: k === "tg", li: k === "li", ap: k === "ap" })),
       footerCols: [
         { title: "تخصص‌ها", links: SPECS.map(s => ({ label: s.label, href: "#doctors" })) },
         { title: "نوبت‌دهی", links: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"], ["لغو نوبت", "#contact"], ["پیگیری نوبت", "#contact"]].map(([label, href]) => ({ label, href })) },
