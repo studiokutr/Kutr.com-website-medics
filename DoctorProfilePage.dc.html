@@ -352,7 +352,7 @@ a:hover{color:#2453D4}
       </nav>
       <nav aria-label="کلینیک" style="display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">کلینیک</span>
-        <a href="Booking%20platform.dc.html#about" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
+        <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
         <a href="Booking%20platform.dc.html#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="Booking%20platform.dc.html#contact" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
         <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
@@ -504,7 +504,7 @@ const BURGER = (home, authed, openLogin, close) => [
   ["پروفایل من", "iUser", "Patient%20Dashboard.dc.html#profile", true],
   ["نوبت‌های من", "iCal", "Patient%20Dashboard.dc.html#appointments", true],
   ["جستجوی پزشک", "iSearch", home + "#doctors"],
-  ["درباره ما", "iInfo", home + "#about"],
+  ["درباره ما", "iInfo", "about.html"],
   ["تماس با ما", "iPhone", home + "#contact"],
   ["سؤالات متداول", "iFaq", ""]
 ].map(([label, icon, href, auth]) => {
@@ -735,7 +735,7 @@ class Component extends DCLogic {
       footerCols: [
         { title: "تخصص‌ها", links: [["قلب و عروق", "sara"], ["پوست و مو", "amir"], ["زنان و زایمان", "narges"], ["ارتوپدی", "hamid"], ["پزشک عمومی", "maryam"], ["مغز و اعصاب", "peyman"]].map(([label, k]) => ({ label, href: "DoctorProfilePage.dc.html?doctor=" + k })) },
         { title: "نوبت‌دهی", links: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"], ["پیگیری نوبت", "#contact"]].map(([label, h]) => ({ label, href: "Booking%20platform.dc.html" + h })) },
-        { title: "کلینیک", links: [["درباره ما", "#about"], ["مجله سلامت", "#magazine"], ["تماس با ما", "#contact"]].map(([label, h]) => ({ label, href: "Booking%20platform.dc.html" + h })) }
+        { title: "کلینیک", links: [["درباره ما", "about.html"], ["مجله سلامت", "Booking%20platform.dc.html#magazine"], ["تماس با ما", "Booking%20platform.dc.html#contact"]].map(([label, href]) => ({ label, href })) }
       ],
       toastText: toast, toastO: toast ? 1 : 0, toastT: toast ? "translate(-50%,0)" : "translate(-50%,12px)", toastBottom: L.bar ? "96px" : "28px"
     };
