@@ -23,7 +23,7 @@ const SITE_URL = "https://studiokutr.github.io/Kutr.com-website-medics/";
 const GOOGLE_SITE_VERIFICATION = "";
 const BING_SITE_VERIFICATION = "";
 
-// Address and phone are shown in the homepage footer and on about.html (which also has the opening hours).
+// Address and phone are shown in the homepage footer and on contact.html (which also has the opening hours).
 const CLINIC = {
   name: "کلینیک تخصصی نیکان",
   shortName: "کلینیک نیکان",
@@ -45,7 +45,7 @@ const SPECIALTY = {
 };
 
 // Pages that keep their own hand-written <head> (title, canonical, structured data).
-const STATIC_PAGES = ["about.html", "online-booking-discount.html", "magazine/neurotherapy-benefits.html"];
+const STATIC_PAGES = ["about.html", "contact.html", "online-booking-discount.html", "magazine/neurotherapy-benefits.html"];
 
 const HOME_TITLE = "کلینیک تخصصی نیکان — نوبت‌دهی اینترنتی";
 const HOME_DESC = "نوبت‌دهی اینترنتی کلینیک تخصصی نیکان در تهران، ونک: رزرو نوبت حضوری، تلفنی و مشاوره آنلاین با پزشکان قلب و عروق، پوست و مو، زنان و زایمان، ارتوپدی، مغز و اعصاب و پزشک عمومی.";
@@ -76,7 +76,7 @@ const clinicLd = {
   logo: abs("assets/brand/icon-512.png"),
   telephone: CLINIC.phone,
   address: { "@type": "PostalAddress", streetAddress: CLINIC.street, addressLocality: CLINIC.city, addressCountry: "IR" },
-  // Opening hours are shown on about.html, so they are in that page's structured data, not here.
+  // Opening hours are shown on contact.html, so they are in that page's structured data, not here.
   medicalSpecialty: [...new Set(Object.values(DOCS).flatMap((d) => SPECIALTY[d.spec] || []))]
 };
 
@@ -122,7 +122,7 @@ const doctorList = Object.entries(DOCS).map(([k, d]) =>
   `<li><a href="${doctorUrl(k)}">${esc(d.name)}</a> — ${esc(d.specialty)}</li>`).join("\n");
 const contactList = [
   `<li>نشانی: ${esc(CLINIC.addressText)}</li>`,
-  '<li>ساعات کاری و نشانی کامل: <a href="about.html">درباره کلینیک نیکان</a></li>',
+  '<li>ساعات کاری و نقشه مسیر: <a href="contact.html">تماس با کلینیک نیکان</a></li>',
   `<li>تلفن پذیرش: <a href="tel:${CLINIC.phone.replace(/-/g, "")}">${esc(CLINIC.phoneText)}</a></li>`
 ].join("\n");
 

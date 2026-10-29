@@ -43,7 +43,7 @@
 <h2>اطلاعات تماس و مراجعه</h2>
 <ul>
 <li>نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</li>
-<li>ساعات کاری و نشانی کامل: <a href="about.html">درباره کلینیک نیکان</a></li>
+<li>ساعات کاری و نقشه مسیر: <a href="contact.html">تماس با کلینیک نیکان</a></li>
 <li>تلفن پذیرش: <a href="tel:+982166778899">۰۲۱-۶۶۷۷۸۸۹۹</a></li>
 </ul>
 </div></noscript>
@@ -67,36 +67,64 @@ a:hover{color:#2453D4}
 <div dir="rtl" lang="fa" style="position:relative; width:{{ L.w }}; height:{{ frameH }}; background:#FFFFFF; color:#222222; font-family:'Yekan Bakh',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow:clip">
 <div ref="{{ scrollRef }}" style="height:100%; overflow-y:{{ scrollY }}; overflow-x:{{ scrollX }}; scrollbar-width:thin">
 
-<header data-screen-label="Header" style="position:sticky; top:0; z-index:20; background:rgba(255,255,255,0.97); border-bottom:1px solid #ECEEF0">
-  <div style="max-width:1440px; margin:0 auto; height:{{ L.headerH }}; padding:0 {{ L.padX }}; display:flex; align-items:center; gap:{{ L.headerGap }}">
-    <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuExpanded }}" aria-label="منو" style="display:{{ L.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #DBDBDB; background:#FFFFFF; cursor:pointer; align-items:center; justify-content:center">
+<header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.97); border-bottom:1px solid {{ hdUp }}; box-shadow:{{ hdShadow }}; transition:box-shadow .3s, border-color .3s">
+  <div style="max-width:1440px; margin:0 auto; padding:0 {{ hdL.px }}; height:{{ hdL.headerH }}; display:flex; align-items:center; gap:{{ hdL.headerGap }}">
+    <button type="button" onClick="{{ hdToggle }}" aria-expanded="{{ hdMenuExpanded }}" aria-label="منو" style="display:{{ hdL.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
       </button>
-    <a href="Booking%20platform.dc.html" aria-label="کلینیک نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222; flex:none">
-      <span aria-hidden="true" style="width:{{ L.logo }}; height:{{ L.logo }}; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
-      <span style="display:{{ brandText }}; flex-direction:column; line-height:1.3">
+    <a href="{{ hdHome }}" aria-label="کلینیک تخصصی نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222; flex:none">
+      <span aria-hidden="true" style="width:44px; height:44px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
+      <span style="display:{{ hdL.brandText }}; flex-direction:column; line-height:1.3">
         <span style="font-size:18px; font-weight:800">کلینیک نیکان</span>
-        <span style="display:{{ L.taglineDisplay }}; font-size:12px; color:#676767">نوبت‌دهی و مشاوره آنلاین</span>
+        <span style="font-size:12px; color:#676767">نوبت‌دهی و مشاوره آنلاین</span>
       </span>
     </a>
-    <nav aria-label="منوی اصلی" style="flex:1; display:{{ L.navDisplay }}; align-items:center; gap:{{ L.navGap }}; font-size:{{ L.navFs }}">
-      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
-        <a href="{{ n.href }}" style="color:{{ n.color }}; padding:8px 0; border-bottom:2px solid {{ n.border }}; white-space:nowrap; transition:color .2s, border-color .2s" style-hover="color:#3669EE; border-color:#3669EE">{{ n.label }}</a>
+    <nav aria-label="منوی اصلی" style="flex:1; display:{{ hdL.navDisplay }}; align-items:center; gap:{{ hdL.navGap }}; font-size:{{ hdL.navFs }}">
+      <div onMouseEnter="{{ hdDdOpen }}" onMouseLeave="{{ hdDdClose }}" onFocus="{{ hdDdOpen }}" onBlur="{{ hdDdBlur }}" style="position:relative">
+        <button type="button" onClick="{{ hdDdToggle }}" aria-expanded="{{ hdDdExpanded }}" aria-haspopup="true" style="display:flex; align-items:center; gap:6px; padding:8px 0; border:0; border-bottom:2px solid {{ hdDdLine }}; background:transparent; color:{{ hdDdColor }}; font-size:{{ hdL.navFs }}; cursor:pointer; white-space:nowrap; transition:color .2s, border-color .2s" style-hover="color:#3669EE">پزشکان و تخصص‌ها<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:{{ hdDdRot }}; transition:transform .25s"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <sc-if value="{{ hdDdShow }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; top:100%; right:-24px; z-index:30; padding-top:14px">
+            <div role="menu" style="width:620px; padding:20px; border-radius:24px; background:#FFFFFF; border:1px solid #ECEEF0; box-shadow:0 20px 48px rgba(16,24,40,.12); display:grid; grid-template-columns:200px minmax(0,1fr); gap:20px">
+              <div style="display:flex; flex-direction:column; gap:2px; padding-left:20px; border-left:1px solid #ECEEF0">
+                <span style="padding:0 12px 8px; font-size:13px; color:#676767">تخصص‌ها</span>
+                <sc-for list="{{ hdSpecs }}" as="sp" hint-placeholder-count="6">
+                  <a href="{{ sp.href }}" role="menuitem" onClick="{{ sp.pick }}" style="min-height:40px; padding:0 12px; border-radius:12px; display:flex; align-items:center; gap:10px; font-size:15px; color:#373A41" style-hover="background:#F5F8FF; color:#3669EE"><span aria-hidden="true" style="display:block; width:24px; height:24px; background-image:url({{ sp.img }}); background-size:cover; background-position:center; background-repeat:no-repeat"></span>{{ sp.label }}</a>
+                </sc-for>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:2px">
+                <span style="padding:0 12px 8px; font-size:13px; color:#676767">پزشکان کلینیک</span>
+                <sc-for list="{{ hdDocs }}" as="dd" hint-placeholder-count="6">
+                  <a href="{{ dd.href }}" role="menuitem" style="min-height:52px; padding:6px 12px; border-radius:12px; display:flex; align-items:center; gap:12px" style-hover="background:#F5F8FF">
+                    <span style="display:flex; flex-direction:column; gap:1px; min-width:0"><span style="font-size:15px; font-weight:700; color:#222222">{{ dd.name }}</span><span style="font-size:13px; color:#676767">{{ dd.specialty }}</span></span>
+                  </a>
+                </sc-for>
+                <a href="{{ hdAllHref }}" onClick="{{ hdAll }}" style="margin-top:6px; padding:8px 12px; font-size:14px; font-weight:600; color:#3669EE">مشاهده همه پزشکان ←</a>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <sc-for list="{{ hdNav }}" as="n" hint-placeholder-count="5">
+        <a href="{{ n.href }}" style="color:#373A41; padding:8px 0; border-bottom:2px solid transparent; transition:color .2s, border-color .2s; white-space:nowrap" style-hover="color:#3669EE; border-color:#3669EE">{{ n.label }}</a>
       </sc-for>
     </nav>
-    <div style="margin-right:auto; display:flex; align-items:center; gap:10px; flex:none">
-      <button type="button" onClick="{{ login }}" style="display:{{ L.loginDisplay }}; height:{{ L.btnH }}; padding:0 20px; border-radius:16px; border:0; background:#F2F2F2; color:#222222; font-size:16px; font-weight:600; cursor:pointer; transition:background-color .2s" style-hover="background:#E6E6E6">ورود | ثبت‌نام</button>
+    <div style="margin-right:auto; display:flex; align-items:center; gap:12px; flex:none">
+      <sc-if value="{{ hdLoginBtn }}" hint-placeholder-val="{{ true }}">
+      <button type="button" onClick="{{ hdLogin }}" style="height:{{ hdL.btnH }}; padding:0 {{ hdL.btnPad }}; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:{{ hdL.btnFs }}; font-weight:700; cursor:pointer; white-space:nowrap; box-shadow:0 6px 16px rgba(54,105,238,.28); transition:background-color .2s, transform .15s, box-shadow .2s" style-hover="background:#2453D4; box-shadow:0 8px 22px rgba(54,105,238,.36)" style-active="transform:scale(.97)">ورود و ثبت‌نام</button>
+      </sc-if>
+      <sc-if value="{{ hdLoggedIn }}" hint-placeholder-val="{{ false }}">
+        <a href="Patient%20Dashboard.dc.html#appointments" aria-label="حساب کاربری" style="height:{{ hdL.btnH }}; padding:0 8px 0 14px; border-radius:14px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; display:flex; align-items:center; gap:10px; font-size:15px; font-weight:600; white-space:nowrap; transition:background-color .2s" style-hover="background:#F5F8FF; color:#3669EE">
+          <span aria-hidden="true" style="flex:none; width:32px; height:32px; border-radius:999px; background:#EBF0FE; display:flex; align-items:center; justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="#3669EE" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0z"></path></svg></span>
+          <span style="display:{{ hdL.nameDisplay }}">{{ hdUserName }}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg>
+        </a>
+      </sc-if>
     </div>
   </div>
-  <nav aria-label="منوی اصلی" style="display:{{ L.navRow }}; align-items:center; gap:28px; height:52px; padding:0 {{ L.padX }}; border-top:1px solid #F0F2F4; overflow-x:auto; scrollbar-width:none; font-size:15px">
-    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
-      <a href="{{ n.href }}" style="flex:none; white-space:nowrap; color:#373A41; padding:14px 0" style-hover="color:#3669EE">{{ n.label }}</a>
-    </sc-for>
-  </nav>
-  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-    <nav aria-label="منوی اصلی" style="padding:8px {{ L.padX }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
-      <sc-for list="{{ burger }}" as="b" hint-placeholder-count="6">
-        <a href="{{ b.href }}" onClick="{{ b.go }}" aria-disabled="{{ b.disabled }}" style="min-height:48px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ b.color }}; cursor:{{ b.cursor }}">
+  <sc-if value="{{ hdMenuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav aria-label="منوی اصلی" style="padding:8px {{ hdL.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
+      <sc-for list="{{ hdBurger }}" as="b" hint-placeholder-count="6">
+        <a href="{{ b.href }}" onClick="{{ b.go }}" aria-disabled="{{ b.disabled }}" style="min-height:52px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ b.color }}; cursor:{{ b.cursor }}">
           <span aria-hidden="true" style="flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:{{ b.iconColor }}">
             <sc-if value="{{ b.iUser }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></sc-if>
             <sc-if value="{{ b.iCal }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg></sc-if>
@@ -109,9 +137,6 @@ a:hover{color:#2453D4}
           <sc-if value="{{ b.soon }}" hint-placeholder-val="{{ false }}"><span style="flex:none; padding:2px 10px; border-radius:999px; background:#F2F4F7; color:#676767; font-size:12px">به‌زودی</span></sc-if>
         </a>
       </sc-for>
-      <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
-      <button type="button" onClick="{{ login }}" style="display:{{ L.menuLoginDisplay }}; margin-top:12px; height:48px; border-radius:16px; border:0; background:#F2F2F2; font-size:16px; font-weight:600; cursor:pointer">ورود | ثبت‌نام</button>
-      </sc-if>
     </nav>
   </sc-if>
 </header>
@@ -354,7 +379,7 @@ a:hover{color:#2453D4}
         <span style="font-size:15px; font-weight:700">کلینیک</span>
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
         <a href="Booking%20platform.dc.html#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
-        <a href="Booking%20platform.dc.html#contact" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
+        <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
         <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
       <div style="display:flex; flex-direction:column; gap:14px">
@@ -504,13 +529,21 @@ const REVIEWS = [
   { name: "س. یزدانی", type: "online", date: "مرداد ۱۴۰۵", text: "برای پیگیری درمان نیازی به رفت‌وآمد نبود. بسیار راضی بودم." }
 ];
 const ADDRESS = "تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم";
+// Site header: the same on every page (homepage, doctor profile, booking flow, dashboard; the static pages use assets/site-header.js).
+const HDR_L = {
+  desktop: { px: "80px", headerH: "88px", headerGap: "40px", navDisplay: "flex", navGap: "28px", navFs: "16px", menuDisplay: "none", brandText: "flex", btnH: "52px", btnPad: "26px", btnFs: "16px", nameDisplay: "flex" },
+  tablet: { px: "40px", headerH: "80px", headerGap: "20px", navDisplay: "flex", navGap: "18px", navFs: "15px", menuDisplay: "none", brandText: "none", btnH: "48px", btnPad: "20px", btnFs: "15px", nameDisplay: "none" },
+  mobile: { px: "16px", headerH: "68px", headerGap: "10px", navDisplay: "none", navGap: "18px", navFs: "15px", menuDisplay: "flex", brandText: "none", btnH: "44px", btnPad: "14px", btnFs: "14px", nameDisplay: "none" }
+};
+const HDR_SPECS = [["cardio", "قلب و عروق"], ["derm", "پوست و مو"], ["gyn", "زنان و زایمان"], ["ortho", "ارتوپدی"], ["gp", "پزشک عمومی"], ["neuro", "مغز و اعصاب"]];
+const HDR_DOCS = [["sara", "دکتر سارا محمدی", "متخصص قلب و عروق"], ["amir", "دکتر امیر رضایی", "متخصص پوست، مو و زیبایی"], ["narges", "دکتر نرگس کریمی", "متخصص زنان، زایمان و نازایی"], ["hamid", "دکتر حمید احمدی", "متخصص ارتوپدی"], ["maryam", "دکتر مریم حسینی", "پزشک عمومی"], ["peyman", "دکتر پیمان راد", "متخصص مغز و اعصاب (نورولوژی)"]];
 // Hamburger menu (mobile): profile/appointments need login; FAQ has no page yet, so it is shown as "coming soon".
-const BURGER = (home, authed, openLogin, close) => [
+const HDR_BURGER = (home, authed, openLogin, close) => [
   ["پروفایل من", "iUser", "Patient%20Dashboard.dc.html#profile", true],
   ["نوبت‌های من", "iCal", "Patient%20Dashboard.dc.html#appointments", true],
   ["جستجوی پزشک", "iSearch", home + "#doctors"],
   ["درباره ما", "iInfo", "about.html"],
-  ["تماس با ما", "iPhone", home + "#contact"],
+  ["تماس با ما", "iPhone", "contact.html"],
   ["سؤالات متداول", "iFaq", ""]
 ].map(([label, icon, href, auth]) => {
   const soon = !href;
@@ -518,6 +551,40 @@ const BURGER = (home, authed, openLogin, close) => [
     iUser: icon === "iUser", iCal: icon === "iCal", iSearch: icon === "iSearch", iInfo: icon === "iInfo", iPhone: icon === "iPhone", iFaq: icon === "iFaq",
     go: (e) => { if (soon) { e.preventDefault(); return; } if (auth && !authed) { e.preventDefault(); openLogin(); return; } close(); } };
 });
+// Shadow once the page scrolls; an open hamburger menu closes as soon as the page scrolls down.
+function headerMount(c) {
+  c.hdScroll = () => {
+    const y = window.scrollY, up = y > 8;
+    if (c.state.hdMenu && y > (c.hdMenuY || 0) + 8) c.setState({ hdMenu: false });
+    if (up !== !!c.state.hdUp) c.setState({ hdUp: up });
+  };
+  window.addEventListener("scroll", c.hdScroll, { passive: true });
+}
+function headerUnmount(c) { window.removeEventListener("scroll", c.hdScroll); clearTimeout(c.hdT); }
+// o: home (homepage URL, "" on the homepage), authed, name, openLogin, onSpec (homepage only: filter the list in place).
+function headerVals(c, dev, o) {
+  const home = o.home, dd = !!c.state.hdDd, menu = !!c.state.hdMenu, close = () => c.setState({ hdMenu: false });
+  const openLogin = () => { c.setState({ hdMenu: false, hdDd: false }); o.openLogin(); };
+  return {
+    hdL: HDR_L[dev], hdHome: home || "#top",
+    hdUp: c.state.hdUp ? "#ECEEF0" : "transparent", hdShadow: c.state.hdUp ? "0 6px 24px rgba(34,34,34,.05)" : "none",
+    hdMenuOpen: menu && dev === "mobile", hdMenuExpanded: menu ? "true" : "false",
+    hdToggle: () => { c.hdMenuY = window.scrollY; c.setState((s) => ({ hdMenu: !s.hdMenu })); },
+    hdBurger: HDR_BURGER(home, o.authed, openLogin, close),
+    hdDdShow: dd, hdDdExpanded: dd ? "true" : "false", hdDdRot: dd ? "rotate(180deg)" : "none",
+    hdDdColor: dd ? "#3669EE" : "#373A41", hdDdLine: dd ? "#3669EE" : "transparent",
+    hdDdOpen: () => { clearTimeout(c.hdT); c.setState({ hdDd: true }); },
+    hdDdClose: () => { clearTimeout(c.hdT); c.hdT = setTimeout(() => c.setState({ hdDd: false }), 120); },
+    hdDdBlur: (e) => { if (!e.currentTarget.contains(e.relatedTarget)) c.setState({ hdDd: false }); },
+    hdDdToggle: () => c.setState((s) => ({ hdDd: !s.hdDd })),
+    hdSpecs: HDR_SPECS.map(([key, label]) => ({ label, img: "assets/specialties/" + key + ".svg", href: home ? home + "?spec=" + key + "#doctors" : "#doctors",
+      pick: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec(key); } })),
+    hdDocs: HDR_DOCS.map(([key, name, specialty]) => ({ name, specialty, href: "DoctorProfilePage.dc.html?doctor=" + key })),
+    hdAllHref: home + "#doctors", hdAll: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec("all"); },
+    hdNav: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href: home + href })),
+    hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری", hdLogin: openLogin
+  };
+}
 const SECS = [["about", "معرفی", "sec-about"], ["services", "خدمات", "sec-services"], ["contact", "اطلاعات مراجعه", "sec-contact"], ["reviews", "نظرات", "sec-reviews"], ["faq", "سوالات متداول", "sec-faq"]];
 const DAYS = [
   { id: "d1", w: "شنبه", d: "۹ آبان", clinic: ["۱۶:۰۰", "۱۶:۳۰", "۱۷:۰۰", "۱۸:۳۰"], phone: ["۱۳:۰۰", "۱۳:۳۰"], online: ["۲۰:۰۰", "۲۰:۳۰"] },
@@ -577,7 +644,7 @@ class Component extends DCLogic {
   scrollRef = React.createRef();
 
   componentDidUpdate() { const dk = DOCS[this.state.doc] ? this.state.doc : "peyman"; if (dk !== this.seoDoc) { this.seoDoc = dk; setDoctorSeo(dk, DOCS[dk]); } const full = this.isFull(); if (full !== this.lastFull) { this.lastFull = full; this.bindScroll(); } }
-  componentWillUnmount() { clearTimeout(this.tt); cancelAnimationFrame(this.scrollRaf); window.removeEventListener("resize", this.onResize); window.removeEventListener("hashchange", this.onHash); window.removeEventListener("popstate", this.onHash); if (this.spyTarget) this.spyTarget.removeEventListener("scroll", this.onSpy); }
+  componentWillUnmount() { headerUnmount(this); clearTimeout(this.tt); cancelAnimationFrame(this.scrollRaf); window.removeEventListener("resize", this.onResize); window.removeEventListener("hashchange", this.onHash); window.removeEventListener("popstate", this.onHash); if (this.spyTarget) this.spyTarget.removeEventListener("scroll", this.onSpy); }
   dev() { if (LAYOUT[this.props.device]) return this.props.device; const w = this.state.vw || 1440; return w >= 1100 ? "desktop" : w >= 700 ? "tablet" : "mobile"; }
   auto() { return !LAYOUT[this.props.device]; }
   componentDidMount() {
@@ -591,8 +658,9 @@ class Component extends DCLogic {
     window.addEventListener("popstate", this.onHash);
     setTimeout(() => { this.bindScroll(); this.fromHash(true); }, 120);
     window.addEventListener("load", () => this.fromHash(true), { once: true });
-    let user = ""; try { user = localStorage.getItem("nikan-user") || ""; } catch (e) {}
-    this.setState({ vw: document.documentElement.clientWidth, user, doc: DOCS[p] ? p : (DOCS[this.props.doctor] ? this.props.doctor : "peyman") });
+    let user = "", pname = ""; try { user = localStorage.getItem("nikan-user") || ""; const pr = JSON.parse(localStorage.getItem("nikan-profile") || "null"); if (pr) pname = (pr.first + " " + pr.last).trim(); } catch (e) {}
+    headerMount(this);
+    this.setState({ vw: document.documentElement.clientWidth, user, pname, doc: DOCS[p] ? p : (DOCS[this.props.doctor] ? this.props.doctor : "peyman") });
   }
   toast(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: "" }), 2600); }
   isFull() { return this.auto() || (this.props.fullPage ?? false); }
@@ -690,12 +758,9 @@ class Component extends DCLogic {
     return {
       L, frameH: full ? "auto" : L.h, scrollY: full ? "visible" : "auto", scrollX: full ? "clip" : "hidden", scrollRef: this.scrollRef,
       toTop: (e) => { e.preventDefault(); const sc = this.scrollRef.current; if (sc) sc.scrollTo({ top: 0, behavior: "smooth" }); },
-      nav: [["پزشکان و تخصص‌ها", "#doctors"], ["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, h], i) => ({ label, href: "Booking%20platform.dc.html" + h, color: i === 0 ? "#3669EE" : "#373A41", border: i === 0 ? "#3669EE" : "transparent" })),
-      menuOpen: menu && dev === "mobile", menuExpanded: menu ? "true" : "false",
-      toggleMenu: () => this.setState((s) => ({ menu: !s.menu })), closeMenu: () => this.setState({ menu: false }),
       login: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "" }),
-      burger: BURGER("Booking%20platform.dc.html", !!this.state.user, () => this.setState({ login: "phone", loginErr: "", code: "", booking: "", menu: false }), () => this.setState({ menu: false })),
       loggedOut: !this.state.user,
+      ...headerVals(this, dev, { home: "Booking%20platform.dc.html", authed: !!this.state.user, name: this.state.pname, openLogin: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "" }) }),
       share: () => this.toast("پیوند پروفایل کپی شد."),
       tabs: SECS.map(([id, label, target]) => ({ href: "#" + target, current: tab === id ? "location" : "false",
         label, bg: tab === id ? "#FFFFFF" : "transparent", color: tab === id ? "#3669EE" : "#4A4A4A", go: (e) => { e.preventDefault(); if (location.hash !== "#" + target) history.pushState(null, "", location.pathname + location.search + "#" + target); this.scrollToId(target); } })),
@@ -721,7 +786,6 @@ class Component extends DCLogic {
       bioMax: bio ? "none" : "96px", bioLabel: bio ? "نمایش کمتر" : "مشاهده بیشتر", bioExpanded: bio ? "true" : "false",
       toggleBio: () => this.setState((s) => ({ bio: !s.bio })),
       conditions: D.conditions,
-      brandText: dev === "desktop" ? "flex" : "none",
       hasPhone: D.types.includes("phone"),
       typeTags: D.types.map((k) => ({ clinic: { label: "ویزیت حضوری", bg: "#EBF0FE", color: "#2453D4" }, phone: { label: "نوبت تلفنی", bg: "#EBF0FE", color: "#2453D4" }, online: { label: "مشاوره آنلاین", bg: "#EBF0FE", color: "#2453D4" } })[k]),
       services: D.services, D, address: ADDRESS, feeLabel: TYPES[type].title, feeText: (D.fee[type] === "—" ? "ارائه نمی‌شود" : D.fee[type] + " تومان"),
@@ -741,7 +805,7 @@ class Component extends DCLogic {
       footerCols: [
         { title: "تخصص‌ها", links: [["قلب و عروق", "sara"], ["پوست و مو", "amir"], ["زنان و زایمان", "narges"], ["ارتوپدی", "hamid"], ["پزشک عمومی", "maryam"], ["مغز و اعصاب", "peyman"]].map(([label, k]) => ({ label, href: "DoctorProfilePage.dc.html?doctor=" + k })) },
         { title: "نوبت‌دهی", links: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"], ["پیگیری نوبت", "#contact"]].map(([label, h]) => ({ label, href: "Booking%20platform.dc.html" + h })) },
-        { title: "کلینیک", links: [["درباره ما", "about.html"], ["مجله سلامت", "Booking%20platform.dc.html#magazine"], ["تماس با ما", "Booking%20platform.dc.html#contact"]].map(([label, href]) => ({ label, href })) }
+        { title: "کلینیک", links: [["درباره ما", "about.html"], ["مجله سلامت", "Booking%20platform.dc.html#magazine"], ["تماس با ما", "contact.html"]].map(([label, href]) => ({ label, href })) }
       ],
       toastText: toast, toastO: toast ? 1 : 0, toastT: toast ? "translate(-50%,0)" : "translate(-50%,12px)", toastBottom: L.bar ? "96px" : "28px"
     };
