@@ -120,6 +120,11 @@ a:hover{color:#2453D4}
     <sc-for list="{{ heroSlides }}" as="h" hint-placeholder-count="3">
       <div aria-hidden="{{ h.hidden }}" style="position:absolute; inset:0; opacity:{{ h.opacity }}; pointer-events:{{ h.pe }}; transition:opacity .8s ease">
         <image-slot id="{{ h.id }}" shape="rect" fit="cover" placeholder="{{ h.hint }}"></image-slot>
+        <div style="position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:{{ heroGap }}; padding:0 {{ heroPadS }} 0 {{ heroPadE }}; background:{{ heroShade }}; color:#FFFFFF; pointer-events:none">
+          <h2 style="margin:0; max-width:{{ heroTextW }}; font-size:{{ heroTitleFs }}; line-height:1.5; font-weight:800; text-wrap:balance">{{ h.title }}</h2>
+          <sc-if value="{{ h.hasText }}" hint-placeholder-val="{{ true }}"><p style="margin:0; max-width:{{ heroTextW }}; font-size:{{ heroTextFs }}; line-height:1.8; color:#E3EAFD; text-wrap:pretty">{{ h.text }}</p></sc-if>
+          <a href="{{ h.href }}" tabindex="{{ h.tab }}" style="pointer-events:auto; margin-top:{{ heroBtnM }}; height:{{ heroBtnH }}; padding:0 {{ heroBtnPad }}; border-radius:14px; background:#FFFFFF; color:#3669EE; font-size:{{ heroBtnFs }}; font-weight:800; display:flex; align-items:center; gap:8px; white-space:nowrap; box-shadow:0 8px 20px rgba(16,24,40,.18); transition:background-color .2s, gap .25s" style-hover="background:#EBF0FE; color:#2453D4; gap:12px">{{ h.cta }}<span aria-hidden="true">←</span></a>
+        </div>
       </div>
     </sc-for>
     <button type="button" onClick="{{ heroPrev }}" aria-label="تصویر قبلی" style="position:absolute; right:16px; top:50%; transform:translateY(-50%); z-index:2; width:44px; height:44px; border-radius:999px; border:0; background:rgba(255,255,255,.88); color:#222222; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.12); transition:background-color .2s" style-hover="background:#FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg></button>
@@ -594,10 +599,15 @@ class Component extends DCLogic {
   renderVals() {
     const { tab, query, searchSpec, type, appliedQuery, appliedType, scrolled, toast } = this.state;
     const filled = this.state.filled || [0];
-    const heroSlides = [["clinic-hero", "عکس اول: فضای داخلی کلینیک"], ["clinic-hero-2", "عکس دوم: کلینیک"], ["clinic-hero-3", "عکس سوم: کلینیک"]].map(([id, hint], i) => {
+    // Hero banners: copy and destinations as given by fateme (item 12). Banner 1 says «رزرو نوبت» but goes to «درباره ما» on purpose.
+    const heroSlides = [
+      ["clinic-hero", "عکس اول: فضای داخلی کلینیک", "خدمات پزشکی با طعم تکنولوژی", "نوبت‌دهی اینترنتی و مشاوره آنلاین با پزشکان کلینیک نیکان", "رزرو نوبت", "#about"],
+      ["clinic-hero-2", "عکس دوم: کلینیک", "۲۰ درصد تخفیف برای رزرو نوبت آنلاین", "", "بیشتر", "online-booking-discount.html"],
+      ["clinic-hero-3", "عکس سوم: کلینیک", "فواید نوروتراپی", "", "بیشتر", "magazine/neurotherapy-benefits.html"]
+    ].map(([id, hint, title, text, cta, href], i) => {
       const on = this.state.slide === i;
       const dotOn = filled.length > 1 && filled.includes(i);
-      return { id, hint, label: "تصویر " + (i + 1), sel: on ? "true" : "false", hidden: on ? "false" : "true", opacity: on ? 1 : 0, pe: on ? "auto" : "none", dotW: on ? "24px" : "6px", dotBg: on ? "#222222" : "#C9CDD2", dotDisplay: "block", pick: () => { this.setState({ slide: i }); this.startHero(); } };
+      return { id, hint, title, text, hasText: !!text, cta, href, tab: on ? "0" : "-1", label: "تصویر " + (i + 1), sel: on ? "true" : "false", hidden: on ? "false" : "true", opacity: on ? 1 : 0, pe: on ? "auto" : "none", dotW: on ? "24px" : "6px", dotBg: on ? "#222222" : "#C9CDD2", dotDisplay: "block", pick: () => { this.setState({ slide: i }); this.startHero(); } };
     });
     const q = appliedQuery.trim();
     const byOther = DOCTORS.filter(d => (appliedType === "all" || d.types.includes(appliedType)) && (!q || d.name.includes(q) || d.specialty.includes(q)));
@@ -617,6 +627,9 @@ class Component extends DCLogic {
         ? { stepDir: "row", stepNumDir: "column", stepInner: "14px", stepLineGap: "6px", stepNum: "40px", stepNumFs: "16px", stepLineW: "0", stepLineH: "auto", stepLineMin: "20px", stepLineTop: "0", stepLineRight: "2px dashed #D9D9D9", stepPadB: "14px", stepTitleFs: "16px", stepDescFs: "14px", stepHeadGap: "24px", stepBtnM: "16px" }
         : { stepDir: "column", stepNumDir: "row", stepInner: dev === "desktop" ? "16px" : "12px", stepLineGap: "10px", stepNum: dev === "desktop" ? "52px" : "40px", stepNumFs: dev === "desktop" ? "20px" : "16px", stepLineW: "auto", stepLineH: "0", stepLineMin: "0", stepLineTop: "2px dashed #D9D9D9", stepLineRight: "0", stepPadB: "0", stepTitleFs: dev === "desktop" ? "18px" : "15px", stepDescFs: dev === "desktop" ? "15px" : "13px", stepHeadGap: dev === "desktop" ? "44px" : "28px", stepBtnM: "40px" }),
       brandText: dev === "desktop" ? "flex" : "none",
+      ...(dev === "mobile"
+        ? { heroShade: "rgba(16,24,40,.55)", heroGap: "6px", heroPadS: "68px", heroPadE: "68px", heroTextW: "100%", heroTitleFs: "18px", heroTextFs: "13px", heroBtnM: "6px", heroBtnH: "38px", heroBtnPad: "14px", heroBtnFs: "14px" }
+        : { heroShade: "linear-gradient(270deg, rgba(16,24,40,.72) 0%, rgba(16,24,40,.5) 45%, rgba(16,24,40,0) 85%)", heroGap: "10px", heroPadS: dev === "desktop" ? "96px" : "80px", heroPadE: "80px", heroTextW: dev === "desktop" ? "560px" : "440px", heroTitleFs: dev === "desktop" ? "30px" : "24px", heroTextFs: dev === "desktop" ? "17px" : "15px", heroBtnM: "8px", heroBtnH: "48px", heroBtnPad: "22px", heroBtnFs: "16px" }),
       magArrows: dev === "mobile" ? "none" : "block",
       goDoctorsCta: () => this.goDoctors(),
       bannerPad: dev === "desktop" ? "56px 64px" : dev === "tablet" ? "44px 36px" : "32px 16px", bannerGap: dev === "desktop" ? "48px" : "28px",
