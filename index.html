@@ -34,68 +34,63 @@ a:hover{color:#2453D4}
 
 <div dir="rtl" lang="fa" data-screen-label="Clinic Homepage" style="width:100%; max-width:1440px; margin:0 auto; overflow-x:clip">
 
-<header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.97); border-bottom:1px solid {{ headerBorder }}; box-shadow:{{ headerShadow }}; transition:box-shadow .3s, border-color .3s">
-  <div style="max-width:1440px; margin:0 auto; padding:0 {{ L.px }}; height:{{ L.headerH }}; display:flex; align-items:center; gap:{{ L.headerGap }}">
-    <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuExpanded }}" aria-label="منو" style="display:{{ L.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
+<header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.97); border-bottom:1px solid {{ hdUp }}; box-shadow:{{ hdShadow }}; transition:box-shadow .3s, border-color .3s">
+  <div style="max-width:1440px; margin:0 auto; padding:0 {{ hdL.px }}; height:{{ hdL.headerH }}; display:flex; align-items:center; gap:{{ hdL.headerGap }}">
+    <button type="button" onClick="{{ hdToggle }}" aria-expanded="{{ hdMenuExpanded }}" aria-label="منو" style="display:{{ hdL.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
       </button>
-    <a href="#top" aria-label="کلینیک تخصصی نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222; flex:none; margin-right:{{ L.logoM }}">
+    <a href="{{ hdHome }}" aria-label="کلینیک تخصصی نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222; flex:none">
       <span aria-hidden="true" style="width:44px; height:44px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
-      <span style="display:{{ brandText }}; flex-direction:column; line-height:1.3">
+      <span style="display:{{ hdL.brandText }}; flex-direction:column; line-height:1.3">
         <span style="font-size:18px; font-weight:800">کلینیک نیکان</span>
         <span style="font-size:12px; color:#676767">نوبت‌دهی و مشاوره آنلاین</span>
       </span>
     </a>
-    <nav aria-label="منوی اصلی" style="flex:1; display:{{ L.navDisplay }}; align-items:center; gap:{{ L.navGap }}; font-size:{{ L.navFs }}">
-      <div onMouseEnter="{{ ddOpen }}" onMouseLeave="{{ ddClose }}" onFocus="{{ ddOpen }}" onBlur="{{ ddBlur }}" style="position:relative">
-        <button type="button" onClick="{{ ddToggle }}" aria-expanded="{{ ddExpanded }}" aria-haspopup="true" style="display:flex; align-items:center; gap:6px; padding:8px 0; border:0; border-bottom:2px solid {{ ddLine }}; background:transparent; color:{{ ddColor }}; font-size:{{ L.navFs }}; cursor:pointer; white-space:nowrap; transition:color .2s, border-color .2s" style-hover="color:#3669EE">پزشکان و تخصص‌ها<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:{{ ddRot }}; transition:transform .25s"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <sc-if value="{{ ddShow }}" hint-placeholder-val="{{ false }}">
+    <nav aria-label="منوی اصلی" style="flex:1; display:{{ hdL.navDisplay }}; align-items:center; gap:{{ hdL.navGap }}; font-size:{{ hdL.navFs }}">
+      <div onMouseEnter="{{ hdDdOpen }}" onMouseLeave="{{ hdDdClose }}" onFocus="{{ hdDdOpen }}" onBlur="{{ hdDdBlur }}" style="position:relative">
+        <button type="button" onClick="{{ hdDdToggle }}" aria-expanded="{{ hdDdExpanded }}" aria-haspopup="true" style="display:flex; align-items:center; gap:6px; padding:8px 0; border:0; border-bottom:2px solid {{ hdDdLine }}; background:transparent; color:{{ hdDdColor }}; font-size:{{ hdL.navFs }}; cursor:pointer; white-space:nowrap; transition:color .2s, border-color .2s" style-hover="color:#3669EE">پزشکان و تخصص‌ها<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:{{ hdDdRot }}; transition:transform .25s"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <sc-if value="{{ hdDdShow }}" hint-placeholder-val="{{ false }}">
           <div style="position:absolute; top:100%; right:-24px; z-index:30; padding-top:14px">
             <div role="menu" style="width:620px; padding:20px; border-radius:24px; background:#FFFFFF; border:1px solid #ECEEF0; box-shadow:0 20px 48px rgba(16,24,40,.12); display:grid; grid-template-columns:200px minmax(0,1fr); gap:20px">
               <div style="display:flex; flex-direction:column; gap:2px; padding-left:20px; border-left:1px solid #ECEEF0">
                 <span style="padding:0 12px 8px; font-size:13px; color:#676767">تخصص‌ها</span>
-                <sc-for list="{{ ddSpecs }}" as="sp" hint-placeholder-count="6">
-                  <a href="#doctors" role="menuitem" onClick="{{ sp.pick }}" style="min-height:40px; padding:0 12px; border-radius:12px; display:flex; align-items:center; gap:10px; font-size:15px; color:#373A41" style-hover="background:#F5F8FF; color:#3669EE"><span aria-hidden="true" style="display:block; width:24px; height:24px; background-image:url({{ sp.img }}); background-size:cover; background-position:center; background-repeat:no-repeat"></span>{{ sp.label }}</a>
+                <sc-for list="{{ hdSpecs }}" as="sp" hint-placeholder-count="6">
+                  <a href="{{ sp.href }}" role="menuitem" onClick="{{ sp.pick }}" style="min-height:40px; padding:0 12px; border-radius:12px; display:flex; align-items:center; gap:10px; font-size:15px; color:#373A41" style-hover="background:#F5F8FF; color:#3669EE"><span aria-hidden="true" style="display:block; width:24px; height:24px; background-image:url({{ sp.img }}); background-size:cover; background-position:center; background-repeat:no-repeat"></span>{{ sp.label }}</a>
                 </sc-for>
               </div>
               <div style="display:flex; flex-direction:column; gap:2px">
                 <span style="padding:0 12px 8px; font-size:13px; color:#676767">پزشکان کلینیک</span>
-                <sc-for list="{{ ddDocs }}" as="dd" hint-placeholder-count="6">
+                <sc-for list="{{ hdDocs }}" as="dd" hint-placeholder-count="6">
                   <a href="{{ dd.href }}" role="menuitem" style="min-height:52px; padding:6px 12px; border-radius:12px; display:flex; align-items:center; gap:12px" style-hover="background:#F5F8FF">
                     <span style="display:flex; flex-direction:column; gap:1px; min-width:0"><span style="font-size:15px; font-weight:700; color:#222222">{{ dd.name }}</span><span style="font-size:13px; color:#676767">{{ dd.specialty }}</span></span>
                   </a>
                 </sc-for>
-                <a href="#doctors" onClick="{{ ddAll }}" style="margin-top:6px; padding:8px 12px; font-size:14px; font-weight:600; color:#3669EE">مشاهده همه پزشکان ←</a>
+                <a href="{{ hdAllHref }}" onClick="{{ hdAll }}" style="margin-top:6px; padding:8px 12px; font-size:14px; font-weight:600; color:#3669EE">مشاهده همه پزشکان ←</a>
               </div>
             </div>
           </div>
         </sc-if>
       </div>
-      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+      <sc-for list="{{ hdNav }}" as="n" hint-placeholder-count="5">
         <a href="{{ n.href }}" style="color:#373A41; padding:8px 0; border-bottom:2px solid transparent; transition:color .2s, border-color .2s; white-space:nowrap" style-hover="color:#3669EE; border-color:#3669EE">{{ n.label }}</a>
       </sc-for>
     </nav>
-    <div style="margin-right:{{ L.endM }}; display:flex; align-items:center; gap:12px; flex:none">
-      <sc-if value="{{ loginBtn }}" hint-placeholder-val="{{ true }}">
-      <button type="button" onClick="{{ openLogin }}" style="height:{{ L.btnH }}; padding:0 {{ L.btnPad }}; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:{{ L.btnFs }}; font-weight:700; cursor:pointer; white-space:nowrap; box-shadow:0 6px 16px rgba(54,105,238,.28); transition:background-color .2s, transform .15s, box-shadow .2s" style-hover="background:#2453D4; box-shadow:0 8px 22px rgba(54,105,238,.36)" style-active="transform:scale(.97)">ورود و ثبت‌نام</button>
+    <div style="margin-right:auto; display:flex; align-items:center; gap:12px; flex:none">
+      <sc-if value="{{ hdLoginBtn }}" hint-placeholder-val="{{ true }}">
+      <button type="button" onClick="{{ hdLogin }}" style="height:{{ hdL.btnH }}; padding:0 {{ hdL.btnPad }}; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:{{ hdL.btnFs }}; font-weight:700; cursor:pointer; white-space:nowrap; box-shadow:0 6px 16px rgba(54,105,238,.28); transition:background-color .2s, transform .15s, box-shadow .2s" style-hover="background:#2453D4; box-shadow:0 8px 22px rgba(54,105,238,.36)" style-active="transform:scale(.97)">ورود و ثبت‌نام</button>
       </sc-if>
-      <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
-        <a href="Patient%20Dashboard.dc.html#appointments" aria-label="حساب کاربری" style="height:{{ L.btnH }}; padding:0 8px 0 14px; border-radius:14px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; display:flex; align-items:center; gap:10px; font-size:15px; font-weight:600; white-space:nowrap; transition:background-color .2s" style-hover="background:#F5F8FF; color:#3669EE">
+      <sc-if value="{{ hdLoggedIn }}" hint-placeholder-val="{{ false }}">
+        <a href="Patient%20Dashboard.dc.html#appointments" aria-label="حساب کاربری" style="height:{{ hdL.btnH }}; padding:0 8px 0 14px; border-radius:14px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; display:flex; align-items:center; gap:10px; font-size:15px; font-weight:600; white-space:nowrap; transition:background-color .2s" style-hover="background:#F5F8FF; color:#3669EE">
           <span aria-hidden="true" style="flex:none; width:32px; height:32px; border-radius:999px; background:#EBF0FE; display:flex; align-items:center; justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="#3669EE" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0z"></path></svg></span>
-          <span style="display:{{ L.phoneDisplay }}">{{ userName }}</span>
+          <span style="display:{{ hdL.nameDisplay }}">{{ hdUserName }}</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg>
         </a>
       </sc-if>
     </div>
   </div>
-  <nav aria-label="منوی اصلی" style="display:{{ L.navRow }}; align-items:center; gap:28px; height:52px; padding:0 {{ L.px }}; border-top:1px solid #F0F2F4; overflow-x:auto; scrollbar-width:none; font-size:15px">
-    <sc-for list="{{ mobileNav }}" as="n" hint-placeholder-count="6">
-      <a href="{{ n.href }}" style="flex:none; white-space:nowrap; color:#373A41; padding:14px 0" style-hover="color:#3669EE">{{ n.label }}</a>
-    </sc-for>
-  </nav>
-  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-    <nav aria-label="منوی اصلی" style="padding:8px {{ L.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
-      <sc-for list="{{ burger }}" as="b" hint-placeholder-count="6">
+  <sc-if value="{{ hdMenuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav aria-label="منوی اصلی" style="padding:8px {{ hdL.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
+      <sc-for list="{{ hdBurger }}" as="b" hint-placeholder-count="6">
         <a href="{{ b.href }}" onClick="{{ b.go }}" aria-disabled="{{ b.disabled }}" style="min-height:52px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ b.color }}; cursor:{{ b.cursor }}">
           <span aria-hidden="true" style="flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:{{ b.iconColor }}">
             <sc-if value="{{ b.iUser }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></sc-if>
@@ -363,7 +358,7 @@ a:hover{color:#2453D4}
         <span style="font-size:15px; font-weight:700">کلینیک</span>
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
         <a href="#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
-        <a href="#contact" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
+        <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
         <a href="#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
       <div style="order:{{ L.fo4 }}; display:flex; flex-direction:column; gap:14px">
@@ -471,13 +466,21 @@ const DOCTORS = [
 ];
 const TYPE_TAG = { clinic: { label: "ویزیت حضوری", bg: "#EBF0FE", color: "#2453D4" }, phone: { label: "نوبت تلفنی", bg: "#EBF0FE", color: "#2453D4" }, online: { label: "مشاوره آنلاین", bg: "#EBF0FE", color: "#2453D4" } };
 const fa = (n) => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+// Site header: the same on every page (homepage, doctor profile, booking flow, dashboard; the static pages use assets/site-header.js).
+const HDR_L = {
+  desktop: { px: "80px", headerH: "88px", headerGap: "40px", navDisplay: "flex", navGap: "28px", navFs: "16px", menuDisplay: "none", brandText: "flex", btnH: "52px", btnPad: "26px", btnFs: "16px", nameDisplay: "flex" },
+  tablet: { px: "40px", headerH: "80px", headerGap: "20px", navDisplay: "flex", navGap: "18px", navFs: "15px", menuDisplay: "none", brandText: "none", btnH: "48px", btnPad: "20px", btnFs: "15px", nameDisplay: "none" },
+  mobile: { px: "16px", headerH: "68px", headerGap: "10px", navDisplay: "none", navGap: "18px", navFs: "15px", menuDisplay: "flex", brandText: "none", btnH: "44px", btnPad: "14px", btnFs: "14px", nameDisplay: "none" }
+};
+const HDR_SPECS = [["cardio", "قلب و عروق"], ["derm", "پوست و مو"], ["gyn", "زنان و زایمان"], ["ortho", "ارتوپدی"], ["gp", "پزشک عمومی"], ["neuro", "مغز و اعصاب"]];
+const HDR_DOCS = [["sara", "دکتر سارا محمدی", "متخصص قلب و عروق"], ["amir", "دکتر امیر رضایی", "متخصص پوست، مو و زیبایی"], ["narges", "دکتر نرگس کریمی", "متخصص زنان، زایمان و نازایی"], ["hamid", "دکتر حمید احمدی", "متخصص ارتوپدی"], ["maryam", "دکتر مریم حسینی", "پزشک عمومی"], ["peyman", "دکتر پیمان راد", "متخصص مغز و اعصاب (نورولوژی)"]];
 // Hamburger menu (mobile): profile/appointments need login; FAQ has no page yet, so it is shown as "coming soon".
-const BURGER = (home, authed, openLogin, close) => [
+const HDR_BURGER = (home, authed, openLogin, close) => [
   ["پروفایل من", "iUser", "Patient%20Dashboard.dc.html#profile", true],
   ["نوبت‌های من", "iCal", "Patient%20Dashboard.dc.html#appointments", true],
   ["جستجوی پزشک", "iSearch", home + "#doctors"],
   ["درباره ما", "iInfo", "about.html"],
-  ["تماس با ما", "iPhone", home + "#contact"],
+  ["تماس با ما", "iPhone", "contact.html"],
   ["سؤالات متداول", "iFaq", ""]
 ].map(([label, icon, href, auth]) => {
   const soon = !href;
@@ -485,6 +488,40 @@ const BURGER = (home, authed, openLogin, close) => [
     iUser: icon === "iUser", iCal: icon === "iCal", iSearch: icon === "iSearch", iInfo: icon === "iInfo", iPhone: icon === "iPhone", iFaq: icon === "iFaq",
     go: (e) => { if (soon) { e.preventDefault(); return; } if (auth && !authed) { e.preventDefault(); openLogin(); return; } close(); } };
 });
+// Shadow once the page scrolls; an open hamburger menu closes as soon as the page scrolls down.
+function headerMount(c) {
+  c.hdScroll = () => {
+    const y = window.scrollY, up = y > 8;
+    if (c.state.hdMenu && y > (c.hdMenuY || 0) + 8) c.setState({ hdMenu: false });
+    if (up !== !!c.state.hdUp) c.setState({ hdUp: up });
+  };
+  window.addEventListener("scroll", c.hdScroll, { passive: true });
+}
+function headerUnmount(c) { window.removeEventListener("scroll", c.hdScroll); clearTimeout(c.hdT); }
+// o: home (homepage URL, "" on the homepage), authed, name, openLogin, onSpec (homepage only: filter the list in place).
+function headerVals(c, dev, o) {
+  const home = o.home, dd = !!c.state.hdDd, menu = !!c.state.hdMenu, close = () => c.setState({ hdMenu: false });
+  const openLogin = () => { c.setState({ hdMenu: false, hdDd: false }); o.openLogin(); };
+  return {
+    hdL: HDR_L[dev], hdHome: home || "#top",
+    hdUp: c.state.hdUp ? "#ECEEF0" : "transparent", hdShadow: c.state.hdUp ? "0 6px 24px rgba(34,34,34,.05)" : "none",
+    hdMenuOpen: menu && dev === "mobile", hdMenuExpanded: menu ? "true" : "false",
+    hdToggle: () => { c.hdMenuY = window.scrollY; c.setState((s) => ({ hdMenu: !s.hdMenu })); },
+    hdBurger: HDR_BURGER(home, o.authed, openLogin, close),
+    hdDdShow: dd, hdDdExpanded: dd ? "true" : "false", hdDdRot: dd ? "rotate(180deg)" : "none",
+    hdDdColor: dd ? "#3669EE" : "#373A41", hdDdLine: dd ? "#3669EE" : "transparent",
+    hdDdOpen: () => { clearTimeout(c.hdT); c.setState({ hdDd: true }); },
+    hdDdClose: () => { clearTimeout(c.hdT); c.hdT = setTimeout(() => c.setState({ hdDd: false }), 120); },
+    hdDdBlur: (e) => { if (!e.currentTarget.contains(e.relatedTarget)) c.setState({ hdDd: false }); },
+    hdDdToggle: () => c.setState((s) => ({ hdDd: !s.hdDd })),
+    hdSpecs: HDR_SPECS.map(([key, label]) => ({ label, img: "assets/specialties/" + key + ".svg", href: home ? home + "?spec=" + key + "#doctors" : "#doctors",
+      pick: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec(key); } })),
+    hdDocs: HDR_DOCS.map(([key, name, specialty]) => ({ name, specialty, href: "DoctorProfilePage.dc.html?doctor=" + key })),
+    hdAllHref: home + "#doctors", hdAll: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec("all"); },
+    hdNav: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href: home + href })),
+    hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری", hdLogin: openLogin
+  };
+}
 
 class Component extends DCLogic {
   heroTimer = null;
@@ -496,7 +533,7 @@ class Component extends DCLogic {
       this.setState((st) => ({ slide: (st.slide + 1) % 3 }));
     }, 6000);
   }
-  state = { dd: false, vw: 1440, menu: false, login: null, phone: "", code: "", loginErr: "", booking: "", slide: 0, filled: [0], tab: "all", query: "", searchSpec: "all", type: "all", appliedQuery: "", appliedType: "all", scrolled: false, toast: "" };
+  state = { vw: 1440, login: null, phone: "", code: "", loginErr: "", booking: "", slide: 0, filled: [0], tab: "all", query: "", searchSpec: "all", type: "all", appliedQuery: "", appliedType: "all", toast: "" };
   magRef = React.createRef();
 
   componentDidMount() {
@@ -505,12 +542,15 @@ class Component extends DCLogic {
     this.onResize = () => { const w = document.documentElement.clientWidth; if (w !== this.state.vw) this.setState({ vw: w }); };
     window.addEventListener("resize", this.onResize);
     let user = "", pname = ""; try { user = localStorage.getItem("nikan-user") || ""; const p = JSON.parse(localStorage.getItem("nikan-profile") || "null"); if (p) pname = (p.first + " " + p.last).trim(); } catch (e) {}
-    this.setState({ vw: document.documentElement.clientWidth, user, pname });
+    const spec = new URLSearchParams(location.search).get("spec"), wantLogin = location.hash === "#login" && !user;
+    this.setState({ vw: document.documentElement.clientWidth, user, pname, ...(SPECS.some((x) => x.key === spec) ? { tab: spec } : {}), ...(wantLogin ? { login: "phone" } : {}) });
     this.fillPoll = setInterval(() => { const f = this.filledSlides(); if (f.join() !== (this.state.filled || []).join()) this.setState((st) => ({ filled: f, slide: f.includes(st.slide) ? st.slide : f[0] })); }, 1000);
-    this.onScroll = () => { const s = window.scrollY > 8; if (s !== this.state.scrolled) this.setState({ scrolled: s }); };
-    window.addEventListener("scroll", this.onScroll, { passive: true });
+    headerMount(this);
+    // Links from other pages (#doctors, #booking…) land before the page has rendered, so jump to the section once it exists.
+    const target = location.hash.length > 1 && location.hash !== "#login" && location.hash.slice(1);
+    if (target) setTimeout(() => { const el = document.getElementById(target); if (el) el.scrollIntoView(); }, 300);
   }
-  componentWillUnmount() { window.removeEventListener("scroll", this.onScroll); clearTimeout(this.tt); clearInterval(this.heroTimer); clearInterval(this.fillPoll); clearTimeout(this.ddT); window.removeEventListener("resize", this.onResize); }
+  componentWillUnmount() { headerUnmount(this); clearTimeout(this.tt); clearInterval(this.heroTimer); clearInterval(this.fillPoll); window.removeEventListener("resize", this.onResize); }
 
   toast(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: "" }), 2600); }
   goDoctors() { const el = document.getElementById("doctors"); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 88, behavior: "smooth" }); }
@@ -538,7 +578,7 @@ class Component extends DCLogic {
     };
   }
   renderVals() {
-    const { tab, query, searchSpec, type, appliedQuery, appliedType, scrolled, toast } = this.state;
+    const { tab, query, searchSpec, type, appliedQuery, appliedType, toast } = this.state;
     const filled = this.state.filled || [0];
     // Hero banners: copy and destinations as given by fateme (item 12). Banner 1 says «رزرو نوبت» but goes to the «درباره ما» page on purpose.
     const heroSlides = [
@@ -557,9 +597,9 @@ class Component extends DCLogic {
     const book = () => this.goDoctors();
     const vw = this.state.vw, dev = vw >= 1100 ? "desktop" : vw >= 700 ? "tablet" : "mobile";
     const L = {
-      desktop: { navRow: "none", navGap: "28px", navFs: "16px", px: "80px", sy: "120px", headerH: "88px", headerGap: "40px", navDisplay: "flex", phoneDisplay: "flex", menuDisplay: "none", btnH: "52px", btnPad: "26px", btnFs: "16px", h2: "35px", specCols: 6, gridGap: "16px", docCols: 3, cardGap: "32px", consultCols: 2, cardPad: "40px", stepCols: 5, stepGap: "20px", twoCols: "minmax(0,1fr) minmax(0,1fr)", aboutGap: "64px", svcCols: 2, aboutRow: "220px", revCols: 3, contactCols: "minmax(0,1fr) minmax(0,1.25fr)", footCols: "minmax(0,1.6fr) repeat(3, minmax(0,1fr)) minmax(0,1.2fr)", footGap: "40px", footTitle: "26px", footBtnPad: "22px", footGrpW: "auto", ctaFlex: "none", ctaBtnPad: "26px", secY: "120px", secY2: "120px", endY: "120px", rowDisp: "grid", rowOv: "visible", rowSnap: "none", rowBleed: "0", rowPad: "0", specFlex: "0 1 auto", docFlex: "0 1 auto", revFlex: "0 1 auto", specDocGap: "48px", allBtnM: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, logoM: "0", endM: "auto", },
-      tablet: { navRow: "none", navGap: "18px", navFs: "15px", px: "40px", sy: "88px", headerH: "80px", headerGap: "20px", navDisplay: "flex", phoneDisplay: "none", menuDisplay: "none", btnH: "48px", btnPad: "20px", btnFs: "15px", h2: "30px", specCols: 3, gridGap: "14px", docCols: 2, cardGap: "24px", consultCols: 2, cardPad: "28px", stepCols: 5, stepGap: "12px", twoCols: "minmax(0,1fr)", aboutGap: "36px", svcCols: 2, aboutRow: "200px", revCols: 2, contactCols: "minmax(0,1fr)", footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footTitle: "22px", footBtnPad: "22px", footGrpW: "auto", ctaFlex: "none", ctaBtnPad: "26px", secY: "88px", secY2: "120px", endY: "88px", rowDisp: "grid", rowOv: "visible", rowSnap: "none", rowBleed: "0", rowPad: "0", specFlex: "0 1 auto", docFlex: "0 1 auto", revFlex: "0 1 auto", specDocGap: "48px", allBtnM: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, logoM: "0", endM: "auto", },
-      mobile: { navRow: "none", navGap: "18px", navFs: "15px", px: "16px", sy: "64px", headerH: "68px", headerGap: "10px", navDisplay: "none", phoneDisplay: "none", menuDisplay: "flex", btnH: "44px", btnPad: "14px", btnFs: "14px", h2: "25px", specCols: 2, gridGap: "12px", docCols: 1, cardGap: "16px", consultCols: 1, cardPad: "20px", stepCols: 1, stepGap: "0", twoCols: "minmax(0,1fr)", aboutGap: "28px", svcCols: 1, aboutRow: "140px", revCols: 1, contactCols: "minmax(0,1fr)", footCols: "auto minmax(0,1fr)", footGap: "28px", footTitle: "19px", footBtnPad: "12px", footGrpW: "100%", ctaFlex: "1 1 100%", ctaBtnPad: "14px", secY: "40px", secY2: "40px", endY: "80px", rowDisp: "flex", rowOv: "auto", rowSnap: "x mandatory", rowBleed: "-16px", rowPad: "0 16px", specFlex: "0 0 158px", docFlex: "0 0 min(318px, 85%)", revFlex: "0 0 min(277px, 78%)", specDocGap: "24px", allBtnM: "16px", footAboutCol: "1 / -1", fo1: 1, fo2: 3, fo3: 2, fo4: 4, logoM: "auto", endM: "0" }
+      desktop: { navRow: "none", navGap: "28px", navFs: "16px", px: "80px", sy: "120px", headerH: "88px", headerGap: "40px", navDisplay: "flex", phoneDisplay: "flex", menuDisplay: "none", btnH: "52px", btnPad: "26px", btnFs: "16px", h2: "35px", specCols: 6, gridGap: "16px", docCols: 3, cardGap: "32px", consultCols: 2, cardPad: "40px", stepCols: 5, stepGap: "20px", twoCols: "minmax(0,1fr) minmax(0,1fr)", aboutGap: "64px", svcCols: 2, aboutRow: "220px", revCols: 3, contactCols: "minmax(0,1fr) minmax(0,1.25fr)", footCols: "minmax(0,1.6fr) repeat(3, minmax(0,1fr)) minmax(0,1.2fr)", footGap: "40px", footTitle: "26px", footBtnPad: "22px", footGrpW: "auto", ctaFlex: "none", ctaBtnPad: "26px", secY: "120px", secY2: "120px", endY: "120px", rowDisp: "grid", rowOv: "visible", rowSnap: "none", rowBleed: "0", rowPad: "0", specFlex: "0 1 auto", docFlex: "0 1 auto", revFlex: "0 1 auto", specDocGap: "48px", allBtnM: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, },
+      tablet: { navRow: "none", navGap: "18px", navFs: "15px", px: "40px", sy: "88px", headerH: "80px", headerGap: "20px", navDisplay: "flex", phoneDisplay: "none", menuDisplay: "none", btnH: "48px", btnPad: "20px", btnFs: "15px", h2: "30px", specCols: 3, gridGap: "14px", docCols: 2, cardGap: "24px", consultCols: 2, cardPad: "28px", stepCols: 5, stepGap: "12px", twoCols: "minmax(0,1fr)", aboutGap: "36px", svcCols: 2, aboutRow: "200px", revCols: 2, contactCols: "minmax(0,1fr)", footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footTitle: "22px", footBtnPad: "22px", footGrpW: "auto", ctaFlex: "none", ctaBtnPad: "26px", secY: "88px", secY2: "120px", endY: "88px", rowDisp: "grid", rowOv: "visible", rowSnap: "none", rowBleed: "0", rowPad: "0", specFlex: "0 1 auto", docFlex: "0 1 auto", revFlex: "0 1 auto", specDocGap: "48px", allBtnM: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, },
+      mobile: { navRow: "none", navGap: "18px", navFs: "15px", px: "16px", sy: "64px", headerH: "68px", headerGap: "10px", navDisplay: "none", phoneDisplay: "none", menuDisplay: "flex", btnH: "44px", btnPad: "14px", btnFs: "14px", h2: "25px", specCols: 2, gridGap: "12px", docCols: 1, cardGap: "16px", consultCols: 1, cardPad: "20px", stepCols: 1, stepGap: "0", twoCols: "minmax(0,1fr)", aboutGap: "28px", svcCols: 1, aboutRow: "140px", revCols: 1, contactCols: "minmax(0,1fr)", footCols: "auto minmax(0,1fr)", footGap: "28px", footTitle: "19px", footBtnPad: "12px", footGrpW: "100%", ctaFlex: "1 1 100%", ctaBtnPad: "14px", secY: "40px", secY2: "40px", endY: "80px", rowDisp: "flex", rowOv: "auto", rowSnap: "x mandatory", rowBleed: "-16px", rowPad: "0 16px", specFlex: "0 0 158px", docFlex: "0 0 min(318px, 85%)", revFlex: "0 0 min(277px, 78%)", specDocGap: "24px", allBtnM: "16px", footAboutCol: "1 / -1", fo1: 1, fo2: 3, fo3: 2, fo4: 4 }
     }[dev];
     const noteParts = [q && `«${q}»`, appliedType !== "all" && TYPE_TAG[appliedType].label].filter(Boolean);
     return {
@@ -567,7 +607,6 @@ class Component extends DCLogic {
       ...(dev === "mobile"
         ? { stepDir: "row", stepNumDir: "column", stepInner: "14px", stepLineGap: "6px", stepNum: "40px", stepNumFs: "16px", stepLineW: "0", stepLineH: "auto", stepLineMin: "20px", stepLineTop: "0", stepLineRight: "2px dashed #D9D9D9", stepPadB: "14px", stepTitleFs: "16px", stepDescFs: "14px", stepHeadGap: "24px", stepBtnM: "16px" }
         : { stepDir: "column", stepNumDir: "row", stepInner: dev === "desktop" ? "16px" : "12px", stepLineGap: "10px", stepNum: dev === "desktop" ? "52px" : "40px", stepNumFs: dev === "desktop" ? "20px" : "16px", stepLineW: "auto", stepLineH: "0", stepLineMin: "0", stepLineTop: "2px dashed #D9D9D9", stepLineRight: "0", stepPadB: "0", stepTitleFs: dev === "desktop" ? "18px" : "15px", stepDescFs: dev === "desktop" ? "15px" : "13px", stepHeadGap: dev === "desktop" ? "44px" : "28px", stepBtnM: "40px" }),
-      brandText: dev === "desktop" ? "flex" : "none",
       ...(dev === "mobile"
         ? { heroArrows: "none", heroShade: "rgba(16,24,40,.55)", heroGap: "6px", heroPadS: "24px", heroPadE: "24px", heroTextW: "100%", heroTitleFs: "18px", heroTextFs: "13px", heroBtnM: "6px", heroBtnH: "38px", heroBtnPad: "14px", heroBtnFs: "14px" }
         : { heroArrows: "flex", heroShade: "linear-gradient(270deg, rgba(16,24,40,.72) 0%, rgba(16,24,40,.5) 45%, rgba(16,24,40,0) 85%)", heroGap: "10px", heroPadS: dev === "desktop" ? "96px" : "80px", heroPadE: "80px", heroTextW: dev === "desktop" ? "560px" : "440px", heroTitleFs: dev === "desktop" ? "30px" : "24px", heroTextFs: dev === "desktop" ? "17px" : "15px", heroBtnM: "8px", heroBtnH: "48px", heroBtnPad: "22px", heroBtnFs: "16px" }),
@@ -583,29 +622,14 @@ class Component extends DCLogic {
         { key: "phone", isPhone: true, title: "نوبت تلفنی" },
         { key: "online", isOnline: true, title: "نوبت آنلاین" }
       ].map(m => ({ isClinic: false, isPhone: false, isOnline: false, ...m })),
-      loggedIn: !!this.state.user, loggedOut: !this.state.user, loginBtn: !this.state.user && dev !== "mobile", userName: this.state.pname || "حساب کاربری",
+      loggedOut: !this.state.user,
+      ...headerVals(this, dev, { home: "", authed: !!this.state.user, name: this.state.pname, openLogin: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "" }), onSpec: (tab) => this.setState({ tab }) }),
       heroPrev: () => { this.setState((st) => ({ slide: (st.slide + 2) % 3 })); this.startHero(); },
       heroNext: () => { this.setState((st) => ({ slide: (st.slide + 1) % 3 })); this.startHero(); },
       specTiles: SPECS.map(x => { const n = DOCTORS.filter(d => d.spec === x.key).length, on = this.state.tab === x.key; return { label: x.label, img: "assets/specialties/" + x.key + ".svg", countText: n.toLocaleString("fa-IR") + " پزشک", on: on ? "true" : "false", border: on ? "#3669EE" : "#ECEEF0", bg: on ? "#FFFFFF" : "#F8F9FA", pick: () => { this.setState((st) => ({ tab: st.tab === x.key ? "all" : x.key })); const el = document.getElementById("doctors"); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" }); } }; }),
-      mobileNav: [["پزشکان و تخصص‌ها", "#doctors"], ["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href })),
-      ddShow: this.state.dd, ddExpanded: this.state.dd ? "true" : "false", ddRot: this.state.dd ? "rotate(180deg)" : "none",
-      ddColor: this.state.dd ? "#3669EE" : "#373A41", ddLine: this.state.dd ? "#3669EE" : "transparent",
-      ddOpen: () => { clearTimeout(this.ddT); this.setState({ dd: true }); },
-      ddClose: () => { clearTimeout(this.ddT); this.ddT = setTimeout(() => this.setState({ dd: false }), 120); },
-      ddBlur: (e) => { if (!e.currentTarget.contains(e.relatedTarget)) this.setState({ dd: false }); },
-      ddToggle: () => this.setState((st) => ({ dd: !st.dd })),
-      ddSpecs: SPECS.map(x => ({ label: x.label, img: "assets/specialties/" + x.key + ".svg", pick: () => this.setState({ tab: x.key, dd: false }) })),
-      ddDocs: DOCTORS.map(d => ({ name: d.name, specialty: d.specialty, photo: "assets/doctors/photos/" + d.key + ".png", href: "DoctorProfilePage.dc.html?doctor=" + d.key })),
-      ddAll: () => this.setState({ tab: "all", dd: false }),
       footerSpecs: SPECS.filter(x => x.key !== "all").map(x => ({ name: x.label, pick: () => this.setState({ tab: x.key }) })),
       openLoginLink: (e) => { e.preventDefault(); this.setState({ login: "phone", loginErr: "", code: "", booking: "", menu: false }); },
-      menuOpen: this.state.menu && dev === "mobile", menuExpanded: this.state.menu ? "true" : "false",
-      toggleMenu: () => this.setState((st) => ({ menu: !st.menu })), closeMenu: () => this.setState({ menu: false }),
-      burger: BURGER("", !!this.state.user, () => this.setState({ login: "phone", loginErr: "", code: "", booking: "", menu: false }), () => this.setState({ menu: false })),
       modalPos: "fixed", D: { name: "", photo: "" },
-      headerBorder: scrolled ? "#ECEEF0" : "transparent",
-      headerShadow: scrolled ? "0 6px 24px rgba(34,34,34,.05)" : "none",
-      nav: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href })),
       book, openLogin: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "", menu: false }),
       query, onQuery: (e) => this.setState({ query: e.target.value, appliedQuery: e.target.value }),
       searchSpec, onSearchSpec: (e) => this.setState({ searchSpec: e.target.value, tab: e.target.value }),
@@ -650,7 +674,7 @@ class Component extends DCLogic {
       footerCols: [
         { title: "تخصص‌ها", links: SPECS.map(s => ({ label: s.label, href: "#doctors" })) },
         { title: "نوبت‌دهی", links: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"], ["لغو نوبت", "#contact"], ["پیگیری نوبت", "#contact"]].map(([label, href]) => ({ label, href })) },
-        { title: "کلینیک", links: [["درباره ما", "about.html"], ["مجله سلامت", "#magazine"], ["تماس با ما", "#contact"], ["ورود پزشکان", "#top"]].map(([label, href]) => ({ label, href })) }
+        { title: "کلینیک", links: [["درباره ما", "about.html"], ["مجله سلامت", "#magazine"], ["تماس با ما", "contact.html"], ["ورود پزشکان", "#top"]].map(([label, href]) => ({ label, href })) }
       ],
       toastText: toast, toastO: toast ? 1 : 0, toastT: toast ? "translate(-50%,0)" : "translate(-50%,16px)"
     };
