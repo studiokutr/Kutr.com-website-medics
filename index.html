@@ -39,7 +39,7 @@ a:hover{color:#2453D4}
     <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuExpanded }}" aria-label="منو" style="display:{{ L.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
       </button>
-    <a href="#top" aria-label="کلینیک تخصصی نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222; flex:none">
+    <a href="#top" aria-label="کلینیک تخصصی نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222; flex:none; margin-right:{{ L.logoM }}">
       <span aria-hidden="true" style="width:44px; height:44px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
       <span style="display:{{ brandText }}; flex-direction:column; line-height:1.3">
         <span style="font-size:18px; font-weight:800">کلینیک نیکان</span>
@@ -75,8 +75,8 @@ a:hover{color:#2453D4}
         <a href="{{ n.href }}" style="color:#373A41; padding:8px 0; border-bottom:2px solid transparent; transition:color .2s, border-color .2s; white-space:nowrap" style-hover="color:#3669EE; border-color:#3669EE">{{ n.label }}</a>
       </sc-for>
     </nav>
-    <div style="margin-right:auto; display:flex; align-items:center; gap:12px; flex:none">
-      <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
+    <div style="margin-right:{{ L.endM }}; display:flex; align-items:center; gap:12px; flex:none">
+      <sc-if value="{{ loginBtn }}" hint-placeholder-val="{{ true }}">
       <button type="button" onClick="{{ openLogin }}" style="height:{{ L.btnH }}; padding:0 {{ L.btnPad }}; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:{{ L.btnFs }}; font-weight:700; cursor:pointer; white-space:nowrap; box-shadow:0 6px 16px rgba(54,105,238,.28); transition:background-color .2s, transform .15s, box-shadow .2s" style-hover="background:#2453D4; box-shadow:0 8px 22px rgba(54,105,238,.36)" style-active="transform:scale(.97)">ورود و ثبت‌نام</button>
       </sc-if>
       <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ false }}">
@@ -285,30 +285,6 @@ a:hover{color:#2453D4}
   </div>
 </section>
 
-<section id="about" aria-labelledby="about-h" data-screen-label="Clinic introduction" style="max-width:1440px; margin:0 auto; padding:{{ L.sy }} {{ L.px }} 0; scroll-margin-top:{{ L.headerH }}">
-  <div style="display:grid; grid-template-columns:{{ L.twoCols }}; gap:{{ L.aboutGap }}; align-items:center">
-    <div style="display:flex; flex-direction:column; gap:22px">
-      <span style="font-size:15px; font-weight:600; color:#3669EE">درباره کلینیک</span>
-      <h2 id="about-h" style="margin:0; font-size:{{ L.h2 }}; line-height:1.5; font-weight:800; text-wrap:balance">مراقبتی دقیق، در فضایی آرام و قابل اعتماد</h2>
-      <p style="margin:0; font-size:18px; line-height:2; color:#4A4A4A; text-wrap:pretty">در کلینیک نیکان پزشکان متخصص در کنار هم کار می‌کنند تا مسیر تشخیص و درمان برای شما ساده‌تر شود. پرونده شما بین پزشکان کلینیک در دسترس است و می‌توانید پیگیری درمان را به‌صورت حضوری یا آنلاین ادامه دهید.</p>
-      <ul style="list-style:none; margin:8px 0 0; padding:0; display:grid; grid-template-columns:repeat({{ L.svcCols }}, minmax(0,1fr)); gap:14px">
-        <sc-for list="{{ services }}" as="sv" hint-placeholder-count="6">
-          <li style="display:flex; align-items:center; gap:12px; padding:16px 18px; border-radius:16px; border:1px solid #ECEEF0; background:#FFFFFF; font-size:16px; font-weight:600; color:#373A41">
-            <span aria-hidden="true" style="width:10px; height:10px; border-radius:3px; background:#3669EE; transform:rotate(45deg)"></span>{{ sv }}
-          </li>
-        </sc-for>
-      </ul>
-    </div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:{{ L.aboutRow }} {{ L.aboutRow }}; gap:16px">
-      <div style="grid-row:1 / 3; position:relative; border-radius:28px; overflow:hidden; background:#F8F9FA">
-        <image-slot id="clinic-hero" shape="rect" fit="cover" placeholder="عکس فضای کلینیک"></image-slot>
-      </div>
-      <div style="position:relative; border-radius:28px; overflow:hidden; background:#F8F9FA"><image-slot id="about-photo-2" shape="rect" fit="cover" placeholder="عکس: اتاق معاینه یا پزشک در حال ویزیت"></image-slot></div>
-      <div style="position:relative; border-radius:28px; overflow:hidden; background:#F8F9FA"><image-slot id="about-photo-3" shape="rect" fit="cover" placeholder="عکس: پذیرش یا سالن انتظار کلینیک"></image-slot></div>
-    </div>
-  </div>
-</section>
-
 <section aria-labelledby="reviews-h" data-screen-label="Testimonials" style="max-width:1440px; margin:0 auto; padding:{{ L.secY2 }} {{ L.px }} 0">
   <div style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:36px">
     <div style="display:flex; flex-direction:column; gap:10px">
@@ -339,7 +315,7 @@ a:hover{color:#2453D4}
   </div>
 </section>
 
-<section id="magazine" aria-labelledby="mag-h" data-screen-label="Health magazine" style="max-width:1440px; margin:0 auto; padding:{{ L.secY2 }} {{ L.px }} 0">
+<section id="magazine" aria-labelledby="mag-h" data-screen-label="Health magazine" style="max-width:1440px; margin:0 auto; padding:{{ L.secY2 }} {{ L.px }} {{ L.endY }}">
   <div style="display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:28px">
     <h2 id="mag-h" style="margin:0; font-size:{{ L.h2 }}; font-weight:800; white-space:nowrap">مجله سلامت</h2>
     <div style="display:flex; align-items:center; gap:12px">
@@ -360,49 +336,9 @@ a:hover{color:#2453D4}
   </div>
 </section>
 
-<section id="contact" aria-labelledby="contact-h" data-screen-label="Practical information" style="max-width:1440px; margin:0 auto; padding:{{ L.sy }} {{ L.px }} 0; scroll-margin-top:{{ L.headerH }}">
-  <div style="display:grid; grid-template-columns:{{ L.contactCols }}; gap:{{ L.cardGap }}; align-items:stretch">
-    <div style="display:flex; flex-direction:column; gap:28px; padding:{{ L.cardPad }}; border-radius:28px; border:1px solid #E6E6E6">
-      <h2 id="contact-h" style="margin:0; font-size:{{ L.h2 }}; font-weight:800">اطلاعات تماس و مراجعه</h2>
-      <dl style="margin:0; display:flex; flex-direction:column; gap:22px">
-        <sc-for list="{{ infoRows }}" as="i" hint-placeholder-count="3">
-          <div style="display:flex; gap:16px; align-items:flex-start">
-            <span aria-hidden="true" style="flex:none; width:48px; height:48px; border-radius:14px; background:{{ i.bg }}; color:{{ i.fg }}; display:flex; align-items:center; justify-content:center"><span style="width:24px; height:24px; background-color:{{ i.fg }}; -webkit-mask:{{ i.mask }}; mask:{{ i.mask }}"></span></span>
-            <div style="display:flex; flex-direction:column; gap:4px">
-              <dt style="font-size:14px; color:#676767">{{ i.label }}</dt>
-              <sc-for list="{{ i.values }}" as="v" hint-placeholder-count="1">
-                <dd style="margin:0; font-size:17px; line-height:1.8; color:#222222">{{ v }}</dd>
-              </sc-for>
-            </div>
-          </div>
-        </sc-for>
-      </dl>
-      <div style="display:flex; gap:12px; margin-top:auto">
-        <a href="#contact" style="height:52px; padding:0 24px; border-radius:16px; background:#3669EE; color:#FFFFFF; font-size:16px; font-weight:700; display:flex; align-items:center; gap:8px; transition:background-color .2s" style-hover="background:#2453D4; color:#FFFFFF">مسیریابی</a>
-        <a href="tel:02166778899" style="height:52px; padding:0 24px; border-radius:16px; background:#F2F2F2; color:#222222; font-size:16px; font-weight:600; display:flex; align-items:center; transition:background-color .2s" style-hover="background:#E6E6E6; color:#222222">تماس با پذیرش</a>
-      </div>
-    </div>
-    <div style="min-height:440px; border-radius:28px; background:#F0F2F4; border:1px solid #E6E6E6; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center">
-      <iframe title="نقشه موقعیت کلینیک" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=51.3985%2C35.7498%2C51.4225%2C35.7658&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe><svg aria-hidden="true" width="44" height="56" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%); pointer-events:none; filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section aria-labelledby="cta-h" data-screen-label="CTA band" style="max-width:1440px; margin:0 auto; padding:{{ L.sy }} {{ L.px }}">
-  <div style="border-radius:32px; background:linear-gradient(180deg,#F5F8FF 0%,#FBF7FD 100%); border:1px solid #ECEEF0; padding:{{ L.cardPad }}; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:28px">
-    <div style="display:flex; flex-direction:column; gap:14px">
-      <h2 id="cta-h" style="margin:0; font-size:{{ L.h2 }}; font-weight:800">خدمات پزشکی با طعم تکنولوژی</h2>
-      <p style="margin:0; font-size:22px; color:#4A4A4A">نوبت‌دهی اینترنتی و مشاوره آنلاین با پزشکان کلینیک نیکان</p>
-    </div>
-    <div style="display:flex; gap:12px; flex:{{ L.ctaFlex }}; width:{{ L.footGrpW }}; min-width:0">
-      <button type="button" onClick="{{ goDoctorsCta }}" style="flex:1 1 auto; min-width:0; white-space:nowrap; height:56px; padding:0 {{ L.ctaBtnPad }}; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:17px; font-weight:700; cursor:pointer; transition:background-color .2s" style-hover="background:#2453D4">دریافت نوبت</button>
-    </div>
-  </div>
-</section>
 </main>
 
-<footer data-screen-label="Footer" style="background:#000000; color:#FFFFFF; border-radius:40px 40px 0 0">
+<footer id="contact" data-screen-label="Footer" style="scroll-margin-top:{{ L.headerH }}; background:#000000; color:#FFFFFF; border-radius:40px 40px 0 0">
   <div style="max-width:1440px; margin:0 auto; padding:72px {{ L.px }} 32px">
     <div style="display:grid; grid-template-columns:{{ L.footCols }}; gap:{{ L.footGap }}; padding:0 0 48px">
       <div style="grid-column:{{ L.footAboutCol }}; display:flex; flex-direction:column; gap:16px">
@@ -425,7 +361,7 @@ a:hover{color:#2453D4}
       </nav>
       <nav aria-label="کلینیک" style="order:{{ L.fo3 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">کلینیک</span>
-        <a href="#about" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
+        <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
         <a href="#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="#contact" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
         <a href="#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
@@ -535,7 +471,7 @@ const BURGER = (home, authed, openLogin, close) => [
   ["پروفایل من", "iUser", "Patient%20Dashboard.dc.html#profile", true],
   ["نوبت‌های من", "iCal", "Patient%20Dashboard.dc.html#appointments", true],
   ["جستجوی پزشک", "iSearch", home + "#doctors"],
-  ["درباره ما", "iInfo", home + "#about"],
+  ["درباره ما", "iInfo", "about.html"],
   ["تماس با ما", "iPhone", home + "#contact"],
   ["سؤالات متداول", "iFaq", ""]
 ].map(([label, icon, href, auth]) => {
@@ -599,9 +535,9 @@ class Component extends DCLogic {
   renderVals() {
     const { tab, query, searchSpec, type, appliedQuery, appliedType, scrolled, toast } = this.state;
     const filled = this.state.filled || [0];
-    // Hero banners: copy and destinations as given by fateme (item 12). Banner 1 says «رزرو نوبت» but goes to «درباره ما» on purpose.
+    // Hero banners: copy and destinations as given by fateme (item 12). Banner 1 says «رزرو نوبت» but goes to the «درباره ما» page on purpose.
     const heroSlides = [
-      ["clinic-hero", "عکس اول: فضای داخلی کلینیک", "خدمات پزشکی با طعم تکنولوژی", "نوبت‌دهی اینترنتی و مشاوره آنلاین با پزشکان کلینیک نیکان", "رزرو نوبت", "#about"],
+      ["clinic-hero", "عکس اول: فضای داخلی کلینیک", "خدمات پزشکی با طعم تکنولوژی", "نوبت‌دهی اینترنتی و مشاوره آنلاین با پزشکان کلینیک نیکان", "رزرو نوبت", "about.html"],
       ["clinic-hero-2", "عکس دوم: کلینیک", "۲۰ درصد تخفیف برای رزرو نوبت آنلاین", "", "بیشتر", "online-booking-discount.html"],
       ["clinic-hero-3", "عکس سوم: کلینیک", "فواید نوروتراپی", "", "بیشتر", "magazine/neurotherapy-benefits.html"]
     ].map(([id, hint, title, text, cta, href], i) => {
@@ -616,9 +552,9 @@ class Component extends DCLogic {
     const book = () => this.goDoctors();
     const vw = this.state.vw, dev = vw >= 1100 ? "desktop" : vw >= 700 ? "tablet" : "mobile";
     const L = {
-      desktop: { navRow: "none", navGap: "28px", navFs: "16px", px: "80px", sy: "120px", headerH: "88px", headerGap: "40px", navDisplay: "flex", phoneDisplay: "flex", menuDisplay: "none", btnH: "52px", btnPad: "26px", btnFs: "16px", h2: "35px", specCols: 6, gridGap: "16px", docCols: 3, cardGap: "32px", consultCols: 2, cardPad: "40px", stepCols: 5, stepGap: "20px", twoCols: "minmax(0,1fr) minmax(0,1fr)", aboutGap: "64px", svcCols: 2, aboutRow: "220px", revCols: 3, contactCols: "minmax(0,1fr) minmax(0,1.25fr)", footCols: "minmax(0,1.6fr) repeat(3, minmax(0,1fr)) minmax(0,1.2fr)", footGap: "40px", footTitle: "26px", footBtnPad: "22px", footGrpW: "auto", ctaFlex: "none", ctaBtnPad: "26px", secY: "120px", secY2: "120px", rowDisp: "grid", rowOv: "visible", rowSnap: "none", rowBleed: "0", rowPad: "0", specFlex: "0 1 auto", docFlex: "0 1 auto", revFlex: "0 1 auto", specDocGap: "48px", allBtnM: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, },
-      tablet: { navRow: "none", navGap: "18px", navFs: "15px", px: "40px", sy: "88px", headerH: "80px", headerGap: "20px", navDisplay: "flex", phoneDisplay: "none", menuDisplay: "none", btnH: "48px", btnPad: "20px", btnFs: "15px", h2: "30px", specCols: 3, gridGap: "14px", docCols: 2, cardGap: "24px", consultCols: 2, cardPad: "28px", stepCols: 5, stepGap: "12px", twoCols: "minmax(0,1fr)", aboutGap: "36px", svcCols: 2, aboutRow: "200px", revCols: 2, contactCols: "minmax(0,1fr)", footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footTitle: "22px", footBtnPad: "22px", footGrpW: "auto", ctaFlex: "none", ctaBtnPad: "26px", secY: "88px", secY2: "120px", rowDisp: "grid", rowOv: "visible", rowSnap: "none", rowBleed: "0", rowPad: "0", specFlex: "0 1 auto", docFlex: "0 1 auto", revFlex: "0 1 auto", specDocGap: "48px", allBtnM: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, },
-      mobile: { navRow: "none", navGap: "18px", navFs: "15px", px: "16px", sy: "64px", headerH: "68px", headerGap: "10px", navDisplay: "none", phoneDisplay: "none", menuDisplay: "flex", btnH: "44px", btnPad: "14px", btnFs: "14px", h2: "25px", specCols: 2, gridGap: "12px", docCols: 1, cardGap: "16px", consultCols: 1, cardPad: "20px", stepCols: 1, stepGap: "0", twoCols: "minmax(0,1fr)", aboutGap: "28px", svcCols: 1, aboutRow: "140px", revCols: 1, contactCols: "minmax(0,1fr)", footCols: "auto minmax(0,1fr)", footGap: "28px", footTitle: "19px", footBtnPad: "12px", footGrpW: "100%", ctaFlex: "1 1 100%", ctaBtnPad: "14px", secY: "40px", secY2: "40px", rowDisp: "flex", rowOv: "auto", rowSnap: "x mandatory", rowBleed: "-16px", rowPad: "0 16px", specFlex: "0 0 158px", docFlex: "0 0 min(318px, 85%)", revFlex: "0 0 min(277px, 78%)", specDocGap: "24px", allBtnM: "16px", footAboutCol: "1 / -1", fo1: 1, fo2: 3, fo3: 2, fo4: 4 }
+      desktop: { navRow: "none", navGap: "28px", navFs: "16px", px: "80px", sy: "120px", headerH: "88px", headerGap: "40px", navDisplay: "flex", phoneDisplay: "flex", menuDisplay: "none", btnH: "52px", btnPad: "26px", btnFs: "16px", h2: "35px", specCols: 6, gridGap: "16px", docCols: 3, cardGap: "32px", consultCols: 2, cardPad: "40px", stepCols: 5, stepGap: "20px", twoCols: "minmax(0,1fr) minmax(0,1fr)", aboutGap: "64px", svcCols: 2, aboutRow: "220px", revCols: 3, contactCols: "minmax(0,1fr) minmax(0,1.25fr)", footCols: "minmax(0,1.6fr) repeat(3, minmax(0,1fr)) minmax(0,1.2fr)", footGap: "40px", footTitle: "26px", footBtnPad: "22px", footGrpW: "auto", ctaFlex: "none", ctaBtnPad: "26px", secY: "120px", secY2: "120px", endY: "120px", rowDisp: "grid", rowOv: "visible", rowSnap: "none", rowBleed: "0", rowPad: "0", specFlex: "0 1 auto", docFlex: "0 1 auto", revFlex: "0 1 auto", specDocGap: "48px", allBtnM: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, logoM: "0", endM: "auto", },
+      tablet: { navRow: "none", navGap: "18px", navFs: "15px", px: "40px", sy: "88px", headerH: "80px", headerGap: "20px", navDisplay: "flex", phoneDisplay: "none", menuDisplay: "none", btnH: "48px", btnPad: "20px", btnFs: "15px", h2: "30px", specCols: 3, gridGap: "14px", docCols: 2, cardGap: "24px", consultCols: 2, cardPad: "28px", stepCols: 5, stepGap: "12px", twoCols: "minmax(0,1fr)", aboutGap: "36px", svcCols: 2, aboutRow: "200px", revCols: 2, contactCols: "minmax(0,1fr)", footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footTitle: "22px", footBtnPad: "22px", footGrpW: "auto", ctaFlex: "none", ctaBtnPad: "26px", secY: "88px", secY2: "120px", endY: "88px", rowDisp: "grid", rowOv: "visible", rowSnap: "none", rowBleed: "0", rowPad: "0", specFlex: "0 1 auto", docFlex: "0 1 auto", revFlex: "0 1 auto", specDocGap: "48px", allBtnM: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, logoM: "0", endM: "auto", },
+      mobile: { navRow: "none", navGap: "18px", navFs: "15px", px: "16px", sy: "64px", headerH: "68px", headerGap: "10px", navDisplay: "none", phoneDisplay: "none", menuDisplay: "flex", btnH: "44px", btnPad: "14px", btnFs: "14px", h2: "25px", specCols: 2, gridGap: "12px", docCols: 1, cardGap: "16px", consultCols: 1, cardPad: "20px", stepCols: 1, stepGap: "0", twoCols: "minmax(0,1fr)", aboutGap: "28px", svcCols: 1, aboutRow: "140px", revCols: 1, contactCols: "minmax(0,1fr)", footCols: "auto minmax(0,1fr)", footGap: "28px", footTitle: "19px", footBtnPad: "12px", footGrpW: "100%", ctaFlex: "1 1 100%", ctaBtnPad: "14px", secY: "40px", secY2: "40px", endY: "80px", rowDisp: "flex", rowOv: "auto", rowSnap: "x mandatory", rowBleed: "-16px", rowPad: "0 16px", specFlex: "0 0 158px", docFlex: "0 0 min(318px, 85%)", revFlex: "0 0 min(277px, 78%)", specDocGap: "24px", allBtnM: "16px", footAboutCol: "1 / -1", fo1: 1, fo2: 3, fo3: 2, fo4: 4, logoM: "auto", endM: "0" }
     }[dev];
     const noteParts = [q && `«${q}»`, appliedType !== "all" && TYPE_TAG[appliedType].label].filter(Boolean);
     return {
@@ -631,7 +567,6 @@ class Component extends DCLogic {
         ? { heroArrows: "none", heroShade: "rgba(16,24,40,.55)", heroGap: "6px", heroPadS: "24px", heroPadE: "24px", heroTextW: "100%", heroTitleFs: "18px", heroTextFs: "13px", heroBtnM: "6px", heroBtnH: "38px", heroBtnPad: "14px", heroBtnFs: "14px" }
         : { heroArrows: "flex", heroShade: "linear-gradient(270deg, rgba(16,24,40,.72) 0%, rgba(16,24,40,.5) 45%, rgba(16,24,40,0) 85%)", heroGap: "10px", heroPadS: dev === "desktop" ? "96px" : "80px", heroPadE: "80px", heroTextW: dev === "desktop" ? "560px" : "440px", heroTitleFs: dev === "desktop" ? "30px" : "24px", heroTextFs: dev === "desktop" ? "17px" : "15px", heroBtnM: "8px", heroBtnH: "48px", heroBtnPad: "22px", heroBtnFs: "16px" }),
       magArrows: dev === "mobile" ? "none" : "block",
-      goDoctorsCta: () => this.goDoctors(),
       bannerPad: dev === "desktop" ? "56px 64px" : dev === "tablet" ? "44px 36px" : "32px 16px", bannerGap: dev === "desktop" ? "48px" : "28px",
       bannerDir: dev === "desktop" ? "row" : "column", bannerAlign: dev === "desktop" ? "start" : "center", bannerItems: dev === "desktop" ? "start" : "center",
       bannerLead: dev === "mobile" ? "16px" : "19px", bannerListM: dev === "mobile" ? "8px 0 0" : "12px 0 0", bannerListW: dev === "mobile" ? "100%" : "auto",
@@ -643,7 +578,7 @@ class Component extends DCLogic {
         { key: "phone", isPhone: true, title: "نوبت تلفنی" },
         { key: "online", isOnline: true, title: "نوبت آنلاین" }
       ].map(m => ({ isClinic: false, isPhone: false, isOnline: false, ...m })),
-      loggedIn: !!this.state.user, loggedOut: !this.state.user, userName: this.state.pname || "حساب کاربری",
+      loggedIn: !!this.state.user, loggedOut: !this.state.user, loginBtn: !this.state.user && dev !== "mobile", userName: this.state.pname || "حساب کاربری",
       heroPrev: () => { this.setState((st) => ({ slide: (st.slide + 2) % 3 })); this.startHero(); },
       heroNext: () => { this.setState((st) => ({ slide: (st.slide + 1) % 3 })); this.startHero(); },
       specTiles: SPECS.map(x => { const n = DOCTORS.filter(d => d.spec === x.key).length, on = this.state.tab === x.key; return { label: x.label, img: "assets/specialties/" + x.key + ".svg", countText: n.toLocaleString("fa-IR") + " پزشک", on: on ? "true" : "false", border: on ? "#3669EE" : "#ECEEF0", bg: on ? "#FFFFFF" : "#F8F9FA", pick: () => { this.setState((st) => ({ tab: st.tab === x.key ? "all" : x.key })); const el = document.getElementById("doctors"); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" }); } }; }),
@@ -698,7 +633,6 @@ class Component extends DCLogic {
         ["ورود با شماره موبایل", "با کد تأیید وارد شوید یا ثبت‌نام کنید."],
         ["تأیید نوبت", "نوبت را تأیید کنید و در صورت نیاز هزینه یا بیعانه را بپردازید."]
       ].map(([title, desc], i, a) => ({ n: fa(i + 1), title, desc, hasLine: i < a.length - 1, numBg: i === 0 ? "#3669EE" : "#FFFFFF", numColor: i === 0 ? "#FFFFFF" : "#3669EE", numBorder: i === 0 ? "#3669EE" : "#DBDBDB" })),
-      services: ["ویزیت تخصصی", "مشاوره آنلاین", "پیگیری درمان", "تفسیر آزمایش‌ها", "معاینات دوره‌ای", "پرونده الکترونیک"],
       reviews: [
         { name: "ز. احمدی", meta: "ویزیت حضوری · قلب و عروق", text: "نوبت را در چند دقیقه گرفتم و همان ساعت تعیین‌شده ویزیت شدم. توضیحات پزشک کامل و روشن بود." },
         { name: "ر. نوری", meta: "مشاوره آنلاین · پوست و مو", text: "برای پیگیری درمان نیازی به رفت‌وآمد نبود و تماس تصویری کاملاً بی‌دردسر انجام شد." },
@@ -706,16 +640,11 @@ class Component extends DCLogic {
       ].map(r => ({ ...r, initial: r.name[0], stars: [1, 2, 3, 4, 5], starsLabel: "امتیاز ۵ از ۵" })),
       articles: ARTICLES.map((a, i) => ({ ...a, slotId: "magazine-" + (i + 1), slotHint: "عکس مقاله: " + a.title })),
       magRef: this.magRef, magPrev: () => this.scrollMag(1), magNext: () => this.scrollMag(-1),
-      infoRows: [
-        { icon: "assets/icons/location.svg", label: "نشانی", values: ["تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم"] },
-        { icon: "assets/icons/clock.svg", label: "ساعات کاری", values: ["شنبه تا چهارشنبه: ۸ تا ۲۰", "پنجشنبه: ۸ تا ۱۴ · جمعه‌ها تعطیل"] },
-        { icon: "assets/icons/phone.svg", label: "تلفن پذیرش", values: ["۰۲۱-۶۶۷۷۸۸۹۹"] }
-      ].map(r => ({ ...r, bg: "#EBF0FE", fg: "#3669EE", mask: "url(\"" + r.icon + "\") center / 24px 24px no-repeat" })),
       socials: ["اینستاگرام", "تلگرام", "لینکدین", "آپارات"],
       footerCols: [
         { title: "تخصص‌ها", links: SPECS.map(s => ({ label: s.label, href: "#doctors" })) },
         { title: "نوبت‌دهی", links: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"], ["لغو نوبت", "#contact"], ["پیگیری نوبت", "#contact"]].map(([label, href]) => ({ label, href })) },
-        { title: "کلینیک", links: [["درباره ما", "#about"], ["مجله سلامت", "#magazine"], ["تماس با ما", "#contact"], ["ورود پزشکان", "#top"]].map(([label, href]) => ({ label, href })) }
+        { title: "کلینیک", links: [["درباره ما", "about.html"], ["مجله سلامت", "#magazine"], ["تماس با ما", "#contact"], ["ورود پزشکان", "#top"]].map(([label, href]) => ({ label, href })) }
       ],
       toastText: toast, toastO: toast ? 1 : 0, toastT: toast ? "translate(-50%,0)" : "translate(-50%,16px)"
     };
