@@ -224,31 +224,26 @@ a:hover{color:#2453D4}
 </section>
 
 <section id="booking" aria-labelledby="booking-h" data-screen-label="Booking methods banner" style="max-width:1440px; margin:0 auto; padding:{{ L.sy }} {{ L.px }} 0; scroll-margin-top:{{ L.headerH }}">
-  <div style="position:relative; overflow:hidden; border-radius:32px; background:#3669EE; border:0; padding:{{ bannerPad }}">
+  <div style="position:relative; overflow:hidden; border-radius:32px; background:#3669EE; padding:{{ bannerPad }}">
     <span aria-hidden="true" style="position:absolute; top:-120px; left:-90px; width:320px; height:320px; border-radius:999px; background:rgba(255,255,255,.08)"></span>
     <span aria-hidden="true" style="position:absolute; bottom:-140px; right:-100px; width:340px; height:340px; border-radius:999px; background:rgba(255,255,255,.06)"></span>
-    <div style="position:relative; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; margin-bottom:{{ bannerGap }}">
-      <span style="display:flex; align-items:center; gap:8px; height:34px; padding:0 14px; border-radius:999px; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28); font-size:14px; font-weight:600; color:#FFFFFF">
-        <span aria-hidden="true" style="width:8px; height:8px; border-radius:999px; background:#7CE3A0"></span>سه روش برای گرفتن نوبت
-      </span>
-      <h2 id="booking-h" style="margin:0; font-size:{{ L.h2 }}; line-height:1.5; font-weight:800; color:#FFFFFF; text-wrap:balance">به روش دلخواهت، نوبت پزشکت رو رزرو کن!</h2>
-      <p style="margin:0; font-size:{{ bannerLead }}; line-height:1.8; color:#E3EAFD; text-wrap:pretty">حضوری، تلفنی یا آنلاین؛ روشی رو انتخاب کن که برات راحت‌تره.</p>
-    </div>
-    <div style="position:relative; display:grid; grid-template-columns:repeat({{ bannerCols }}, minmax(0,1fr)); gap:{{ bannerCardGap }}">
-      <sc-for list="{{ methods }}" as="m" hint-placeholder-count="3">
-        <article style="display:flex; flex-direction:column; gap:16px; padding:{{ bannerCardPad }}; border-radius:24px; background:#FFFFFF; border:1px solid #FFFFFF; box-shadow:0 12px 32px rgba(16,24,40,.16); transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(16,24,40,.09); border-color:{{ m.soft }}">
-          <span aria-hidden="true" style="width:56px; height:56px; border-radius:18px; background:{{ m.tint }}; color:{{ m.accent }}; display:flex; align-items:center; justify-content:center">
-            <sc-if value="{{ m.isClinic }}" hint-placeholder-val="{{ false }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"></path><path d="M12 9v6M9 12h6"></path></svg></sc-if>
-            <sc-if value="{{ m.isPhone }}" hint-placeholder-val="{{ false }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg></sc-if>
-            <sc-if value="{{ m.isOnline }}" hint-placeholder-val="{{ false }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="3"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></sc-if>
-          </span>
-          <div style="flex:1; display:flex; flex-direction:column; gap:8px">
-            <h3 style="margin:0; font-size:22px; font-weight:800">{{ m.title }}</h3>
-            <p style="margin:0; font-size:16px; line-height:1.9; color:#4A4A4A; text-wrap:pretty">{{ m.desc }}</p>
-          </div>
-          <a href="{{ m.href }}" onClick="{{ m.go }}" style="height:52px; padding:0 20px; border-radius:16px; background:{{ m.accent }}; color:#FFFFFF; font-size:16px; font-weight:700; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:10px; transition:filter .2s, transform .15s, gap .25s" style-hover="color:#FFFFFF; filter:brightness(.92); gap:16px" style-active="transform:scale(.97)">{{ m.cta }}<span aria-hidden="true">←</span></a>
-        </article>
-      </sc-for>
+    <div style="position:relative; display:flex; flex-direction:{{ bannerDir }}; align-items:center; justify-content:space-between; gap:{{ bannerGap }}; text-align:{{ bannerAlign }}">
+      <div style="display:flex; flex-direction:column; align-items:{{ bannerItems }}; gap:14px; min-width:0">
+        <h2 id="booking-h" style="margin:0; font-size:{{ L.h2 }}; line-height:1.5; font-weight:800; color:#FFFFFF; text-wrap:balance">به روش دلخواهت، نوبت پزشکت رو رزرو کن!</h2>
+        <p style="margin:0; font-size:{{ bannerLead }}; line-height:1.8; color:#E3EAFD; text-wrap:pretty">نوبت حضوری، تلفنی یا آنلاین؛ روشی رو انتخاب کن که برات راحت‌تره.</p>
+        <ul aria-label="روش‌های دریافت نوبت" style="list-style:none; margin:{{ bannerListM }}; padding:0; display:grid; grid-template-columns:repeat(3, {{ bannerChipW }}); justify-content:{{ bannerItems }}; gap:{{ bannerChipGap }}; width:{{ bannerListW }}">
+          <sc-for list="{{ methods }}" as="m" hint-placeholder-count="3">
+            <li style="display:flex; flex-direction:{{ bannerChipDir }}; align-items:center; justify-content:center; gap:{{ bannerChipInner }}; padding:{{ bannerChipPad }}; border-radius:16px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.26); color:#FFFFFF; font-size:{{ bannerChipFs }}; font-weight:700; white-space:nowrap">
+              <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:12px; background:#FFFFFF; color:#3669EE; display:flex; align-items:center; justify-content:center">
+                <sc-if value="{{ m.isClinic }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"></path><path d="M12 9v6M9 12h6"></path></svg></sc-if>
+                <sc-if value="{{ m.isPhone }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path></svg></sc-if>
+                <sc-if value="{{ m.isOnline }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="3"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></sc-if>
+              </span>{{ m.title }}
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+      <a href="#doctors" onClick="{{ bannerBook }}" style="flex:none; height:58px; width:{{ bannerCtaW }}; padding:0 34px; border-radius:16px; background:#FFFFFF; color:#3669EE; font-size:17px; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 12px 28px rgba(16,24,40,.18); transition:background-color .2s, transform .15s, gap .25s" style-hover="background:#EBF0FE; color:#2453D4; gap:16px" style-active="transform:scale(.97)">رزرو نوبت<span aria-hidden="true">←</span></a>
     </div>
   </div>
 </section>
@@ -603,13 +598,17 @@ class Component extends DCLogic {
         : { stepDir: "column", stepNumDir: "row", stepInner: dev === "desktop" ? "16px" : "12px", stepLineGap: "10px", stepNum: dev === "desktop" ? "52px" : "40px", stepNumFs: dev === "desktop" ? "20px" : "16px", stepLineW: "auto", stepLineH: "0", stepLineMin: "0", stepLineTop: "2px dashed #D9D9D9", stepLineRight: "0", stepPadB: "0", stepTitleFs: dev === "desktop" ? "18px" : "15px", stepDescFs: dev === "desktop" ? "15px" : "13px", stepHeadGap: dev === "desktop" ? "44px" : "28px" }),
       brandText: dev === "desktop" ? "flex" : "none",
       goDoctorsCta: () => this.goDoctors(),
-      bannerCols: dev === "mobile" ? 1 : 3, bannerPad: dev === "desktop" ? "56px" : dev === "tablet" ? "36px 28px" : "28px 16px", bannerGap: dev === "mobile" ? "28px" : "40px",
-      bannerLead: dev === "mobile" ? "16px" : "19px", bannerCardGap: dev === "desktop" ? "24px" : "14px", bannerCardPad: dev === "desktop" ? "28px" : "20px",
+      bannerPad: dev === "desktop" ? "56px 64px" : dev === "tablet" ? "44px 36px" : "32px 16px", bannerGap: dev === "desktop" ? "48px" : "28px",
+      bannerDir: dev === "desktop" ? "row" : "column", bannerAlign: dev === "desktop" ? "start" : "center", bannerItems: dev === "desktop" ? "start" : "center",
+      bannerLead: dev === "mobile" ? "16px" : "19px", bannerListM: dev === "mobile" ? "8px 0 0" : "12px 0 0", bannerListW: dev === "mobile" ? "100%" : "auto",
+      bannerChipW: dev === "mobile" ? "minmax(0,1fr)" : "auto", bannerChipGap: dev === "mobile" ? "8px" : "12px", bannerChipDir: dev === "mobile" ? "column" : "row",
+      bannerChipInner: dev === "mobile" ? "8px" : "10px", bannerChipPad: dev === "mobile" ? "14px 6px" : "8px 10px 8px 18px", bannerChipFs: dev === "mobile" ? "14px" : "16px",
+      bannerCtaW: dev === "mobile" ? "100%" : "auto", bannerBook: (e) => { e.preventDefault(); book(); },
       methods: [
-        { key: "clinic", isClinic: true, title: "نوبت حضوری", desc: "زمان مراجعه‌ات رو انتخاب کن و در کلینیک پزشک ویزیت شو.", cta: "رزرو نوبت حضوری", accent: "#3669EE", tint: "#EBF0FE", soft: "#C9D7FB", href: "#doctors" },
-        { key: "phone", isPhone: true, title: "نوبت تلفنی", desc: "بدون نیاز به مراجعه حضوری، از طریق تماس تلفنی با پزشک مشورت کن.", cta: "رزرو نوبت تلفنی", accent: "#0E8F86", tint: "#E3F5F3", soft: "#BFE6E1", href: "#doctors" },
-        { key: "online", isOnline: true, title: "نوبت آنلاین", desc: "از هر جایی، به‌صورت تصویری یا آنلاین با پزشک مشورت کن.", cta: "رزرو نوبت آنلاین", accent: "#15B743", tint: "#E6F7EB", soft: "#C3EBCF", href: "#doctors" }
-      ].map(m => ({ isClinic: false, isPhone: false, isOnline: false, ...m, go: (e) => { e.preventDefault(); this.setState({ type: m.key, appliedType: m.key, tab: "all" }); this.goDoctors(); } })),
+        { key: "clinic", isClinic: true, title: "نوبت حضوری" },
+        { key: "phone", isPhone: true, title: "نوبت تلفنی" },
+        { key: "online", isOnline: true, title: "نوبت آنلاین" }
+      ].map(m => ({ isClinic: false, isPhone: false, isOnline: false, ...m })),
       loggedIn: !!this.state.user, loggedOut: !this.state.user, userName: this.state.pname || "حساب کاربری",
       heroPrev: () => { this.setState((st) => ({ slide: (st.slide + 2) % 3 })); this.startHero(); },
       heroNext: () => { this.setState((st) => ({ slide: (st.slide + 1) % 3 })); this.startHero(); },
