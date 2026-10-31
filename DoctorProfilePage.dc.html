@@ -534,8 +534,9 @@ const HDR_SPECS = [["cardio", "قلب و عروق"], ["derm", "پوست و مو"
 const HDR_DOCS = [["sara", "دکتر سارا محمدی", "متخصص قلب و عروق"], ["amir", "دکتر امیر رضایی", "متخصص پوست، مو و زیبایی"], ["narges", "دکتر نرگس کریمی", "متخصص زنان، زایمان و نازایی"], ["hamid", "دکتر حمید احمدی", "متخصص ارتوپدی"], ["maryam", "دکتر مریم حسینی", "پزشک عمومی"], ["peyman", "دکتر پیمان راد", "متخصص مغز و اعصاب (نورولوژی)"]];
 // Hamburger menu (mobile): profile/appointments need login; FAQ has no page yet, so it is shown as "coming soon".
 const HDR_BURGER = (home, authed, openLogin, close) => [
-  ["پروفایل من", "iUser", "Patient%20Dashboard.dc.html#profile", true],
-  ["نوبت‌های من", "iCal", "Patient%20Dashboard.dc.html#appointments", true],
+  // Logged out: one «ورود و ثبت‌نام» item instead of profile/appointments (fateme, 2026-10-31).
+  ...(authed ? [["پروفایل من", "iUser", "Patient%20Dashboard.dc.html#profile", true], ["نوبت‌های من", "iCal", "Patient%20Dashboard.dc.html#appointments", true]]
+    : [["ورود و ثبت‌نام", "iUser", "#login", "login"]]),
   ["جستجوی پزشک", "iSearch", home + "#doctors"],
   ["درباره ما", "iInfo", "about.html"],
   ["تماس با ما", "iPhone", "contact.html"],
@@ -544,7 +545,7 @@ const HDR_BURGER = (home, authed, openLogin, close) => [
   const soon = !href;
   return { label, href: href || "#", soon, disabled: soon ? "true" : "false", color: soon ? "#94979C" : "#373A41", iconColor: soon ? "#94979C" : "#3669EE", cursor: soon ? "default" : "pointer",
     iUser: icon === "iUser", iCal: icon === "iCal", iSearch: icon === "iSearch", iInfo: icon === "iInfo", iPhone: icon === "iPhone", iFaq: icon === "iFaq",
-    go: (e) => { if (soon) { e.preventDefault(); return; } if (auth && !authed) { e.preventDefault(); openLogin(); return; } close(); } };
+    go: (e) => { if (soon) { e.preventDefault(); return; } if (auth === "login" || (auth && !authed)) { e.preventDefault(); openLogin(); return; } close(); } };
 });
 // Shadow once the page scrolls. The hamburger menu stays open until its button (×) or a link is tapped.
 function headerMount(c) {
