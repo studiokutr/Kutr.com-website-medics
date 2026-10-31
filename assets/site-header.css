@@ -45,7 +45,7 @@
 .sh-acct:hover{background:#F5F8FF;color:#3669EE}
 .sh-acct>span:first-child{flex:none;width:32px;height:32px;border-radius:999px;background:#EBF0FE;display:flex;align-items:center;justify-content:center}
 .sh [hidden]{display:none !important}
-.sh-menu{max-height:calc(100dvh - 68px);overflow-y:auto;overscroll-behavior:contain;padding:8px 16px 16px;display:flex;flex-direction:column;border-top:1px solid #ECEEF0;background:#FFFFFF}
+.sh-menu{position:relative;z-index:1;max-height:calc(100dvh - 68px);overflow-y:auto;overscroll-behavior:contain;padding:8px 16px 16px;display:flex;flex-direction:column;border-top:1px solid #ECEEF0;background:#FFFFFF}
 .sh-menu a{min-height:52px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #F0F2F4;font-size:16px;color:#373A41}
 .sh-menu a>span:first-child{flex:none;width:20px;height:20px;display:flex;align-items:center;justify-content:center;color:#3669EE}
 .sh-menu a>span:nth-child(2){flex:1}
@@ -67,4 +67,6 @@
   .sh-login,.sh-acct{height:44px}
   .sh-login{padding:0 14px;font-size:14px}
 }
-@media (min-width:700px){.sh-menu{display:none !important}}
+.sh-dim{position:fixed;top:68px;left:0;right:0;bottom:0;background:rgba(0,0,0,.45)}
+.sh-dim[hidden]{display:none}
+@media (min-width:700px){.sh-menu,.sh-dim{display:none !important}}
