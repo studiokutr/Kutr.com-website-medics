@@ -32,5 +32,5 @@ node tools/seo.mjs
 - Structured data only repeats facts that the page shows. No ratings or reviews markup
   (Google does not show self-published clinic reviews, and the numbers must be real).
 - `Booking Flow` and `Patient Dashboard` are private steps and carry `noindex`; they are not in the sitemap.
-- Stand-alone pages listed in `STATIC_PAGES` (the discount page, magazine articles) keep their own `<head>`. They join the sitemap automatically once their `noindex` tag is removed; re-run the script then.
+- Stand-alone pages listed in `STATIC_PAGES` (about, contact, doctors list, magazine, discount page, articles) keep their own `<head>`. They join the sitemap automatically once their `noindex` tag is removed; re-run the script then.
 - `index.html` and `Booking platform.dc.html` are the same page; both declare the site root as canonical.

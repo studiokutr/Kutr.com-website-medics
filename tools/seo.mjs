@@ -45,7 +45,7 @@ const SPECIALTY = {
 };
 
 // Pages that keep their own hand-written <head> (title, canonical, structured data).
-const STATIC_PAGES = ["about.html", "contact.html", "online-booking-discount.html", "magazine/neurotherapy-benefits.html"];
+const STATIC_PAGES = ["about.html", "contact.html", "doctors.html", "magazine/index.html", "online-booking-discount.html", "magazine/neurotherapy-benefits.html"];
 
 const HOME_TITLE = "کلینیک تخصصی نیکان — نوبت‌دهی اینترنتی";
 const HOME_DESC = "نوبت‌دهی اینترنتی کلینیک تخصصی نیکان در تهران، ونک: رزرو نوبت حضوری، تلفنی و مشاوره آنلاین با پزشکان قلب و عروق، پوست و مو، زنان و زایمان، ارتوپدی، مغز و اعصاب و پزشک عمومی.";
