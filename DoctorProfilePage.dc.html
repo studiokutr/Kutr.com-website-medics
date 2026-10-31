@@ -69,7 +69,7 @@ a:hover{color:#2453D4}
     </nav>
     <div style="margin-right:auto; display:flex; align-items:center; gap:12px; flex:none">
       <sc-if value="{{ hdLoginBtn }}" hint-placeholder-val="{{ true }}">
-      <button type="button" onClick="{{ hdLogin }}" style="height:{{ hdL.btnH }}; padding:0 {{ hdL.btnPad }}; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:{{ hdL.btnFs }}; font-weight:700; cursor:pointer; white-space:nowrap; box-shadow:0 6px 16px rgba(54,105,238,.28); transition:background-color .2s, transform .15s, box-shadow .2s" style-hover="background:#2453D4; box-shadow:0 8px 22px rgba(54,105,238,.36)" style-active="transform:scale(.97)">ورود و ثبت‌نام</button>
+      <a href="{{ hdBookHref }}" onClick="{{ hdBook }}" style="height:{{ hdL.btnH }}; padding:0 {{ hdL.btnPad }}; border-radius:16px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; font-size:{{ hdL.btnFs }}; font-weight:700; white-space:nowrap; box-shadow:0 6px 16px rgba(54,105,238,.28); transition:background-color .2s, transform .15s, box-shadow .2s" style-hover="background:#2453D4; color:#FFFFFF; box-shadow:0 8px 22px rgba(54,105,238,.36)" style-active="transform:scale(.97)">دریافت نوبت</a>
       </sc-if>
       <sc-if value="{{ hdLoggedIn }}" hint-placeholder-val="{{ false }}">
         <a href="Patient%20Dashboard.dc.html#appointments" aria-label="حساب کاربری" style="height:{{ hdL.btnH }}; padding:0 8px 0 14px; border-radius:14px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; display:flex; align-items:center; gap:10px; font-size:15px; font-weight:600; white-space:nowrap; transition:background-color .2s" style-hover="background:#F5F8FF; color:#3669EE">
@@ -541,7 +541,9 @@ function headerVals(c, dev, o) {
     hdDocs: HDR_DOCS.map(([key, name, specialty]) => ({ name, specialty, href: "DoctorProfilePage.dc.html?doctor=" + key })),
     hdAllHref: home + "#doctors", hdAll: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec("all"); },
     hdNav: [["نوبت حضوری", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href: home + href })),
-    hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری", hdLogin: openLogin
+    hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری",
+    // «دریافت نوبت» starts booking at the homepage search box.
+    hdBookHref: home + "#search", hdBook: () => c.setState({ hdMenu: false, hdDd: false })
   };
 }
 const SECS = [["about", "معرفی", "sec-about"], ["services", "خدمات", "sec-services"], ["contact", "اطلاعات مراجعه", "sec-contact"], ["reviews", "نظرات", "sec-reviews"], ["faq", "سوالات متداول", "sec-faq"]];
