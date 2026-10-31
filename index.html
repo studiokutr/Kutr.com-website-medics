@@ -42,8 +42,8 @@ a:hover{color:#2453D4}
 
 <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.97); border-bottom:1px solid {{ hdUp }}; box-shadow:{{ hdShadow }}; transition:box-shadow .3s, border-color .3s">
   <div style="max-width:1440px; margin:0 auto; padding:0 {{ hdL.px }}; height:{{ hdL.headerH }}; display:flex; align-items:center; gap:{{ hdL.headerGap }}">
-    <button type="button" onClick="{{ hdToggle }}" aria-expanded="{{ hdMenuExpanded }}" aria-label="منو" style="display:{{ hdL.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+    <button type="button" onClick="{{ hdToggle }}" aria-expanded="{{ hdMenuExpanded }}" aria-label="{{ hdMenuLabel }}" style="display:{{ hdL.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
+        <sc-if value="{{ hdMenuShut }}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></sc-if><sc-if value="{{ hdMenuOpen }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></sc-if>
       </button>
     <a href="{{ hdHome }}" aria-label="کلینیک تخصصی نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222; flex:none">
       <span aria-hidden="true" style="width:44px; height:44px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
@@ -95,7 +95,7 @@ a:hover{color:#2453D4}
     </div>
   </div>
   <sc-if value="{{ hdMenuOpen }}" hint-placeholder-val="{{ false }}">
-    <nav aria-label="منوی اصلی" style="padding:8px {{ hdL.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
+    <nav aria-label="منوی اصلی" style="max-height:calc(100dvh - {{ hdL.headerH }}); overflow-y:auto; overscroll-behavior:contain; padding:8px {{ hdL.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
       <sc-for list="{{ hdBurger }}" as="b" hint-placeholder-count="6">
         <a href="{{ b.href }}" onClick="{{ b.go }}" aria-disabled="{{ b.disabled }}" style="min-height:52px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ b.color }}; cursor:{{ b.cursor }}">
           <span aria-hidden="true" style="flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:{{ b.iconColor }}">
@@ -121,10 +121,10 @@ a:hover{color:#2453D4}
     <sc-for list="{{ heroSlides }}" as="h" hint-placeholder-count="3">
       <div aria-hidden="{{ h.hidden }}" style="position:absolute; inset:0; opacity:{{ h.opacity }}; pointer-events:{{ h.pe }}; transition:opacity .8s ease">
         <image-slot id="{{ h.id }}" shape="rect" fit="cover" placeholder="{{ h.hint }}"></image-slot>
-        <div style="position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:{{ heroGap }}; padding:0 {{ heroPadS }} 0 {{ heroPadE }}; background:{{ heroShade }}; color:#FFFFFF; pointer-events:none">
+        <div style="position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:{{ heroGap }}; padding:0 {{ heroPadS }} calc({{ heroBtnH }} + {{ heroBtnB }} + 8px) {{ heroPadE }}; background:{{ heroShade }}; color:#FFFFFF; pointer-events:none">
           <h2 style="margin:0; max-width:{{ heroTextW }}; font-size:{{ heroTitleFs }}; line-height:1.5; font-weight:800; text-wrap:balance">{{ h.title }}</h2>
           <sc-if value="{{ h.hasText }}" hint-placeholder-val="{{ true }}"><p style="margin:0; max-width:{{ heroTextW }}; font-size:{{ heroTextFs }}; line-height:1.8; color:#E3EAFD; text-wrap:pretty">{{ h.text }}</p></sc-if>
-          <a href="{{ h.href }}" tabindex="{{ h.tab }}" style="pointer-events:auto; align-self:flex-end; margin-top:{{ heroBtnM }}; height:{{ heroBtnH }}; padding:0 {{ heroBtnPad }}; border-radius:14px; background:#FFFFFF; color:#3669EE; font-size:{{ heroBtnFs }}; font-weight:800; display:flex; align-items:center; gap:8px; white-space:nowrap; box-shadow:0 8px 20px rgba(16,24,40,.18); transition:background-color .2s, gap .25s" style-hover="background:#EBF0FE; color:#2453D4; gap:12px">{{ h.cta }}<span aria-hidden="true">←</span></a>
+          <a href="{{ h.href }}" tabindex="{{ h.tab }}" style="pointer-events:auto; position:absolute; left:{{ heroPadE }}; bottom:{{ heroBtnB }}; height:{{ heroBtnH }}; padding:0 {{ heroBtnPad }}; border-radius:14px; background:#FFFFFF; color:#3669EE; font-size:{{ heroBtnFs }}; font-weight:800; display:flex; align-items:center; gap:8px; white-space:nowrap; box-shadow:0 8px 20px rgba(16,24,40,.18); transition:background-color .2s, gap .25s" style-hover="background:#EBF0FE; color:#2453D4; gap:12px">{{ h.cta }}<span aria-hidden="true">←</span></a>
         </div>
       </div>
     </sc-for>
@@ -489,11 +489,10 @@ const HDR_BURGER = (home, authed, openLogin, close) => [
     iUser: icon === "iUser", iCal: icon === "iCal", iSearch: icon === "iSearch", iInfo: icon === "iInfo", iPhone: icon === "iPhone", iFaq: icon === "iFaq",
     go: (e) => { if (soon) { e.preventDefault(); return; } if (auth && !authed) { e.preventDefault(); openLogin(); return; } close(); } };
 });
-// Shadow once the page scrolls; an open hamburger menu closes as soon as the page scrolls down.
+// Shadow once the page scrolls. The hamburger menu stays open until its button (×) or a link is tapped.
 function headerMount(c) {
   c.hdScroll = () => {
     const y = window.scrollY, up = y > 8;
-    if (c.state.hdMenu && y > (c.hdMenuY || 0) + 8) c.setState({ hdMenu: false });
     if (up !== !!c.state.hdUp) c.setState({ hdUp: up });
   };
   window.addEventListener("scroll", c.hdScroll, { passive: true });
@@ -506,8 +505,8 @@ function headerVals(c, dev, o) {
   return {
     hdL: HDR_L[dev], hdHome: home || "#top",
     hdUp: c.state.hdUp ? "#ECEEF0" : "transparent", hdShadow: c.state.hdUp ? "0 6px 24px rgba(34,34,34,.05)" : "none",
-    hdMenuOpen: menu && dev === "mobile", hdMenuExpanded: menu ? "true" : "false",
-    hdToggle: () => { c.hdMenuY = window.scrollY; c.setState((s) => ({ hdMenu: !s.hdMenu })); },
+    hdMenuOpen: menu && dev === "mobile", hdMenuShut: !(menu && dev === "mobile"), hdMenuExpanded: menu ? "true" : "false", hdMenuLabel: menu ? "بستن منو" : "منو",
+    hdToggle: () => c.setState((s) => ({ hdMenu: !s.hdMenu })),
     hdBurger: HDR_BURGER(home, o.authed, openLogin, close),
     hdDdShow: dd, hdDdExpanded: dd ? "true" : "false", hdDdRot: dd ? "rotate(180deg)" : "none",
     hdDdColor: dd ? "#3669EE" : "#373A41", hdDdLine: dd ? "#3669EE" : "transparent",
@@ -611,8 +610,8 @@ class Component extends DCLogic {
         ? { stepDir: "row", stepNumDir: "column", stepInner: "14px", stepLineGap: "6px", stepNum: "40px", stepNumFs: "16px", stepLineW: "0", stepLineH: "auto", stepLineMin: "20px", stepLineTop: "0", stepLineRight: "2px dashed #D9D9D9", stepPadB: "14px", stepTitleFs: "16px", stepDescFs: "14px", stepHeadGap: "24px", stepBtnM: "16px" }
         : { stepDir: "column", stepNumDir: "row", stepInner: dev === "desktop" ? "16px" : "12px", stepLineGap: "10px", stepNum: dev === "desktop" ? "52px" : "40px", stepNumFs: dev === "desktop" ? "20px" : "16px", stepLineW: "auto", stepLineH: "0", stepLineMin: "0", stepLineTop: "2px dashed #D9D9D9", stepLineRight: "0", stepPadB: "0", stepTitleFs: dev === "desktop" ? "18px" : "15px", stepDescFs: dev === "desktop" ? "15px" : "13px", stepHeadGap: dev === "desktop" ? "44px" : "28px", stepBtnM: "40px" }),
       ...(dev === "mobile"
-        ? { heroArrows: "none", heroShade: "rgba(16,24,40,.55)", heroGap: "6px", heroPadS: "24px", heroPadE: "24px", heroTextW: "100%", heroTitleFs: "18px", heroTextFs: "13px", heroBtnM: "6px", heroBtnH: "38px", heroBtnPad: "14px", heroBtnFs: "14px" }
-        : { heroArrows: "flex", heroShade: "linear-gradient(270deg, rgba(16,24,40,.72) 0%, rgba(16,24,40,.5) 45%, rgba(16,24,40,0) 85%)", heroGap: "10px", heroPadS: dev === "desktop" ? "96px" : "80px", heroPadE: "80px", heroTextW: dev === "desktop" ? "560px" : "440px", heroTitleFs: dev === "desktop" ? "30px" : "24px", heroTextFs: dev === "desktop" ? "17px" : "15px", heroBtnM: "8px", heroBtnH: "48px", heroBtnPad: "22px", heroBtnFs: "16px" }),
+        ? { heroArrows: "none", heroShade: "rgba(16,24,40,.55)", heroGap: "6px", heroPadS: "24px", heroPadE: "24px", heroTextW: "100%", heroTitleFs: "18px", heroTextFs: "13px", heroBtnM: "6px", heroBtnB: "18px", heroBtnH: "38px", heroBtnPad: "14px", heroBtnFs: "14px" }
+        : { heroArrows: "flex", heroShade: "linear-gradient(270deg, rgba(16,24,40,.72) 0%, rgba(16,24,40,.5) 45%, rgba(16,24,40,0) 85%)", heroGap: "10px", heroPadS: dev === "desktop" ? "96px" : "80px", heroPadE: "80px", heroTextW: dev === "desktop" ? "560px" : "440px", heroTitleFs: dev === "desktop" ? "30px" : "24px", heroTextFs: dev === "desktop" ? "17px" : "15px", heroBtnB: dev === "desktop" ? "36px" : "28px", heroBtnM: "8px", heroBtnH: "48px", heroBtnPad: "22px", heroBtnFs: "16px" }),
       magArrows: dev === "mobile" ? "none" : "block",
       bannerPad: dev === "desktop" ? "56px 64px" : dev === "tablet" ? "44px 36px" : "32px 16px", bannerGap: dev === "desktop" ? "48px" : "28px",
       bannerDir: dev === "desktop" ? "row" : "column", bannerAlign: dev === "desktop" ? "start" : "center", bannerItems: dev === "desktop" ? "start" : "center",

@@ -30,8 +30,8 @@ a:hover{color:#2453D4}
 
 <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.97); border-bottom:1px solid {{ hdUp }}; box-shadow:{{ hdShadow }}; transition:box-shadow .3s, border-color .3s">
   <div style="max-width:1440px; margin:0 auto; padding:0 {{ hdL.px }}; height:{{ hdL.headerH }}; display:flex; align-items:center; gap:{{ hdL.headerGap }}">
-    <button type="button" onClick="{{ hdToggle }}" aria-expanded="{{ hdMenuExpanded }}" aria-label="منو" style="display:{{ hdL.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+    <button type="button" onClick="{{ hdToggle }}" aria-expanded="{{ hdMenuExpanded }}" aria-label="{{ hdMenuLabel }}" style="display:{{ hdL.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
+        <sc-if value="{{ hdMenuShut }}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></sc-if><sc-if value="{{ hdMenuOpen }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></sc-if>
       </button>
     <a href="{{ hdHome }}" aria-label="کلینیک تخصصی نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222; flex:none">
       <span aria-hidden="true" style="width:44px; height:44px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
@@ -83,7 +83,7 @@ a:hover{color:#2453D4}
     </div>
   </div>
   <sc-if value="{{ hdMenuOpen }}" hint-placeholder-val="{{ false }}">
-    <nav aria-label="منوی اصلی" style="padding:8px {{ hdL.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
+    <nav aria-label="منوی اصلی" style="max-height:calc(100dvh - {{ hdL.headerH }}); overflow-y:auto; overscroll-behavior:contain; padding:8px {{ hdL.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
       <sc-for list="{{ hdBurger }}" as="b" hint-placeholder-count="6">
         <a href="{{ b.href }}" onClick="{{ b.go }}" aria-disabled="{{ b.disabled }}" style="min-height:52px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ b.color }}; cursor:{{ b.cursor }}">
           <span aria-hidden="true" style="flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:{{ b.iconColor }}">
@@ -104,7 +104,12 @@ a:hover{color:#2453D4}
 
 <main style="max-width:{{ maxW }}; margin:0 auto; padding:{{ L.py }} {{ L.px }} 96px; display:flex; flex-direction:column; gap:20px">
 
-  <a href="{{ profileHref }}" style="align-self:flex-start; min-height:44px; display:flex; align-items:center; gap:6px; font-size:15px; color:#4A4A4A">بازگشت به پروفایل پزشک <span aria-hidden="true">←</span></a>
+  <nav aria-label="مسیر صفحه" style="display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-size:14px; color:#676767">
+    <a href="index.html" style="color:#676767; text-decoration:none; min-height:32px; display:inline-flex; align-items:center">صفحه اصلی</a><span aria-hidden="true" style="color:#94979C">‹</span>
+    <a href="doctors.html" style="color:#676767; text-decoration:none; min-height:32px; display:inline-flex; align-items:center">پزشکان</a><span aria-hidden="true" style="color:#94979C">‹</span>
+    <a href="{{ profileHref }}" style="color:#676767; text-decoration:none; min-height:32px; display:inline-flex; align-items:center">{{ D.name }}</a><span aria-hidden="true" style="color:#94979C">‹</span>
+    <span aria-current="page" style="color:#222222">دریافت نوبت</span>
+  </nav>
 
   <sc-if value="{{ showStepper }}" hint-placeholder-val="{{ true }}">
     <ol aria-label="مراحل دریافت نوبت" style="list-style:none; margin:0 0 8px; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr))">
@@ -373,11 +378,10 @@ const HDR_BURGER = (home, authed, openLogin, close) => [
     iUser: icon === "iUser", iCal: icon === "iCal", iSearch: icon === "iSearch", iInfo: icon === "iInfo", iPhone: icon === "iPhone", iFaq: icon === "iFaq",
     go: (e) => { if (soon) { e.preventDefault(); return; } if (auth && !authed) { e.preventDefault(); openLogin(); return; } close(); } };
 });
-// Shadow once the page scrolls; an open hamburger menu closes as soon as the page scrolls down.
+// Shadow once the page scrolls. The hamburger menu stays open until its button (×) or a link is tapped.
 function headerMount(c) {
   c.hdScroll = () => {
     const y = window.scrollY, up = y > 8;
-    if (c.state.hdMenu && y > (c.hdMenuY || 0) + 8) c.setState({ hdMenu: false });
     if (up !== !!c.state.hdUp) c.setState({ hdUp: up });
   };
   window.addEventListener("scroll", c.hdScroll, { passive: true });
@@ -390,8 +394,8 @@ function headerVals(c, dev, o) {
   return {
     hdL: HDR_L[dev], hdHome: home || "#top",
     hdUp: c.state.hdUp ? "#ECEEF0" : "transparent", hdShadow: c.state.hdUp ? "0 6px 24px rgba(34,34,34,.05)" : "none",
-    hdMenuOpen: menu && dev === "mobile", hdMenuExpanded: menu ? "true" : "false",
-    hdToggle: () => { c.hdMenuY = window.scrollY; c.setState((s) => ({ hdMenu: !s.hdMenu })); },
+    hdMenuOpen: menu && dev === "mobile", hdMenuShut: !(menu && dev === "mobile"), hdMenuExpanded: menu ? "true" : "false", hdMenuLabel: menu ? "بستن منو" : "منو",
+    hdToggle: () => c.setState((s) => ({ hdMenu: !s.hdMenu })),
     hdBurger: HDR_BURGER(home, o.authed, openLogin, close),
     hdDdShow: dd, hdDdExpanded: dd ? "true" : "false", hdDdRot: dd ? "rotate(180deg)" : "none",
     hdDdColor: dd ? "#3669EE" : "#373A41", hdDdLine: dd ? "#3669EE" : "transparent",
