@@ -370,9 +370,8 @@ const HDR_SPECS = [["cardio", "قلب و عروق"], ["derm", "پوست و مو"
 const HDR_DOCS = [["sara", "دکتر سارا محمدی", "متخصص قلب و عروق"], ["amir", "دکتر امیر رضایی", "متخصص پوست، مو و زیبایی"], ["narges", "دکتر نرگس کریمی", "متخصص زنان، زایمان و نازایی"], ["hamid", "دکتر حمید احمدی", "متخصص ارتوپدی"], ["maryam", "دکتر مریم حسینی", "پزشک عمومی"], ["peyman", "دکتر پیمان راد", "متخصص مغز و اعصاب (نورولوژی)"]];
 // Hamburger menu (mobile): profile/appointments need login; FAQ has no page yet, so it is shown as "coming soon".
 const HDR_BURGER = (home, authed, openLogin, close) => [
-  // Logged out: one «ورود و ثبت‌نام» item instead of profile/appointments (fateme, 2026-10-31).
-  ...(authed ? [["پروفایل من", "iUser", "Patient%20Dashboard.dc.html#profile", true], ["نوبت‌های من", "iCal", "Patient%20Dashboard.dc.html#appointments", true]]
-    : [["ورود و ثبت‌نام", "iUser", "#login", "login"]]),
+  // Logged out: «ورود و ثبت‌نام». Profile/appointments removed from the menu (fateme, 2026-10-31).
+  ...(authed ? [] : [["ورود و ثبت‌نام", "iUser", "#login", "login"]]),
   ["جستجوی پزشک", "iSearch", home + "#doctors"],
   ["درباره ما", "iInfo", "about.html"],
   ["تماس با ما", "iPhone", "contact.html"],
