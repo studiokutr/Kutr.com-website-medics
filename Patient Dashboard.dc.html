@@ -457,7 +457,7 @@ a:hover{color:#2453D4}
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
         <a href="magazine/index.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
-        <a href="index.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
+        <a href="faq.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
       <div style="order:{{ L.fo4 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تماس با ما</span>
@@ -472,8 +472,8 @@ a:hover{color:#2453D4}
     <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 24px; padding-top:24px; border-top:1px solid #373A41">
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; font-size:13px; color:#969696">
         <span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span>
-        <a href="index.html#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
-        <a href="index.html#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
+        <a href="privacy.html" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
+        <a href="terms.html" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
       </div>
       <div style="flex:1 1 100%; display:flex; flex-wrap:wrap; justify-content:center; gap:8px">
         <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
@@ -547,7 +547,7 @@ const HDR_BURGER = (home, authed, openLogin, close) => [
   ["جستجوی پزشک", "iSearch", home + "#doctors"],
   ["درباره ما", "iInfo", "about.html"],
   ["تماس با ما", "iPhone", "contact.html"],
-  ["سؤالات متداول", "iFaq", ""]
+  ["سؤالات متداول", "iFaq", "faq.html"]
 ].map(([label, icon, href, auth]) => {
   const soon = !href;
   return { label, href: href || "#", soon, disabled: soon ? "true" : "false", color: soon ? "#94979C" : "#373A41", iconColor: soon ? "#94979C" : "#3669EE", cursor: soon ? "default" : "pointer",
@@ -666,11 +666,11 @@ class Component extends DCLogic {
       menuToggle: () => this.setState((st) => ({ menu: !st.menu })),
       menuItems: ITEMS.map((it) => ({ ...item(it), color: it[0] === "logout" ? "#D92D20" : "#222222" })),
       sideItems: ITEMS.map((it) => { const on = s.tab === it[0], out = it[0] === "logout"; return { ...item(it), current: on ? "page" : "false", bg: on && dev !== "tablet" ? "#F2F4F7" : "transparent", color: out ? "#D92D20" : on ? "#222222" : "#373A41", iconColor: out ? "#D92D20" : "#3669EE", weight: on ? 700 : 500, underline: dev === "tablet" ? "2px solid " + (on ? "#3669EE" : "transparent") : "0" }; }),
-      // Privacy and terms pages don't exist yet, so they are shown as "coming soon"; log out only appears when signed in.
-      acctItems: [["حریم خصوصی", "iShield"], ["قوانین و شرایط", "iDoc"], ...(s.authed ? [["خروج از حساب", "iOut"]] : [])].map(([label, icon]) => {
+      // Privacy and terms open their pages; log out only appears when signed in.
+      acctItems: [["حریم خصوصی", "iShield", "privacy.html"], ["قوانین و شرایط", "iDoc", "terms.html"], ...(s.authed ? [["خروج از حساب", "iOut"]] : [])].map(([label, icon, href]) => {
         const out = icon === "iOut";
-        return { label, iShield: icon === "iShield", iDoc: icon === "iDoc", iOut: out, soon: !out, disabled: out ? "false" : "true", cursor: out ? "pointer" : "default",
-          color: out ? "#D92D20" : "#94979C", iconColor: out ? "#D92D20" : "#94979C", go: () => { if (out) this.logout(); } };
+        return { label, iShield: icon === "iShield", iDoc: icon === "iDoc", iOut: out, soon: false, disabled: "false", cursor: "pointer",
+          color: out ? "#D92D20" : "#373A41", iconColor: out ? "#D92D20" : "#3669EE", go: () => { if (out) this.logout(); else location.href = href; } };
       }),
       isAppts: s.tab === "appointments", isProfile: s.tab === "profile", isChat: s.tab === "chat",
       ...this.chatVals(s, dev),

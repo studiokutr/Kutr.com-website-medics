@@ -337,7 +337,7 @@ a:hover{color:#2453D4}
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
         <a href="magazine/index.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
-        <a href="index.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
+        <a href="faq.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
       <div style="order:{{ L.fo4 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تماس با ما</span>
@@ -352,8 +352,8 @@ a:hover{color:#2453D4}
     <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 24px; padding-top:24px; border-top:1px solid #373A41">
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; font-size:13px; color:#969696">
         <span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span>
-        <a href="index.html#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
-        <a href="index.html#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
+        <a href="privacy.html" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
+        <a href="terms.html" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
       </div>
       <div style="flex:1 1 100%; display:flex; flex-wrap:wrap; justify-content:center; gap:8px">
         <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
@@ -502,7 +502,7 @@ const HDR_BURGER = (home, authed, openLogin, close) => [
   ["جستجوی پزشک", "iSearch", home + "#doctors"],
   ["درباره ما", "iInfo", "about.html"],
   ["تماس با ما", "iPhone", "contact.html"],
-  ["سؤالات متداول", "iFaq", ""]
+  ["سؤالات متداول", "iFaq", "faq.html"]
 ].map(([label, icon, href, auth]) => {
   const soon = !href;
   return { label, href: href || "#", soon, disabled: soon ? "true" : "false", color: soon ? "#94979C" : "#373A41", iconColor: soon ? "#94979C" : "#3669EE", cursor: soon ? "default" : "pointer",
