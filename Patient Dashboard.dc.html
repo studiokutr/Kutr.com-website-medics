@@ -332,8 +332,8 @@ a:hover{color:#2453D4}
       <section aria-labelledby="chat-h" data-screen-label="Dashboard · Chat" style="background:#FFFFFF; border:1px solid #ECEEF0; border-radius:20px; padding:{{ L.formPad }}; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center">
         <span aria-hidden="true" style="width:64px; height:64px; border-radius:999px; background:#EBF0FE; color:#3669EE; display:flex; align-items:center; justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"></path></svg></span>
         <h1 id="chat-h" style="margin:0; font-size:18px; font-weight:800">صفحه گفتگو</h1>
-        <p style="margin:0; max-width:460px; font-size:15px; line-height:1.9; color:#4A4A4A">گفتگوی شما با پزشک پس از رزرو مشاوره آنلاین این‌جا نمایش داده می‌شود. در حال حاضر گفتگوی فعالی ندارید.</p>
-        <a href="Booking%20platform.dc.html#doctors" style="min-height:48px; padding:0 22px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; font-weight:700" style-hover="color:#FFFFFF; background:#2453D4">رزرو مشاوره آنلاین</a>
+        <p style="margin:0; max-width:460px; font-size:15px; line-height:1.9; color:#4A4A4A">گفتگوی شما با پزشک پس از دریافت نوبت مشاوره آنلاین این‌جا نمایش داده می‌شود. در حال حاضر گفتگوی فعالی ندارید.</p>
+        <a href="Booking%20platform.dc.html#doctors" style="min-height:48px; padding:0 22px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; font-weight:700" style-hover="color:#FFFFFF; background:#2453D4">دریافت مشاوره آنلاین</a>
       </section>
     </sc-if>
 
@@ -345,7 +345,7 @@ a:hover{color:#2453D4}
     
     <div style="display:grid; grid-template-columns:{{ L.footCols }}; gap:{{ L.footGap }}; padding:0 0 48px">
       <div style="display:flex; flex-direction:column; gap:16px">
-        <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان رزرو نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
+        <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان دریافت نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
         <a href="Booking%20platform.dc.html#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
       </div>
@@ -410,7 +410,7 @@ const DOCS = {
 };
 const ADDRESS = "تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم";
 const TYPES = { clinic: "ویزیت حضوری", phone: "نوبت تلفنی", online: "مشاوره آنلاین" };
-const ST = { booked: ["رزرو شده", "#EBF0FE", "#2453D4"], done: ["انجام شده", "#F2F4F7", "#475467"], cancelled: ["لغو شده", "#FEF3F2", "#B42318"] };
+const ST = { booked: ["دریافت شده", "#EBF0FE", "#2453D4"], done: ["انجام شده", "#F2F4F7", "#475467"], cancelled: ["لغو شده", "#FEF3F2", "#B42318"] };
 const SAMPLE = [
   { id: "s1", doc: "peyman", type: "clinic", when: "۱۲ آبان ۱۴۰۵ | ۱۷:۳۰", status: "booked", code: "۲۳۱۷۸۰۳۸۰", paid: "۱۲۷٬۵۰۰ تومان", remain: "۵۵۰٬۰۰۰ تومان · در کلینیک", patient: "حساب شما", created: "۵ آبان ۱۴۰۵" },
   { id: "s4", doc: "hamid", type: "phone", when: "۲۰ مهر ۱۴۰۵ | ۱۸:۰۰", status: "done", code: "۲۳۱۶۱۰۴۵۷", paid: "۴۲۷٬۵۰۰ تومان", remain: "—", patient: "حساب شما", created: "۱۸ مهر ۱۴۰۵" },
