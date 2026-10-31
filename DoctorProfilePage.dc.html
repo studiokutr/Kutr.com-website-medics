@@ -317,27 +317,27 @@ a:hover{color:#2453D4}
       <div style="grid-column:{{ L.footAboutCol }}; display:flex; flex-direction:column; gap:16px">
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان دریافت نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
-        <a href="Booking%20platform.dc.html#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
+        <a href="contact.html" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
       </div>
       <nav aria-label="تخصص‌ها" style="order:{{ L.fo1 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تخصص‌ها</span>
         <sc-for list="{{ footerSpecs }}" as="f" hint-placeholder-count="5">
-          <a href="Booking%20platform.dc.html#doctors" onClick="{{ f.pick }}" style="font-size:14px; color:#BBBBBB; transition:color .2s" style-hover="color:#FFFFFF">{{ f.name }}</a>
+          <a href="index.html#doctors" onClick="{{ f.pick }}" style="font-size:14px; color:#BBBBBB; transition:color .2s" style-hover="color:#FFFFFF">{{ f.name }}</a>
         </sc-for>
       </nav>
       <nav aria-label="نوبت‌دهی" style="order:{{ L.fo2 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">نوبت‌دهی</span>
-        <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
-        <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
-        <a href="Booking%20platform.dc.html#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
-        <a href="Booking%20platform.dc.html#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
+        <a href="index.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
+        <a href="index.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
+        <a href="index.html#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
+        <a href="Patient%20Dashboard.dc.html#appointments" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
       </nav>
       <nav aria-label="کلینیک" style="order:{{ L.fo3 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">کلینیک</span>
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
-        <a href="Booking%20platform.dc.html#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
+        <a href="magazine/index.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
-        <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
+        <a href="index.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
       <div style="order:{{ L.fo4 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تماس با ما</span>
@@ -352,8 +352,8 @@ a:hover{color:#2453D4}
     <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 24px; padding-top:24px; border-top:1px solid #373A41">
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; font-size:13px; color:#969696">
         <span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span>
-        <a href="Booking%20platform.dc.html#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
-        <a href="Booking%20platform.dc.html#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
+        <a href="index.html#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
+        <a href="index.html#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
       </div>
       <div style="flex:1 1 100%; display:flex; flex-wrap:wrap; justify-content:center; gap:8px">
         <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
@@ -710,7 +710,7 @@ class Component extends DCLogic {
       toTop: (e) => { e.preventDefault(); const sc = this.scrollRef.current; if (sc) sc.scrollTo({ top: 0, behavior: "smooth" }); },
       login: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "" }),
       loggedOut: !this.state.user,
-      ...headerVals(this, dev, { home: "Booking%20platform.dc.html", authed: !!this.state.user, name: this.state.pname, openLogin: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "" }) }),
+      ...headerVals(this, dev, { home: "index.html", authed: !!this.state.user, name: this.state.pname, openLogin: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "" }) }),
       share: () => this.toast("پیوند پروفایل کپی شد."),
       tabs: SECS.map(([id, label, target]) => ({ href: "#" + target, current: tab === id ? "location" : "false",
         label, bg: tab === id ? "#FFFFFF" : "transparent", color: tab === id ? "#3669EE" : "#4A4A4A", go: (e) => { e.preventDefault(); if (location.hash !== "#" + target) history.pushState(null, "", location.pathname + location.search + "#" + target); this.scrollToId(target); } })),
@@ -760,8 +760,8 @@ class Component extends DCLogic {
       openLoginLink: (e) => { e.preventDefault(); this.setState({ login: "phone", loginErr: "", code: "", booking: "" }); },
       footerCols: [
         { title: "تخصص‌ها", links: [["قلب و عروق", "sara"], ["پوست و مو", "amir"], ["زنان و زایمان", "narges"], ["ارتوپدی", "hamid"], ["پزشک عمومی", "maryam"], ["مغز و اعصاب", "peyman"]].map(([label, k]) => ({ label, href: "DoctorProfilePage.dc.html?doctor=" + k })) },
-        { title: "نوبت‌دهی", links: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"], ["پیگیری نوبت", "#contact"]].map(([label, h]) => ({ label, href: "Booking%20platform.dc.html" + h })) },
-        { title: "کلینیک", links: [["درباره ما", "about.html"], ["مجله سلامت", "Booking%20platform.dc.html#magazine"], ["تماس با ما", "contact.html"]].map(([label, href]) => ({ label, href })) }
+        { title: "نوبت‌دهی", links: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"], ["پیگیری نوبت", "#contact"]].map(([label, h]) => ({ label, href: "index.html" + h })) },
+        { title: "کلینیک", links: [["درباره ما", "about.html"], ["مجله سلامت", "index.html#magazine"], ["تماس با ما", "contact.html"]].map(([label, href]) => ({ label, href })) }
       ],
       toastText: toast, toastO: toast ? 1 : 0, toastT: toast ? "translate(-50%,0)" : "translate(-50%,12px)", toastBottom: L.bar ? "96px" : "28px"
     };

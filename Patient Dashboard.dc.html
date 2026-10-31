@@ -279,7 +279,7 @@ a:hover{color:#2453D4}
         <sc-if value="{{ apptsEmpty }}" hint-placeholder-val="{{ false }}">
           <div style="background:#FFFFFF; border:1px solid #ECEEF0; border-radius:20px; padding:48px 20px; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center">
             <span style="font-size:16px; font-weight:700">نوبتی در این دسته ندارید.</span>
-            <a href="Booking%20platform.dc.html#doctors" style="min-height:48px; padding:0 22px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; font-weight:700" style-hover="color:#FFFFFF; background:#2453D4">دریافت نوبت آنلاین</a>
+            <a href="index.html#doctors" style="min-height:48px; padding:0 22px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; font-weight:700" style-hover="color:#FFFFFF; background:#2453D4">دریافت نوبت آنلاین</a>
           </div>
         </sc-if>
       </div>
@@ -437,27 +437,27 @@ a:hover{color:#2453D4}
       <div style="grid-column:{{ L.footAboutCol }}; display:flex; flex-direction:column; gap:16px">
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان دریافت نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
-        <a href="Booking%20platform.dc.html#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
+        <a href="contact.html" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
       </div>
       <nav aria-label="تخصص‌ها" style="order:{{ L.fo1 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تخصص‌ها</span>
         <sc-for list="{{ footerSpecs }}" as="f" hint-placeholder-count="5">
-          <a href="Booking%20platform.dc.html#doctors" onClick="{{ f.pick }}" style="font-size:14px; color:#BBBBBB; transition:color .2s" style-hover="color:#FFFFFF">{{ f.name }}</a>
+          <a href="index.html#doctors" onClick="{{ f.pick }}" style="font-size:14px; color:#BBBBBB; transition:color .2s" style-hover="color:#FFFFFF">{{ f.name }}</a>
         </sc-for>
       </nav>
       <nav aria-label="نوبت‌دهی" style="order:{{ L.fo2 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">نوبت‌دهی</span>
-        <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
-        <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
-        <a href="Booking%20platform.dc.html#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
-        <a href="Booking%20platform.dc.html#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
+        <a href="index.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
+        <a href="index.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
+        <a href="index.html#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
+        <a href="#appointments" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
       </nav>
       <nav aria-label="کلینیک" style="order:{{ L.fo3 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">کلینیک</span>
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
-        <a href="Booking%20platform.dc.html#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
+        <a href="magazine/index.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
-        <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
+        <a href="index.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
       <div style="order:{{ L.fo4 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تماس با ما</span>
@@ -472,8 +472,8 @@ a:hover{color:#2453D4}
     <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 24px; padding-top:24px; border-top:1px solid #373A41">
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; font-size:13px; color:#969696">
         <span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span>
-        <a href="Booking%20platform.dc.html#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
-        <a href="Booking%20platform.dc.html#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
+        <a href="index.html#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
+        <a href="index.html#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
       </div>
       <div style="flex:1 1 100%; display:flex; flex-wrap:wrap; justify-content:center; gap:8px">
         <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
@@ -597,6 +597,8 @@ class Component extends DCLogic {
   state = { vw: 1440, tab: "appointments", filter: "all", phone: "09121234567", profile: DEFAULT_PROFILE, draft: DEFAULT_PROFILE, errs: {}, booked: [], over: {}, open: "", review: "", stars: 0, reviewText: "", reviewErr: false, chat: "c1", chatDraft: "", chatMsgs: {}, chatRev: {}, cStars: 0, cText: "", cErr: false, cancelAsk: "", resch: "", rDay: -1, rTime: "", cReason: "", menu: false, toast: "" };
   componentDidMount() {
     let phone = "09121234567", authed = false; try { authed = !!localStorage.getItem("nikan-user"); phone = localStorage.getItem("nikan-user") || phone; } catch (e) {}
+    // The account page needs a login: send guests to the homepage login and bring them back here afterwards.
+    if (!authed) { try { sessionStorage.setItem("nikan-next", "Patient%20Dashboard.dc.html" + (location.hash || "")); } catch (e) {} location.replace("index.html#login"); return; }
     const profile = { ...DEFAULT_PROFILE, ...read("nikan-profile", {}) };
     const hash = (location.hash || "").slice(1);
     this.setState({ vw: document.documentElement.clientWidth, phone, authed, profile, draft: profile, booked: read("nikan-appts", []), over: read("nikan-appt-state", {}), chatMsgs: read("nikan-chat", {}), chatRev: read("nikan-chat-reviews", {}), tab: ["profile", "appointments", "chat"].includes(hash) ? hash : "appointments" });
@@ -636,7 +638,7 @@ class Component extends DCLogic {
   }
   toast(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: "" }), 2600); }
   goTab(tab) { this.setState({ tab, menu: false }); try { history.replaceState(null, "", "#" + tab); } catch (e) {} window.scrollTo(0, 0); }
-  logout() { try { localStorage.removeItem("nikan-user"); } catch (e) {} location.href = "Booking%20platform.dc.html"; }
+  logout() { try { localStorage.removeItem("nikan-user"); } catch (e) {} location.href = "index.html"; }
   setOver(id, patch) { const over = { ...this.state.over, [id]: { ...(this.state.over[id] || {}), ...patch } }; write("nikan-appt-state", over); this.setState({ over }); }
   renderVals() {
     const s = this.state, vw = s.vw, dev = vw >= 1100 ? "desktop" : vw >= 700 ? "tablet" : "mobile";
@@ -656,7 +658,7 @@ class Component extends DCLogic {
     const field = (key, label, req, ph, ac) => ({ label, reqDisplay: req ? "inline" : "none", type: "text", mode: "text", dir: "rtl", align: "right", ph, ac, value: d[key], set: (e) => setD({ [key]: e.target.value }), hasErr: !!E[key], err: E[key] || "", invalid: E[key] ? "true" : "false", border: E[key] ? "#D92D20" : "#D9D9D9" });
     const years = []; for (let y = 1404; y >= 1300; y--) years.push({ v: String(y), t: fa(y) });
     return {
-      L, fullName, ...headerVals(this, dev, { home: "Booking%20platform.dc.html", authed: !!s.authed, name: fullName, openLogin: () => { location.href = "Booking%20platform.dc.html#login"; } }),
+      L, fullName, ...headerVals(this, dev, { home: "index.html", authed: !!s.authed, name: fullName, openLogin: () => { location.href = "index.html#login"; } }),
       phoneFa: fa(s.phone), phoneLocal: fa(s.phone.replace(/^0/, "")),
       menuOpen: s.menu, menuExpanded: s.menu ? "true" : "false", chevron: s.menu ? "rotate(180deg)" : "none",
       menuEnter: () => { if (dev === "desktop") { clearTimeout(this.mt); this.setState({ menu: true }); } },

@@ -178,11 +178,11 @@ a:hover{color:#2453D4}
     <sc-for list="{{ doctors }}" as="d" hint-placeholder-count="6">
       <article style="position:relative; flex:{{ L.docFlex }}; scroll-snap-align:start; display:flex; flex-direction:column; gap:20px; padding:24px; border-radius:24px; background:#FFFFFF; border:1px solid #E6E6E6; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(34,34,34,.08); border-color:#DBDBDB">
         <div style="display:flex; flex-direction:{{ docTopDir }}; gap:{{ docTopGap }}; align-items:{{ docTopAlign }}; text-align:{{ docTopText }}">
-          <div style="flex:none; width:88px; height:88px; border-radius:22px; overflow:hidden; background:#F8F9FA">
+          <div style="flex:none; width:{{ docPhoto }}; height:{{ docPhoto }}; border-radius:22px; overflow:hidden; background:#F8F9FA">
             <image-slot id="{{ d.photoId }}" shape="rect" fit="cover" src="{{ d.photo }}" placeholder="عکس پزشک"></image-slot>
           </div>
           <div style="flex:1; min-width:0; display:flex; flex-direction:column; align-items:{{ docTopAlign }}; gap:6px">
-            <h3 title="{{ d.name }}" style="margin:0; font-size:20px; font-weight:800; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ d.name }}</h3>
+            <h3 title="{{ d.name }}" style="margin:0; padding-left:{{ docNamePad }}; font-size:{{ docNameFs }}; font-weight:800; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ d.name }}</h3>
             <span title="{{ d.specialty }}" style="font-size:15px; color:#4A4A4A; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ d.specialty }}</span>
             <span title="{{ d.credential }}" style="font-size:14px; color:#676767; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ d.credential }}</span>
           </div>
@@ -344,7 +344,7 @@ a:hover{color:#2453D4}
       <div style="grid-column:{{ L.footAboutCol }}; display:flex; flex-direction:column; gap:16px">
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان دریافت نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
-        <a href="#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
+        <a href="contact.html" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
       </div>
       <nav aria-label="تخصص‌ها" style="order:{{ L.fo1 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تخصص‌ها</span>
@@ -357,12 +357,12 @@ a:hover{color:#2453D4}
         <a href="#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
         <a href="#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
         <a href="#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
-        <a href="#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
+        <a href="Patient%20Dashboard.dc.html#appointments" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
       </nav>
       <nav aria-label="کلینیک" style="order:{{ L.fo3 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">کلینیک</span>
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
-        <a href="#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
+        <a href="magazine/index.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
         <a href="#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
@@ -533,6 +533,9 @@ function headerVals(c, dev, o) {
   };
 }
 
+// Pages that need a login (the account page) store their address in sessionStorage "nikan-next" and open #login here; go back there after login.
+const goNext = () => { let n = ""; try { n = sessionStorage.getItem("nikan-next") || ""; sessionStorage.removeItem("nikan-next"); } catch (x) {} if (!/^[A-Za-z%][\w%.\-]*\.html(#[\w-]*)?$/.test(n)) return false; location.href = n; return true; };
+
 class Component extends DCLogic {
   heroTimer = null;
   heroIds = ["clinic-hero", "clinic-hero-2", "clinic-hero-3"];
@@ -552,6 +555,7 @@ class Component extends DCLogic {
     this.onResize = () => { const w = document.documentElement.clientWidth; if (w !== this.state.vw) this.setState({ vw: w }); };
     window.addEventListener("resize", this.onResize);
     let user = "", pname = ""; try { user = localStorage.getItem("nikan-user") || ""; const p = JSON.parse(localStorage.getItem("nikan-profile") || "null"); if (p) pname = (p.first + " " + p.last).trim(); } catch (e) {}
+    if (location.hash === "#login" && user && goNext()) return;
     const spec = new URLSearchParams(location.search).get("spec"), wantLogin = location.hash === "#login" && !user;
     this.setState({ vw: document.documentElement.clientWidth, user, pname, ...(SPECS.some((x) => x.key === spec) ? { tab: spec } : {}), ...(wantLogin ? { login: "phone" } : {}) });
     this.fillPoll = setInterval(() => { const f = this.filledSlides(); if (f.join() !== (this.state.filled || []).join()) this.setState((st) => ({ filled: f, slide: f.includes(st.slide) ? st.slide : f[0] })); }, 1000);
@@ -580,9 +584,9 @@ class Component extends DCLogic {
       phoneShown: faD(en(phone)), hasLoginErr: !!loginErr, loginErr, loginInvalid: loginErr ? "true" : "false", loginBorder: loginErr ? "#D92D20" : "#D9D9D9",
       codeCta: booking ? "تأیید و ثبت نوبت" : "ورود",
       submitPhone: (e) => { e.preventDefault(); if (!/^09\d{9}$/.test(en(this.state.phone))) { this.setState({ loginErr: "شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود." }); return; } this.setState({ login: "code", loginErr: "" }); },
-      submitCode: (e) => { e.preventDefault(); if (en(this.state.code).length !== 5) { this.setState({ loginErr: "کد تأیید ۵ رقمی را کامل وارد کنید." }); return; } try { localStorage.setItem("nikan-user", en(this.state.phone)); } catch (x) {} this.setState({ login: "done", loginErr: "", user: en(this.state.phone) }); },
+      submitCode: (e) => { e.preventDefault(); if (en(this.state.code).length !== 5) { this.setState({ loginErr: "کد تأیید ۵ رقمی را کامل وارد کنید." }); return; } try { localStorage.setItem("nikan-user", en(this.state.phone)); } catch (x) {} if (goNext()) return; this.setState({ login: "done", loginErr: "", user: en(this.state.phone) }); },
       editPhone: () => this.setState({ login: "phone", code: "" }),
-      closeLogin: () => this.setState({ login: null }),
+      closeLogin: () => { try { sessionStorage.removeItem("nikan-next"); } catch (x) {} this.setState({ login: null }); },
       doneTitle: booking ? D.name + " · " + booking : "با شماره " + faD(en(phone)) + " وارد شدید.",
       doneText: booking ? "این نسخه نمایشی است: نوبتی در سامانه ثبت نشده، پرداختی انجام نشده و پیامک یادآوری ارسال نمی‌شود." : "این نسخه نمایشی است و حساب کاربری واقعی ساخته نشده است."
     };
@@ -679,10 +683,10 @@ class Component extends DCLogic {
         { name: "م. کاظمی", meta: "ویزیت حضوری · پزشک عمومی", text: "پیامک یادآوری نوبت خیلی کمک کرد. فضای کلینیک آرام و رفتار پرسنل محترمانه بود." }
       ].map(r => ({ ...r, initial: r.name[0], stars: [1, 2, 3, 4, 5], starsLabel: "امتیاز ۵ از ۵" })),
       articles: ARTICLES.map((a, i) => ({ ...a, slotId: "magazine-" + (i + 1), slotHint: "عکس مقاله: " + a.title })),
-      // Phone doctor cards: name and specialty under the photo, and the three visit tags small enough for one row.
+      // Doctor cards: name and specialty under the photo on every width (no «…» cut-offs); on phones the three visit tags are small enough for one row.
       ...(dev === "mobile"
-        ? { docTopDir: "column", docTopGap: "12px", docTopAlign: "center", docTopText: "center", docSharePos: "absolute", docTagJustify: "center", docTagGap: "4px", docTagH: "26px", docTagPad: "6px", docTagFs: "11.5px", docTagWrap: "nowrap" }
-        : { docTopDir: "row", docTopGap: "16px", docTopAlign: "flex-start", docTopText: "right", docSharePos: "static", docTagJustify: "flex-start", docTagGap: "8px", docTagH: "28px", docTagPad: "10px", docTagFs: "13px", docTagWrap: "wrap" }),
+        ? { docTopDir: "column", docTopGap: "12px", docTopAlign: "center", docTopText: "center", docSharePos: "absolute", docPhoto: "88px", docNamePad: "0", docNameFs: "20px", docTagJustify: "center", docTagGap: "4px", docTagH: "26px", docTagPad: "6px", docTagFs: "11.5px", docTagWrap: "nowrap" }
+        : { docTopDir: "column", docTopGap: "12px", docTopAlign: "center", docTopText: "center", docSharePos: "absolute", docPhoto: "88px", docNamePad: "0", docNameFs: "20px", docTagJustify: "center", docTagGap: "8px", docTagH: "28px", docTagPad: "10px", docTagFs: "13px", docTagWrap: "wrap" }),
       magCardW: dev === "mobile" ? "min(280px, 78%)" : "302px", magPadX: dev === "mobile" ? "16px" : "4px",
       magRef: this.magRef, magPrev: () => this.scrollMag(1), magNext: () => this.scrollMag(-1),
       // Icons only for now; fateme will send the profile links later.
