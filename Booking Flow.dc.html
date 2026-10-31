@@ -402,7 +402,7 @@ function headerVals(c, dev, o) {
       pick: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec(key); } })),
     hdDocs: HDR_DOCS.map(([key, name, specialty]) => ({ name, specialty, href: "DoctorProfilePage.dc.html?doctor=" + key })),
     hdAllHref: home + "#doctors", hdAll: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec("all"); },
-    hdNav: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href: home + href })),
+    hdNav: [["نوبت حضوری", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href: home + href })),
     hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری", hdLogin: openLogin
   };
 }

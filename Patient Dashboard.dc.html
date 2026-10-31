@@ -337,8 +337,8 @@ a:hover{color:#2453D4}
       </nav>
       <nav aria-label="نوبت‌دهی" style="display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">نوبت‌دهی</span>
-        <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
-        <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
+        <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
+        <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
         <a href="Booking%20platform.dc.html#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
         <a href="#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
       </nav>
@@ -457,7 +457,7 @@ function headerVals(c, dev, o) {
       pick: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec(key); } })),
     hdDocs: HDR_DOCS.map(([key, name, specialty]) => ({ name, specialty, href: "DoctorProfilePage.dc.html?doctor=" + key })),
     hdAllHref: home + "#doctors", hdAll: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec("all"); },
-    hdNav: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href: home + href })),
+    hdNav: [["نوبت حضوری", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href: home + href })),
     hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری", hdLogin: openLogin
   };
 }
