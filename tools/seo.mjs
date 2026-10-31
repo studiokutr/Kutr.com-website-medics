@@ -11,7 +11,7 @@
 // Every fact below must match what the pages show. Do not add anything here
 // that is not on the site.
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import vm from "node:vm";
 
@@ -45,7 +45,12 @@ const SPECIALTY = {
 };
 
 // Pages that keep their own hand-written <head> (title, canonical, structured data).
-const STATIC_PAGES = ["about.html", "contact.html", "doctors.html", "magazine/index.html", "online-booking-discount.html", "magazine/neurotherapy-benefits.html"];
+const STATIC_PAGES = [
+  "about.html", "contact.html", "doctors.html", "online-booking-discount.html",
+  "magazine/index.html", "magazine/neurotherapy-benefits.html",
+  "magazine/high-blood-pressure.html", "magazine/winter-skin-care.html", "magazine/is-neurotherapy-effective.html",
+  "magazine/knee-pain.html", "magazine/womens-health-screenings.html", "magazine/annual-checkup-tests.html"
+];
 
 const HOME_TITLE = "کلینیک تخصصی نیکان — نوبت‌دهی اینترنتی";
 const HOME_DESC = "نوبت‌دهی اینترنتی کلینیک تخصصی نیکان در تهران، ونک: رزرو نوبت حضوری، تلفنی و مشاوره آنلاین با پزشکان قلب و عروق، پوست و مو، زنان و زایمان، ارتوپدی، مغز و اعصاب و پزشک عمومی.";
@@ -196,7 +201,7 @@ const urls = [
   ...Object.keys(DOCS).map((k) => ({ loc: abs(doctorUrl(k)), lastmod: lastmod("DoctorProfilePage.dc.html") })),
   // Stand-alone pages with their own <head>. Each joins the sitemap once its
   // <meta name="robots" content="noindex..."> is removed.
-  ...STATIC_PAGES.filter((f) => !/<meta name="robots" content="[^"]*noindex/i.test(read(f)))
+  ...STATIC_PAGES.filter((f) => existsSync(new URL(f, ROOT)) && !/<meta name="robots" content="[^"]*noindex/i.test(read(f)))
     .map((f) => ({ loc: abs(f), lastmod: lastmod(f) }))
 ];
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
