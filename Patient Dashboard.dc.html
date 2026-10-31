@@ -68,6 +68,9 @@ a:hover{color:#2453D4}
       <sc-for list="{{ hdNav }}" as="n" hint-placeholder-count="5">
         <a href="{{ n.href }}" style="color:#373A41; padding:8px 0; border-bottom:2px solid transparent; transition:color .2s, border-color .2s; white-space:nowrap" style-hover="color:#3669EE; border-color:#3669EE">{{ n.label }}</a>
       </sc-for>
+      <sc-if value="{{ hdLoginBtn }}" hint-placeholder-val="{{ true }}">
+        <a href="#login" onClick="{{ hdNavLogin }}" style="color:#373A41; padding:8px 0; border-bottom:2px solid transparent; transition:color .2s, border-color .2s; white-space:nowrap" style-hover="color:#3669EE; border-color:#3669EE">ورود و ثبت‌نام</a>
+      </sc-if>
     </nav>
     <div style="margin-right:auto; display:flex; align-items:center; gap:12px; flex:none">
       <sc-if value="{{ hdLoginBtn }}" hint-placeholder-val="{{ true }}">
@@ -209,11 +212,42 @@ a:hover{color:#2453D4}
                 </form>
               </sc-if>
               <sc-if value="{{ a.cancelAsk }}" hint-placeholder-val="{{ false }}">
-                <div role="alertdialog" aria-label="لغو نوبت" style="padding:16px; border-radius:14px; background:#FEF3F2; border:1px solid #FECDCA; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px">
-                  <span style="font-size:14px; line-height:1.8; color:#912018">این نوبت لغو شود؟ پیش‌پرداخت طبق قوانین لغو بازگردانده می‌شود.</span>
-                  <div style="display:flex; gap:8px">
-                    <button type="button" onClick="{{ a.cancelYes }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:0; background:#D92D20; color:#FFFFFF; font-weight:700; cursor:pointer">بله، لغو شود</button>
-                    <button type="button" onClick="{{ a.cancelNo }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer">خیر</button>
+                <div role="alertdialog" aria-labelledby="cx-h" style="padding:18px; border-radius:16px; background:#FEF3F2; border:1px solid #FECDCA; display:flex; flex-direction:column; gap:14px">
+                  <div style="display:flex; flex-direction:column; gap:4px">
+                    <span id="cx-h" style="font-size:16px; font-weight:800; color:#912018">لغو نوبت {{ a.when }}</span>
+                    <span style="font-size:14px; line-height:1.8; color:#912018">پیش‌پرداخت ({{ a.paid }}) طبق قوانین لغو کلینیک بازگردانده می‌شود.</span>
+                  </div>
+                  <div role="radiogroup" aria-label="دلیل لغو" style="display:flex; flex-wrap:wrap; gap:8px">
+                    <sc-for list="{{ a.reasons }}" as="r" hint-placeholder-count="4">
+                      <button type="button" role="radio" aria-checked="{{ r.sel }}" onClick="{{ r.pick }}" style="min-height:40px; padding:0 14px; border-radius:999px; border:1px solid {{ r.border }}; background:{{ r.bg }}; color:{{ r.color }}; font:inherit; font-size:14px; cursor:pointer">{{ r.label }}</button>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex; flex-wrap:wrap; gap:8px">
+                    <button type="button" onClick="{{ a.cancelYes }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:0; background:#D92D20; color:#FFFFFF; font-weight:700; cursor:pointer">لغو نوبت</button>
+                    <button type="button" onClick="{{ a.reschFromCancel }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; font-weight:600; cursor:pointer">به جای لغو، زمان را تغییر می‌دهم</button>
+                    <button type="button" onClick="{{ a.cancelNo }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer">منصرف شدم</button>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ a.reschOpen }}" hint-placeholder-val="{{ false }}">
+                <div role="dialog" aria-labelledby="rs-h" style="padding:18px; border-radius:16px; background:#F5F8FF; border:1px solid #C9D7FB; display:flex; flex-direction:column; gap:14px">
+                  <div style="display:flex; flex-direction:column; gap:4px">
+                    <span id="rs-h" style="font-size:16px; font-weight:800">انتخاب زمان جدید</span>
+                    <span style="font-size:14px; color:#4A4A4A">زمان فعلی: {{ a.when }} · {{ a.docName }}</span>
+                  </div>
+                  <div role="radiogroup" aria-label="روز جدید" style="display:flex; gap:8px; overflow-x:auto; scrollbar-width:none">
+                    <sc-for list="{{ a.rDays }}" as="d" hint-placeholder-count="5">
+                      <button type="button" role="radio" aria-checked="{{ d.sel }}" onClick="{{ d.pick }}" style="flex:none; min-width:76px; height:64px; border-radius:14px; border:1px solid {{ d.border }}; background:{{ d.bg }}; color:{{ d.color }}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font:inherit; cursor:pointer"><span style="font-size:13px">{{ d.w }}</span><span style="font-size:15px; font-weight:700">{{ d.d }}</span></button>
+                    </sc-for>
+                  </div>
+                  <div role="radiogroup" aria-label="ساعت جدید" style="display:flex; flex-wrap:wrap; gap:8px">
+                    <sc-for list="{{ a.rTimes }}" as="t" hint-placeholder-count="5">
+                      <button type="button" role="radio" aria-checked="{{ t.sel }}" onClick="{{ t.pick }}" style="min-height:44px; padding:0 14px; border-radius:12px; border:1px solid {{ t.border }}; background:{{ t.bg }}; color:{{ t.color }}; font:inherit; font-size:14px; font-weight:600; cursor:pointer">{{ t.t }}</button>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex; flex-wrap:wrap; gap:8px">
+                    <button type="button" onClick="{{ a.reschYes }}" aria-disabled="{{ a.reschDis }}" style="min-height:44px; padding:0 20px; border-radius:12px; border:0; background:{{ a.reschBg }}; color:#FFFFFF; font-weight:700; cursor:{{ a.reschCursor }}">تأیید زمان جدید</button>
+                    <button type="button" onClick="{{ a.reschNo }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer">انصراف</button>
                   </div>
                 </div>
               </sc-if>
@@ -233,7 +267,12 @@ a:hover{color:#2453D4}
                 <button type="button" onClick="{{ a.cancelStart }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #FECDCA; background:#FFFFFF; color:#D92D20; font-size:14px; font-weight:600; cursor:pointer" style-hover="background:#FEF3F2">لغو نوبت</button>
               </sc-if>
               <span style="flex:1"></span>
+              <sc-if value="{{ a.canResch }}" hint-placeholder-val="{{ false }}">
+                <button type="button" onClick="{{ a.reschStart }}" style="min-height:44px; padding:0 22px; border-radius:12px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; font:inherit; font-size:14px; font-weight:600; cursor:pointer" style-hover="background:#F5F8FF">تغییر زمان</button>
+              </sc-if>
+              <sc-if value="{{ a.showAgain }}" hint-placeholder-val="{{ true }}">
               <a href="{{ a.again }}" style="min-height:44px; padding:0 22px; border-radius:12px; border:1px solid #3669EE; color:#3669EE; display:flex; align-items:center; font-size:14px; font-weight:600" style-hover="background:#F5F8FF; color:#3669EE">{{ a.againLabel }}</a>
+              </sc-if>
             </div>
           </article>
         </sc-for>
@@ -316,11 +355,76 @@ a:hover{color:#2453D4}
     </sc-if>
 
     <sc-if value="{{ isChat }}" hint-placeholder-val="{{ false }}">
-      <section aria-labelledby="chat-h" data-screen-label="Dashboard · Chat" style="background:#FFFFFF; border:1px solid #ECEEF0; border-radius:20px; padding:{{ L.formPad }}; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center">
-        <span aria-hidden="true" style="width:64px; height:64px; border-radius:999px; background:#EBF0FE; color:#3669EE; display:flex; align-items:center; justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"></path></svg></span>
-        <h1 id="chat-h" style="margin:0; font-size:18px; font-weight:800">صفحه گفتگو</h1>
-        <p style="margin:0; max-width:460px; font-size:15px; line-height:1.9; color:#4A4A4A">گفتگوی شما با پزشک پس از دریافت نوبت مشاوره آنلاین این‌جا نمایش داده می‌شود. در حال حاضر گفتگوی فعالی ندارید.</p>
-        <a href="Booking%20platform.dc.html#doctors" style="min-height:48px; padding:0 22px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; font-weight:700" style-hover="color:#FFFFFF; background:#2453D4">دریافت مشاوره آنلاین</a>
+      <section aria-labelledby="chat-h" data-screen-label="Dashboard · Chat" style="background:#FFFFFF; border:1px solid #ECEEF0; border-radius:20px; overflow:hidden; display:grid; grid-template-columns:{{ chatCols }}; align-items:stretch">
+        <div style="display:flex; flex-direction:column; min-width:0; border-left:{{ chatListBorder }}; border-bottom:{{ chatListBorderB }}">
+          <div style="padding:20px 20px 12px; display:flex; flex-direction:column; gap:4px">
+            <h1 id="chat-h" style="margin:0; font-size:18px; font-weight:800">صفحه گفتگو</h1>
+            <p style="margin:0; font-size:13px; line-height:1.8; color:#676767">گفتگو با پزشک بعد از نوبت تلفنی یا مشاوره آنلاین</p>
+          </div>
+          <div role="tablist" aria-label="گفتگوها" style="display:flex; flex-direction:{{ chatListDir }}; gap:6px; padding:0 12px 12px; overflow-x:auto; scrollbar-width:none">
+            <sc-for list="{{ convs }}" as="c" hint-placeholder-count="2">
+              <button type="button" role="tab" aria-selected="{{ c.sel }}" onClick="{{ c.pick }}" style="flex:{{ chatItemFlex }}; display:flex; align-items:center; gap:12px; padding:12px; border-radius:14px; border:1px solid {{ c.border }}; background:{{ c.bg }}; cursor:pointer; text-align:right; font:inherit; color:#222222">
+                <img src="{{ c.photo }}" alt="" width="44" height="44" style="flex:none; width:44px; height:44px; border-radius:999px; object-fit:cover; background:#F2F4F7">
+                <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px">
+                  <span style="font-size:15px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ c.name }}</span>
+                  <span style="font-size:12px; color:#676767; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ c.last }}</span>
+                </span>
+                <span style="flex:none; padding:2px 8px; border-radius:999px; background:{{ c.stBg }}; color:{{ c.stFg }}; font-size:11px; font-weight:700">{{ c.st }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; min-width:0">
+          <div style="display:flex; align-items:center; gap:12px; padding:14px 20px; border-bottom:1px solid #F0F2F4">
+            <img src="{{ cPhoto }}" alt="" width="40" height="40" style="flex:none; width:40px; height:40px; border-radius:999px; object-fit:cover; background:#F2F4F7">
+            <span style="flex:1; min-width:0; display:flex; flex-direction:column">
+              <span style="font-size:16px; font-weight:800">{{ cName }}</span>
+              <span style="font-size:13px; color:#676767">{{ cTopic }}</span>
+            </span>
+            <a href="{{ cProfile }}" style="flex:none; font-size:13px; font-weight:600; color:#3669EE">صفحه پزشک</a>
+          </div>
+          <div role="log" aria-label="پیام‌ها" style="flex:1; min-height:280px; max-height:460px; overflow-y:auto; padding:20px; background:#F8F9FA; display:flex; flex-direction:column; gap:10px">
+            <span style="align-self:center; padding:4px 12px; border-radius:999px; background:#ECEEF0; color:#676767; font-size:12px">{{ cDay }}</span>
+            <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="3">
+              <div style="align-self:{{ m.align }}; max-width:82%; padding:10px 14px; border-radius:{{ m.radius }}; background:{{ m.bg }}; color:{{ m.color }}; border:1px solid {{ m.border }}; display:flex; flex-direction:column; gap:4px">
+                <span style="font-size:15px; line-height:1.9">{{ m.text }}</span>
+                <span style="align-self:flex-end; font-size:11px; opacity:.7">{{ m.time }}</span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ cEnded }}" hint-placeholder-val="{{ false }}">
+              <span style="align-self:center; padding:4px 12px; border-radius:999px; background:#ECEEF0; color:#676767; font-size:12px">این گفتگو به پایان رسید</span>
+            </sc-if>
+          </div>
+          <sc-if value="{{ cOpen }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ sendMsg }}" style="display:flex; align-items:flex-end; gap:10px; padding:14px 16px; border-top:1px solid #F0F2F4">
+              <label style="flex:1; display:flex"><span style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)">پیام شما</span><textarea rows="1" value="{{ chatDraft }}" onChange="{{ onDraft }}" placeholder="پیام خود را بنویسید…" style="flex:1; min-height:48px; max-height:120px; resize:none; padding:12px 14px; border-radius:14px; border:1px solid #E6E6E6; background:#F8F9FA; font:inherit; font-size:15px; line-height:1.6"></textarea></label>
+              <button type="submit" aria-label="ارسال پیام" style="flex:none; width:48px; height:48px; border-radius:14px; border:0; background:{{ sendBg }}; color:#FFFFFF; display:flex; align-items:center; justify-content:center; cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:scaleX(-1)"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"></path></svg></button>
+            </form>
+          </sc-if>
+          <sc-if value="{{ cAskReview }}" hint-placeholder-val="{{ false }}">
+            <form onSubmit="{{ cSubmit }}" novalidate="" style="padding:20px; border-top:1px solid #F0F2F4; display:flex; flex-direction:column; gap:14px">
+              <div style="display:flex; flex-direction:column; gap:4px">
+                <h2 style="margin:0; font-size:17px; font-weight:800">نظر شما درباره {{ cName }}</h2>
+                <p style="margin:0; font-size:14px; color:#676767">به پزشک امتیاز بدهید و تجربه‌تان را بنویسید. نظر شما به مراجعان دیگر کمک می‌کند.</p>
+              </div>
+              <div role="group" aria-label="امتیاز به پزشک" style="display:flex; align-items:center; gap:6px">
+                <sc-for list="{{ cStars }}" as="st" hint-placeholder-count="5">
+                  <button type="button" aria-label="{{ st.label }}" aria-pressed="{{ st.sel }}" onClick="{{ st.pick }}" style="width:44px; height:44px; border-radius:12px; border:1px solid {{ st.border }}; background:{{ st.bg }}; color:{{ st.color }}; display:flex; align-items:center; justify-content:center; cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"></path></svg></button>
+                </sc-for>
+                <span style="margin-right:6px; font-size:14px; font-weight:700; color:#4A4A4A">{{ cStarsText }}</span>
+              </div>
+              <label style="display:flex; flex-direction:column; gap:6px"><span style="font-size:14px; color:#4A4A4A">نظر شما</span><textarea rows="3" value="{{ cText }}" onChange="{{ onCText }}" placeholder="مثلاً درباره‌ی دقت پزشک، توضیحات و زمان پاسخ‌گویی" style="padding:12px 14px; border-radius:14px; border:1px solid #E6E6E6; background:#F8F9FA; font:inherit; font-size:15px; line-height:1.8; resize:vertical"></textarea></label>
+              <sc-if value="{{ cErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px; color:#D92D20">لطفاً به پزشک امتیاز بدهید.</span></sc-if>
+              <button type="submit" style="align-self:flex-start; min-height:48px; padding:0 28px; border-radius:14px; border:0; background:#3669EE; color:#FFFFFF; font:inherit; font-size:15px; font-weight:700; cursor:pointer">ثبت نظر</button>
+            </form>
+          </sc-if>
+          <sc-if value="{{ cReviewed }}" hint-placeholder-val="{{ false }}">
+            <div role="status" style="margin:16px 20px 20px; padding:16px; border-radius:14px; background:#ECFDF3; color:#067647; display:flex; flex-direction:column; gap:4px">
+              <span style="font-size:15px; font-weight:700">✓ نظر شما ثبت شد · {{ cRevStars }}</span>
+              <sc-if value="{{ cRevHasText }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px; line-height:1.8; color:#344054">«{{ cRevText }}»</span></sc-if>
+            </div>
+          </sc-if>
+        </div>
       </section>
     </sc-if>
 
@@ -329,34 +433,33 @@ a:hover{color:#2453D4}
 
 <footer data-screen-label="Footer" style="background:#000000; color:#FFFFFF; border-radius:40px 40px 0 0">
   <div style="max-width:1440px; margin:0 auto; padding:72px {{ L.px }} 32px">
-    
     <div style="display:grid; grid-template-columns:{{ L.footCols }}; gap:{{ L.footGap }}; padding:0 0 48px">
-      <div style="display:flex; flex-direction:column; gap:16px">
+      <div style="grid-column:{{ L.footAboutCol }}; display:flex; flex-direction:column; gap:16px">
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان دریافت نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
         <a href="Booking%20platform.dc.html#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
       </div>
-      <nav aria-label="تخصص‌ها" style="display:flex; flex-direction:column; gap:14px">
+      <nav aria-label="تخصص‌ها" style="order:{{ L.fo1 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تخصص‌ها</span>
         <sc-for list="{{ footerSpecs }}" as="f" hint-placeholder-count="5">
           <a href="Booking%20platform.dc.html#doctors" onClick="{{ f.pick }}" style="font-size:14px; color:#BBBBBB; transition:color .2s" style-hover="color:#FFFFFF">{{ f.name }}</a>
         </sc-for>
       </nav>
-      <nav aria-label="نوبت‌دهی" style="display:flex; flex-direction:column; gap:14px">
+      <nav aria-label="نوبت‌دهی" style="order:{{ L.fo2 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">نوبت‌دهی</span>
         <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
         <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
         <a href="Booking%20platform.dc.html#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
-        <a href="#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
+        <a href="Booking%20platform.dc.html#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
       </nav>
-      <nav aria-label="کلینیک" style="display:flex; flex-direction:column; gap:14px">
+      <nav aria-label="کلینیک" style="order:{{ L.fo3 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">کلینیک</span>
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
         <a href="Booking%20platform.dc.html#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
         <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
-      <div style="display:flex; flex-direction:column; gap:14px">
+      <div style="order:{{ L.fo4 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تماس با ما</span>
         <a href="tel:02166778899" dir="ltr" style="font-size:16px; color:#FFFFFF; text-align:right">۰۲۱-۶۶۷۷۸۸۹۹</a>
         <a href="mailto:info@nikan-clinic.example" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">info@nikan-clinic.example</a>
@@ -369,8 +472,8 @@ a:hover{color:#2453D4}
     <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 24px; padding-top:24px; border-top:1px solid #373A41">
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; font-size:13px; color:#969696">
         <span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span>
-        <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
-        <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
+        <a href="Booking%20platform.dc.html#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
+        <a href="Booking%20platform.dc.html#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
       </div>
       <div style="flex:1 1 100%; display:flex; flex-wrap:wrap; justify-content:center; gap:8px">
         <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
@@ -396,6 +499,18 @@ const DOCS = {
   maryam: ["دکتر مریم حسینی", "پزشک عمومی"], peyman: ["دکتر پیمان راد", "متخصص مغز و اعصاب (نورولوژی)"]
 };
 const ADDRESS = "تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم";
+// Demo conversations (front end only). Messages the user sends and chat reviews are kept in the browser (nikan-chat, nikan-chat-reviews).
+const CHATS = [
+  { id: "c1", doc: "hamid", topic: "پیگیری نوبت تلفنی · ۲۰ مهر ۱۴۰۵", day: "۲۰ مهر ۱۴۰۵", open: true, msgs: [
+    ["doc", "۱۸:۲۰", "سلام، همان‌طور که در تماس گفتم، تا جلسه بعد تمرین‌های کششی را روزی دو بار انجام دهید."],
+    ["me", "۱۸:۳۵", "سلام دکتر، ممنون. اگر درد بیشتر شد چه کار کنم؟"],
+    ["doc", "۱۸:۴۱", "در این صورت تمرین را متوقف کنید و از همین‌جا پیام بدهید یا نوبت حضوری بگیرید."]] },
+  { id: "c2", doc: "maryam", topic: "مشاوره آنلاین · ۱۵ شهریور ۱۴۰۵", day: "۱۵ شهریور ۱۴۰۵", open: false, msgs: [
+    ["me", "۱۵:۰۲", "سلام دکتر، جواب آزمایشم را فرستادم."],
+    ["doc", "۱۵:۰۸", "سلام، آزمایش را دیدم. نتیجه در محدوده طبیعی است و جای نگرانی نیست."],
+    ["me", "۱۵:۱۰", "خیلی ممنون از راهنمایی‌تان."],
+    ["doc", "۱۵:۱۲", "خواهش می‌کنم. سه ماه دیگر برای آزمایش دوره‌ای مراجعه کنید."]] }
+];
 const TYPES = { clinic: "ویزیت حضوری", phone: "نوبت تلفنی", online: "مشاوره آنلاین" };
 const ST = { booked: ["دریافت شده", "#EBF0FE", "#2453D4"], done: ["انجام شده", "#F2F4F7", "#475467"], cancelled: ["لغو شده", "#FEF3F2", "#B42318"] };
 const SAMPLE = [
@@ -404,6 +519,10 @@ const SAMPLE = [
   { id: "s2", doc: "maryam", type: "online", when: "۱۵ شهریور ۱۴۰۵ | ۱۵:۰۰", status: "done", code: "۲۳۱۴۵۵۹۱۲", paid: "۲۷۷٬۵۰۰ تومان", remain: "—", patient: "حساب شما", created: "۱۰ شهریور ۱۴۰۵" },
   { id: "s3", doc: "sara", type: "clinic", when: "۲ مرداد ۱۴۰۵ | ۱۸:۱۵", status: "cancelled", code: "۲۳۰۹۸۷۲۰۴", paid: "۱۲۷٬۵۰۰ تومان · بازگشت داده شد", remain: "—", patient: "حساب شما", created: "۲۸ تیر ۱۴۰۵" }
 ];
+// Demo free times offered when moving an appointment (clinic closed Thursday/Friday).
+const RESCH_DAYS = [["چهارشنبه", "۱۳ آبان"], ["شنبه", "۱۶ آبان"], ["یکشنبه", "۱۷ آبان"], ["دوشنبه", "۱۸ آبان"], ["سه‌شنبه", "۱۹ آبان"]];
+const RESCH_TIMES = ["۱۰:۰۰", "۱۱:۳۰", "۱۶:۰۰", "۱۷:۳۰", "۱۸:۱۵"];
+const CANCEL_REASONS = ["زمان مناسب نیست", "بهبود یافتم", "پزشک دیگری را انتخاب کردم", "سایر"];
 const CITIES = ["تهران / تهران", "البرز / کرج", "اصفهان / اصفهان", "فارس / شیراز", "خراسان رضوی / مشهد", "آذربایجان شرقی / تبریز"];
 const fa = (v) => String(v).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
 const en = (v) => String(v).replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/\D/g, "");
@@ -465,7 +584,9 @@ function headerVals(c, dev, o) {
       pick: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec(key); } })),
     hdDocs: HDR_DOCS.map(([key, name, specialty]) => ({ name, specialty, href: "DoctorProfilePage.dc.html?doctor=" + key })),
     hdAllHref: "doctors.html", hdAll: () => c.setState({ hdDd: false }),
-    hdNav: [["نوبت حضوری", "#search"], ["مشاوره آنلاین", "#search"]].map(([label, href]) => ({ label, href: home + href })),
+    // Desktop nav (fateme, 2026-10-31): پزشکان و تخصص‌ها (dropdown), درباره ما, تماس با ما, and ورود و ثبت‌نام while logged out.
+    hdNav: [["درباره ما", "about.html"], ["تماس با ما", "contact.html"]].map(([label, href]) => ({ label, href })),
+    hdNavLogin: (e) => { e.preventDefault(); openLogin(); },
     hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری",
     // «دریافت نوبت» starts booking at the homepage search box.
     hdBookHref: home + "#search", hdBook: () => c.setState({ hdMenu: false, hdDd: false })
@@ -473,12 +594,12 @@ function headerVals(c, dev, o) {
 }
 
 class Component extends DCLogic {
-  state = { vw: 1440, tab: "appointments", filter: "all", phone: "09121234567", profile: DEFAULT_PROFILE, draft: DEFAULT_PROFILE, errs: {}, booked: [], over: {}, open: "", review: "", stars: 0, reviewText: "", reviewErr: false, cancelAsk: "", menu: false, toast: "" };
+  state = { vw: 1440, tab: "appointments", filter: "all", phone: "09121234567", profile: DEFAULT_PROFILE, draft: DEFAULT_PROFILE, errs: {}, booked: [], over: {}, open: "", review: "", stars: 0, reviewText: "", reviewErr: false, chat: "c1", chatDraft: "", chatMsgs: {}, chatRev: {}, cStars: 0, cText: "", cErr: false, cancelAsk: "", resch: "", rDay: -1, rTime: "", cReason: "", menu: false, toast: "" };
   componentDidMount() {
     let phone = "09121234567", authed = false; try { authed = !!localStorage.getItem("nikan-user"); phone = localStorage.getItem("nikan-user") || phone; } catch (e) {}
     const profile = { ...DEFAULT_PROFILE, ...read("nikan-profile", {}) };
     const hash = (location.hash || "").slice(1);
-    this.setState({ vw: document.documentElement.clientWidth, phone, authed, profile, draft: profile, booked: read("nikan-appts", []), over: read("nikan-appt-state", {}), tab: ["profile", "appointments", "chat"].includes(hash) ? hash : "appointments" });
+    this.setState({ vw: document.documentElement.clientWidth, phone, authed, profile, draft: profile, booked: read("nikan-appts", []), over: read("nikan-appt-state", {}), chatMsgs: read("nikan-chat", {}), chatRev: read("nikan-chat-reviews", {}), tab: ["profile", "appointments", "chat"].includes(hash) ? hash : "appointments" });
     // clientWidth ignores iOS Safari's toolbar show/hide while scrolling, which fires resize with the same width.
     this.onResize = () => { const w = document.documentElement.clientWidth; if (w !== this.state.vw) this.setState({ vw: w }); };
     this.onHash = () => { const h = location.hash.slice(1); if (["profile", "appointments", "chat"].includes(h)) this.setState({ tab: h }); };
@@ -487,6 +608,32 @@ class Component extends DCLogic {
     headerMount(this);
   }
   componentWillUnmount() { headerUnmount(this); window.removeEventListener("resize", this.onResize); window.removeEventListener("hashchange", this.onHash); window.removeEventListener("keydown", this.onKey); clearTimeout(this.tt); clearTimeout(this.mt); }
+  chatVals(s, dev) {
+    const C = CHATS.find((c) => c.id === s.chat) || CHATS[0], mobile = dev === "mobile";
+    const extra = s.chatMsgs[C.id] || [], rev = s.chatRev[C.id];
+    const all = C.msgs.concat(extra);
+    const stars = s.cStars;
+    return {
+      chatCols: mobile ? "minmax(0,1fr)" : (dev === "desktop" ? "280px minmax(0,1fr)" : "240px minmax(0,1fr)"),
+      chatListDir: mobile ? "row" : "column", chatItemFlex: mobile ? "0 0 min(270px, 82%)" : "none",
+      chatListBorder: mobile ? "0" : "1px solid #F0F2F4", chatListBorderB: mobile ? "1px solid #F0F2F4" : "0",
+      convs: CHATS.map((c) => { const on = c.id === C.id, m = c.msgs.concat(s.chatMsgs[c.id] || []); return { name: DOCS[c.doc][0], photo: "assets/doctors/photos/" + c.doc + ".png", last: m[m.length - 1][2],
+        st: c.open ? "فعال" : "پایان یافته", stBg: c.open ? "#ECFDF3" : "#F2F4F7", stFg: c.open ? "#067647" : "#475467",
+        sel: on ? "true" : "false", bg: on ? "#F5F8FF" : "#FFFFFF", border: on ? "#C9D7FB" : "transparent",
+        pick: () => this.setState({ chat: c.id, chatDraft: "", cStars: 0, cText: "", cErr: false }) }; }),
+      cName: DOCS[C.doc][0], cPhoto: "assets/doctors/photos/" + C.doc + ".png", cTopic: C.topic, cDay: C.day, cProfile: "DoctorProfilePage.dc.html?doctor=" + C.doc,
+      msgs: all.map(([who, time, text]) => { const me = who === "me"; return { text, time, align: me ? "flex-start" : "flex-end", bg: me ? "#3669EE" : "#FFFFFF", color: me ? "#FFFFFF" : "#222222", border: me ? "#3669EE" : "#ECEEF0", radius: me ? "16px 16px 4px 16px" : "16px 16px 16px 4px" }; }),
+      cOpen: C.open, cEnded: !C.open, chatDraft: s.chatDraft, sendBg: s.chatDraft.trim() ? "#3669EE" : "#B4C6F7",
+      onDraft: (e) => this.setState({ chatDraft: e.target.value }),
+      sendMsg: (e) => { e.preventDefault(); const t = this.state.chatDraft.trim(); if (!t) return; const d = new Date(), time = fa(String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"));
+        const chatMsgs = { ...this.state.chatMsgs, [C.id]: (this.state.chatMsgs[C.id] || []).concat([["me", time, t]]) }; write("nikan-chat", chatMsgs); this.setState({ chatMsgs, chatDraft: "" }, () => { const l = document.querySelector('[role="log"]'); if (l) l.scrollTop = l.scrollHeight; }); },
+      cAskReview: !C.open && !rev, cReviewed: !C.open && !!rev,
+      cRevStars: rev ? fa(rev.stars) + " از ۵" : "", cRevText: rev ? rev.text : "", cRevHasText: !!(rev && rev.text),
+      cStars: [1, 2, 3, 4, 5].map((n) => { const on = stars >= n; return { label: fa(n) + " ستاره", sel: stars === n ? "true" : "false", border: on ? "#F5A524" : "#D9D9D9", bg: on ? "#FFF7E6" : "#FFFFFF", color: on ? "#F5A524" : "#C9CDD2", pick: () => this.setState({ cStars: n, cErr: false }) }; }),
+      cStarsText: stars ? fa(stars) + " از ۵" : "", cText: s.cText, onCText: (e) => this.setState({ cText: e.target.value }), cErr: s.cErr,
+      cSubmit: (e) => { e.preventDefault(); if (!this.state.cStars) return this.setState({ cErr: true }); const chatRev = { ...this.state.chatRev, [C.id]: { stars: this.state.cStars, text: this.state.cText.trim() } }; write("nikan-chat-reviews", chatRev); this.setState({ chatRev, cStars: 0, cText: "" }); this.toast("نظر شما ثبت شد (نسخه نمایشی)."); }
+    };
+  }
   toast(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: "" }), 2600); }
   goTab(tab) { this.setState({ tab, menu: false }); try { history.replaceState(null, "", "#" + tab); } catch (e) {} window.scrollTo(0, 0); }
   logout() { try { localStorage.removeItem("nikan-user"); } catch (e) {} location.href = "Booking%20platform.dc.html"; }
@@ -494,9 +641,9 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state, vw = s.vw, dev = vw >= 1100 ? "desktop" : vw >= 700 ? "tablet" : "mobile";
     const L = {
-      desktop: { footCols: "minmax(0,1.5fr) repeat(3, minmax(0,0.8fr)) minmax(0,1.2fr)", footGap: "48px", navRow: "none", navGap: "28px", navFs: "16px", px: "80px", py: "32px", headerH: "80px", headerGap: "40px", navDisplay: "flex", spacer: "0", brandText: "inline", userName: "inline", gridCols: "280px minmax(0,1fr)", gap: "24px", asidePos: "sticky", asideTop: "112px", userDir: "column", userGap: "12px", userPad: "24px 20px", userAlign: "center", avatar: "56px", tabDir: "column", tabFlex: "none", tabPad: "20px", tabChevron: "block", cardPad: "24px", apptCols: 6, detailCols: 3, formPad: "32px", fieldCols: "repeat(2, minmax(0,1fr))" },
-      tablet: { footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", navRow: "none", navGap: "18px", navFs: "15px", px: "32px", py: "24px", headerH: "72px", headerGap: "20px", navDisplay: "flex", spacer: "0", brandText: "none", userName: "none", gridCols: "minmax(0,1fr)", gap: "16px", asidePos: "static", asideTop: "0", userDir: "row", userGap: "14px", userPad: "16px 20px", userAlign: "right", avatar: "48px", tabDir: "row", tabFlex: "1 0 auto", tabPad: "16px", tabChevron: "none", cardPad: "22px", apptCols: 3, detailCols: 3, formPad: "28px", fieldCols: "repeat(2, minmax(0,1fr))" },
-      mobile: { footCols: "minmax(0,1fr)", footGap: "28px", navRow: "none", navGap: "18px", navFs: "15px", px: "16px", py: "16px", headerH: "64px", headerGap: "12px", navDisplay: "none", spacer: "1", brandText: "none", userName: "none", gridCols: "minmax(0,1fr)", gap: "14px", asidePos: "static", asideTop: "0", userDir: "row", userGap: "12px", userPad: "14px 16px", userAlign: "right", avatar: "44px", tabDir: "row", tabFlex: "none", tabPad: "14px", tabChevron: "none", cardPad: "16px", apptCols: 2, detailCols: 1, formPad: "18px", fieldCols: "minmax(0,1fr)" }
+      desktop: { footCols: "minmax(0,1.6fr) repeat(3, minmax(0,1fr)) minmax(0,1.2fr)", footGap: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, navRow: "none", navGap: "28px", navFs: "16px", px: "80px", py: "32px", headerH: "80px", headerGap: "40px", navDisplay: "flex", spacer: "0", brandText: "inline", userName: "inline", gridCols: "280px minmax(0,1fr)", gap: "24px", asidePos: "sticky", asideTop: "112px", userDir: "column", userGap: "12px", userPad: "24px 20px", userAlign: "center", avatar: "56px", tabDir: "column", tabFlex: "none", tabPad: "20px", tabChevron: "block", cardPad: "24px", apptCols: 6, detailCols: 3, formPad: "32px", fieldCols: "repeat(2, minmax(0,1fr))" },
+      tablet: { footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, navRow: "none", navGap: "18px", navFs: "15px", px: "32px", py: "24px", headerH: "72px", headerGap: "20px", navDisplay: "flex", spacer: "0", brandText: "none", userName: "none", gridCols: "minmax(0,1fr)", gap: "16px", asidePos: "static", asideTop: "0", userDir: "row", userGap: "14px", userPad: "16px 20px", userAlign: "right", avatar: "48px", tabDir: "row", tabFlex: "1 0 auto", tabPad: "16px", tabChevron: "none", cardPad: "22px", apptCols: 3, detailCols: 3, formPad: "28px", fieldCols: "repeat(2, minmax(0,1fr))" },
+      mobile: { footCols: "auto minmax(0,1fr)", footGap: "28px", footAboutCol: "1 / -1", fo1: 1, fo2: 3, fo3: 2, fo4: 4, navRow: "none", navGap: "18px", navFs: "15px", px: "16px", py: "16px", headerH: "64px", headerGap: "12px", navDisplay: "none", spacer: "1", brandText: "none", userName: "none", gridCols: "minmax(0,1fr)", gap: "14px", asidePos: "static", asideTop: "0", userDir: "column", userGap: "12px", userPad: "24px 20px", userAlign: "center", avatar: "56px", tabDir: "column", tabFlex: "none", tabPad: "20px", tabChevron: "block", cardPad: "16px", apptCols: 2, detailCols: 1, formPad: "18px", fieldCols: "minmax(0,1fr)" }
     }[dev];
     const P = s.profile, d = s.draft, fullName = (P.first + " " + P.last).trim() || "کاربر کلینیک";
     const ITEMS = [["profile", "اطلاعات کاربری", "iUser"], ["appointments", "نوبت‌های من", "iCal"], ["chat", "صفحه گفتگو", "iChat"], ["logout", "خروج", "iOut"]];
@@ -516,7 +663,7 @@ class Component extends DCLogic {
       menuLeave: () => { if (dev === "desktop") { clearTimeout(this.mt); this.mt = setTimeout(() => this.setState({ menu: false }), 160); } },
       menuToggle: () => this.setState((st) => ({ menu: !st.menu })),
       menuItems: ITEMS.map((it) => ({ ...item(it), color: it[0] === "logout" ? "#D92D20" : "#222222" })),
-      sideItems: ITEMS.map((it) => { const on = s.tab === it[0], out = it[0] === "logout"; return { ...item(it), current: on ? "page" : "false", bg: on && dev === "desktop" ? "#F2F4F7" : "transparent", color: out ? "#D92D20" : on ? "#222222" : "#373A41", iconColor: out ? "#D92D20" : "#3669EE", weight: on ? 700 : 500, underline: dev !== "desktop" ? "2px solid " + (on ? "#3669EE" : "transparent") : "0" }; }),
+      sideItems: ITEMS.map((it) => { const on = s.tab === it[0], out = it[0] === "logout"; return { ...item(it), current: on ? "page" : "false", bg: on && dev !== "tablet" ? "#F2F4F7" : "transparent", color: out ? "#D92D20" : on ? "#222222" : "#373A41", iconColor: out ? "#D92D20" : "#3669EE", weight: on ? 700 : 500, underline: dev === "tablet" ? "2px solid " + (on ? "#3669EE" : "transparent") : "0" }; }),
       // Privacy and terms pages don't exist yet, so they are shown as "coming soon"; log out only appears when signed in.
       acctItems: [["حریم خصوصی", "iShield"], ["قوانین و شرایط", "iDoc"], ...(s.authed ? [["خروج از حساب", "iOut"]] : [])].map(([label, icon]) => {
         const out = icon === "iOut";
@@ -524,6 +671,7 @@ class Component extends DCLogic {
           color: out ? "#D92D20" : "#94979C", iconColor: out ? "#D92D20" : "#94979C", go: () => { if (out) this.logout(); } };
       }),
       isAppts: s.tab === "appointments", isProfile: s.tab === "profile", isChat: s.tab === "chat",
+      ...this.chatVals(s, dev),
       filters: [["all", "همه"], ["clinic", "ویزیت حضوری"], ["phone", "نوبت تلفنی"], ["online", "مشاوره آنلاین"]].map(([k, label]) => { const on = s.filter === k; return { label, count: fa(counts[k]), sel: on ? "true" : "false", line: on ? "#3669EE" : "transparent", color: on ? "#222222" : "#676767", weight: on ? 700 : 500, pick: () => this.setState({ filter: k }) }; }),
       apptsEmpty: list.length === 0,
       appts: list.map((a) => {
@@ -542,8 +690,16 @@ class Component extends DCLogic {
           reviewText: s.reviewText, onReviewText: (e) => this.setState({ reviewText: e.target.value }), reviewErr: inReview && s.reviewErr,
           reviewSubmit: (e) => { e.preventDefault(); if (!this.state.stars) return this.setState({ reviewErr: true }); this.setOver(a.id, { stars: this.state.stars }); this.setState({ review: "" }); this.toast("نظر شما ثبت شد (نسخه نمایشی)."); },
           canCancel: a.status === "booked" && s.cancelAsk !== a.id, cancelAsk: s.cancelAsk === a.id,
-          cancelStart: () => this.setState({ cancelAsk: a.id }), cancelNo: () => this.setState({ cancelAsk: "" }),
-          cancelYes: () => { this.setOver(a.id, { status: "cancelled", paid: a.paid + " · در حال بازگشت" }); this.setState({ cancelAsk: "" }); this.toast("نوبت لغو شد (نسخه نمایشی)."); },
+          cancelStart: () => this.setState({ cancelAsk: a.id, resch: "", cReason: "" }), cancelNo: () => this.setState({ cancelAsk: "" }),
+          reasons: CANCEL_REASONS.map((label) => { const on = s.cReason === label; return { label, sel: on ? "true" : "false", border: on ? "#D92D20" : "#FECDCA", bg: on ? "#D92D20" : "#FFFFFF", color: on ? "#FFFFFF" : "#912018", pick: () => this.setState({ cReason: label }) }; }),
+          reschFromCancel: () => this.setState({ cancelAsk: "", resch: a.id, rDay: -1, rTime: "" }),
+          canResch: a.status === "booked" && s.resch !== a.id, showAgain: a.status !== "booked", reschOpen: s.resch === a.id, docName: DOCS[a.doc][0],
+          reschStart: () => this.setState({ resch: a.id, cancelAsk: "", rDay: -1, rTime: "" }), reschNo: () => this.setState({ resch: "" }),
+          rDays: RESCH_DAYS.map(([w, d], i) => { const on = s.rDay === i; return { w, d, sel: on ? "true" : "false", border: on ? "#3669EE" : "#E6E6E6", bg: on ? "#3669EE" : "#FFFFFF", color: on ? "#FFFFFF" : "#222222", pick: () => this.setState({ rDay: i, rTime: "" }) }; }),
+          rTimes: s.rDay < 0 ? [] : RESCH_TIMES.map((t) => { const on = s.rTime === t; return { t, sel: on ? "true" : "false", border: on ? "#3669EE" : "#E6E6E6", bg: on ? "#EBF0FE" : "#FFFFFF", color: on ? "#2453D4" : "#222222", pick: () => this.setState({ rTime: t }) }; }),
+          reschDis: s.rDay >= 0 && s.rTime ? "false" : "true", reschBg: s.rDay >= 0 && s.rTime ? "#3669EE" : "#B4C6F7", reschCursor: s.rDay >= 0 && s.rTime ? "pointer" : "not-allowed",
+          reschYes: () => { const st = this.state; if (st.rDay < 0 || !st.rTime) return; this.setOver(a.id, { when: RESCH_DAYS[st.rDay][1] + " ۱۴۰۵ | " + st.rTime }); this.setState({ resch: "" }); this.toast("زمان نوبت تغییر کرد (نسخه نمایشی)."); },
+          cancelYes: () => { this.setOver(a.id, { status: "cancelled", paid: a.paid + " · در حال بازگشت", reason: this.state.cReason }); this.setState({ cancelAsk: "" }); this.toast("نوبت لغو شد (نسخه نمایشی)."); },
           again: "Booking%20Flow.dc.html?doctor=" + a.doc + "&type=" + a.type, againLabel: a.status === "booked" ? "تغییر زمان" : "نوبت مجدد"
         };
       }),
