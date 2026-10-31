@@ -29,8 +29,8 @@ a:hover{color:#2453D4}
 
 <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.97); border-bottom:1px solid {{ hdUp }}; box-shadow:{{ hdShadow }}; transition:box-shadow .3s, border-color .3s">
   <div style="max-width:1440px; margin:0 auto; padding:0 {{ hdL.px }}; height:{{ hdL.headerH }}; display:flex; align-items:center; gap:{{ hdL.headerGap }}">
-    <button type="button" onClick="{{ hdToggle }}" aria-expanded="{{ hdMenuExpanded }}" aria-label="منو" style="display:{{ hdL.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+    <button type="button" onClick="{{ hdToggle }}" aria-expanded="{{ hdMenuExpanded }}" aria-label="{{ hdMenuLabel }}" style="display:{{ hdL.menuDisplay }}; width:48px; height:48px; border-radius:14px; border:1px solid #E6E6E6; background:#FFFFFF; align-items:center; justify-content:center; cursor:pointer">
+        <sc-if value="{{ hdMenuShut }}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></sc-if><sc-if value="{{ hdMenuOpen }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></sc-if>
       </button>
     <a href="{{ hdHome }}" aria-label="کلینیک تخصصی نیکان — صفحه اصلی" style="display:flex; align-items:center; gap:12px; color:#222222; flex:none">
       <span aria-hidden="true" style="width:44px; height:44px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800">ن</span>
@@ -82,7 +82,7 @@ a:hover{color:#2453D4}
     </div>
   </div>
   <sc-if value="{{ hdMenuOpen }}" hint-placeholder-val="{{ false }}">
-    <nav aria-label="منوی اصلی" style="padding:8px {{ hdL.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
+    <nav aria-label="منوی اصلی" style="max-height:calc(100dvh - {{ hdL.headerH }}); overflow-y:auto; overscroll-behavior:contain; padding:8px {{ hdL.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
       <sc-for list="{{ hdBurger }}" as="b" hint-placeholder-count="6">
         <a href="{{ b.href }}" onClick="{{ b.go }}" aria-disabled="{{ b.disabled }}" style="min-height:52px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ b.color }}; cursor:{{ b.cursor }}">
           <span aria-hidden="true" style="flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:{{ b.iconColor }}">
@@ -159,7 +159,7 @@ a:hover{color:#2453D4}
       <div style="display:flex; flex-direction:column; gap:12px">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px">
           <h3 style="margin:0; font-size:16px; font-weight:700">انتخاب روز</h3>
-          <span style="font-size:12px; color:#676767; background:#F0F2F4; padding:4px 10px; border-radius:999px">زمان‌های خالی این هفته</span>
+          <span style="font-size:12px; color:#676767; background:#F0F2F4; padding:4px 10px; border-radius:999px">زمان‌های خالی این ماه</span>
         </div>
         <div role="radiogroup" aria-label="روز" style="display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px">
           <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
@@ -282,21 +282,6 @@ a:hover{color:#2453D4}
           <div style="padding:32px 20px; border-radius:18px; background:#F8F9FA; text-align:center; font-size:15px; color:#676767">{{ revEmpty }}</div>
         </sc-if>
       </div>
-    </section>
-
-    <section id="sec-faq" aria-labelledby="faq-h" data-screen-label="FAQ" style="border:1px solid #E6E6E6; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:14px">
-      <h2 id="faq-h" style="margin:0 0 6px; font-size:22px; font-weight:800">سوالات متداول</h2>
-      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
-        <div style="border:1px solid #ECEEF0; border-radius:16px">
-          <button type="button" onClick="{{ f.toggle }}" aria-expanded="{{ f.expanded }}" style="width:100%; min-height:60px; padding:0 18px; border:0; background:transparent; display:flex; align-items:center; gap:14px; cursor:pointer; text-align:right; font-size:16px; font-weight:600">
-            <span aria-hidden="true" style="flex:none; width:32px; height:32px; border-radius:999px; background:#EBF0FE; color:#3669EE; display:flex; align-items:center; justify-content:center; font-size:20px; line-height:1">{{ f.sign }}</span>
-            <span style="flex:1">{{ f.q }}</span>
-          </button>
-          <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
-            <p style="margin:0; padding:0 64px 18px 18px; font-size:15px; line-height:1.9; color:#4A4A4A">{{ f.a }}</p>
-          </sc-if>
-        </div>
-      </sc-for>
     </section>
 
     <nav aria-label="مسیر صفحه" style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-size:14px; color:#676767">
@@ -506,11 +491,10 @@ const HDR_BURGER = (home, authed, openLogin, close) => [
     iUser: icon === "iUser", iCal: icon === "iCal", iSearch: icon === "iSearch", iInfo: icon === "iInfo", iPhone: icon === "iPhone", iFaq: icon === "iFaq",
     go: (e) => { if (soon) { e.preventDefault(); return; } if (auth && !authed) { e.preventDefault(); openLogin(); return; } close(); } };
 });
-// Shadow once the page scrolls; an open hamburger menu closes as soon as the page scrolls down.
+// Shadow once the page scrolls. The hamburger menu stays open until its button (×) or a link is tapped.
 function headerMount(c) {
   c.hdScroll = () => {
     const y = window.scrollY, up = y > 8;
-    if (c.state.hdMenu && y > (c.hdMenuY || 0) + 8) c.setState({ hdMenu: false });
     if (up !== !!c.state.hdUp) c.setState({ hdUp: up });
   };
   window.addEventListener("scroll", c.hdScroll, { passive: true });
@@ -523,8 +507,8 @@ function headerVals(c, dev, o) {
   return {
     hdL: HDR_L[dev], hdHome: home || "#top",
     hdUp: c.state.hdUp ? "#ECEEF0" : "transparent", hdShadow: c.state.hdUp ? "0 6px 24px rgba(34,34,34,.05)" : "none",
-    hdMenuOpen: menu && dev === "mobile", hdMenuExpanded: menu ? "true" : "false",
-    hdToggle: () => { c.hdMenuY = window.scrollY; c.setState((s) => ({ hdMenu: !s.hdMenu })); },
+    hdMenuOpen: menu && dev === "mobile", hdMenuShut: !(menu && dev === "mobile"), hdMenuExpanded: menu ? "true" : "false", hdMenuLabel: menu ? "بستن منو" : "منو",
+    hdToggle: () => c.setState((s) => ({ hdMenu: !s.hdMenu })),
     hdBurger: HDR_BURGER(home, o.authed, openLogin, close),
     hdDdShow: dd, hdDdExpanded: dd ? "true" : "false", hdDdRot: dd ? "rotate(180deg)" : "none",
     hdDdColor: dd ? "#3669EE" : "#373A41", hdDdLine: dd ? "#3669EE" : "transparent",
@@ -542,30 +526,30 @@ function headerVals(c, dev, o) {
     hdBookHref: home + "#search", hdBook: () => c.setState({ hdMenu: false, hdDd: false })
   };
 }
-const SECS = [["about", "معرفی", "sec-about"], ["services", "خدمات", "sec-services"], ["contact", "اطلاعات مراجعه", "sec-contact"], ["reviews", "نظرات", "sec-reviews"], ["faq", "سوالات متداول", "sec-faq"]];
-const DAYS = [
-  { id: "d1", w: "شنبه", d: "۹ آبان", clinic: ["۱۶:۰۰", "۱۶:۳۰", "۱۷:۰۰", "۱۸:۳۰"], phone: ["۱۳:۰۰", "۱۳:۳۰"], online: ["۲۰:۰۰", "۲۰:۳۰"] },
-  { id: "d2", w: "یکشنبه", d: "۱۰ آبان", clinic: [], phone: ["۱۱:۰۰", "۱۱:۳۰", "۱۲:۰۰"], online: ["۱۹:۰۰"] },
-  { id: "d3", w: "دوشنبه", d: "۱۱ آبان", clinic: ["۱۰:۰۰", "۱۰:۳۰", "۱۱:۰۰", "۱۱:۳۰", "۱۲:۰۰"], phone: [], online: [] },
-  { id: "d4", w: "سه‌شنبه", d: "۱۲ آبان", clinic: [], phone: ["۱۸:۰۰"], online: [] },
-  { id: "d5", w: "چهارشنبه", d: "۱۳ آبان", clinic: ["۱۵:۰۰", "۱۵:۳۰", "۱۶:۰۰"], phone: ["۱۲:۰۰", "۱۲:۳۰"], online: ["۲۱:۰۰", "۲۱:۳۰"] }
+const SECS = [["about", "معرفی", "sec-about"], ["services", "خدمات", "sec-services"], ["contact", "اطلاعات مراجعه", "sec-contact"], ["reviews", "نظرات", "sec-reviews"]];
+// Demo free times for the coming month: the same Saturday–Wednesday pattern repeated for 4 weeks (from ۹ آبان).
+const WEEK = [
+  { w: "شنبه", clinic: ["۱۶:۰۰", "۱۶:۳۰", "۱۷:۰۰", "۱۸:۳۰"], phone: ["۱۳:۰۰", "۱۳:۳۰"], online: ["۲۰:۰۰", "۲۰:۳۰"] },
+  { w: "یکشنبه", clinic: [], phone: ["۱۱:۰۰", "۱۱:۳۰", "۱۲:۰۰"], online: ["۱۹:۰۰"] },
+  { w: "دوشنبه", clinic: ["۱۰:۰۰", "۱۰:۳۰", "۱۱:۰۰", "۱۱:۳۰", "۱۲:۰۰"], phone: [], online: [] },
+  { w: "سه‌شنبه", clinic: [], phone: ["۱۸:۰۰"], online: [] },
+  { w: "چهارشنبه", clinic: ["۱۵:۰۰", "۱۵:۳۰", "۱۶:۰۰"], phone: ["۱۲:۰۰", "۱۲:۳۰"], online: ["۲۱:۰۰", "۲۱:۳۰"] }
 ];
+const faNum = (n) => String(n).replace(/\d/g, (x) => "۰۱۲۳۴۵۶۷۸۹"[x]);
+const DAYS = [];
+for (let k = 0; k < 4; k++) WEEK.forEach((x, j) => {
+  const n = 9 + k * 7 + j, d = n <= 30 ? faNum(n) + " آبان" : faNum(n - 30) + " آذر";
+  DAYS.push({ ...x, id: "d" + (DAYS.length + 1), d });
+});
 const TYPES = {
   clinic: { title: "نوبت حضوری", sub: "کلینیک نیکان، تهران", accent: "#3669EE", iconBg: "#EBF0FE", label: "حضوری" },
   phone: { title: "نوبت تلفنی", sub: "تماس تلفنی پزشک با شما", accent: "#0E8F86", iconBg: "#E3F5F3", label: "تلفنی" },
   online: { title: "مشاوره آنلاین", sub: "تماس تصویری یا صوتی", accent: "#15B743", iconBg: "#E8F7EC", label: "آنلاین" }
 };
 const firstSlot = (t) => { const d = DAYS.find((x) => x[t].length); return d ? "اولین نوبت خالی: " + d.w + " " + d.d + "، " + d[t][0] : "نوبت خالی ندارد"; };
-const FAQS = (D) => [
-  ["نزدیک‌ترین نوبت " + D.name + " چه زمانی است؟", "اولین زمان خالی هر نوع ویزیت در بخش «نوع ویزیت را انتخاب کنید» نمایش داده می‌شود."],
-  [D.types.includes("online") ? "امکان مشاوره آنلاین با " + D.name + " وجود دارد؟" : "آیا " + D.name + " مشاوره آنلاین دارند؟", D.types.includes("online") ? "بله، با انتخاب «مشاوره آنلاین» می‌توانید زمان تماس تصویری یا صوتی را انتخاب کنید." : "خیر، " + D.name + " مشاوره آنلاین ارائه نمی‌کنند."],
-  [D.types.includes("phone") ? "نوبت تلفنی با " + D.name + " چگونه انجام می‌شود؟" : "آیا " + D.name + " نوبت تلفنی دارند؟", D.types.includes("phone") ? "با انتخاب «نوبت تلفنی» زمان تماس را انتخاب کنید؛ پزشک در همان ساعت با شماره موبایلی که با آن وارد شده‌اید تماس می‌گیرد." : "خیر، " + D.name + " نوبت تلفنی ارائه نمی‌کنند."],
-  ["هزینه ویزیت چگونه پرداخت می‌شود؟", "هزینه ویزیت حضوری " + D.fee.clinic + " تومان است" + (D.types.includes("phone") ? "، نوبت تلفنی " + D.fee.phone + " تومان" : "") + (D.types.includes("online") ? " و مشاوره آنلاین " + D.fee.online + " تومان" : "") + ". مبلغ پیش از تأیید نهایی نمایش داده می‌شود."],
-  ["نشانی محل ویزیت حضوری کجاست؟", "ویزیت حضوری در کلینیک نیکان به نشانی " + ADDRESS + " انجام می‌شود."]
-];
 
 class Component extends DCLogic {
-  state = { doc: "peyman", vw: 1440, login: null, phone: "", code: "", loginErr: "", booking: "", type: "clinic", day: "d1", slot: null, bio: false, faq: 0, menu: false, toast: "", tab: "about" };
+  state = { doc: "peyman", vw: 1440, login: null, phone: "", code: "", loginErr: "", booking: "", type: "clinic", day: "d1", slot: null, bio: false, menu: false, toast: "", tab: "about" };
   scrollRef = React.createRef();
 
   componentDidUpdate() { const full = this.isFull(); if (full !== this.lastFull) { this.lastFull = full; this.bindScroll(); } }
@@ -670,7 +654,7 @@ class Component extends DCLogic {
     const full = auto ? true : (this.props.fullPage ?? false);
     const dk = DOCS[this.state.doc] ? this.state.doc : "peyman";
     const D = { ...DOCS[dk], photo: "assets/doctors/photos/" + dk + ".png" };
-    const { day, slot, bio, faq, menu, toast, tab } = this.state;
+    const { day, slot, bio, menu, toast, tab } = this.state;
     const type = D.types.includes(this.state.type) ? this.state.type : D.types[0];
     const dayObj = DAYS.find((d) => d.id === day) || DAYS[0];
     const slots = dayObj[type];
@@ -724,7 +708,6 @@ class Component extends DCLogic {
       footerSpecs: [["قلب و عروق", "sara"], ["پوست و مو", "amir"], ["زنان و زایمان", "narges"], ["ارتوپدی", "hamid"], ["پزشک عمومی", "maryam"], ["مغز و اعصاب", "peyman"]].map(([name, k]) => ({ name, pick: () => { location.href = "DoctorProfilePage.dc.html?doctor=" + k; } })),
       openLogin: () => this.setState({ login: "phone", loginErr: "", code: "", booking: "" }),
       openLoginLink: (e) => { e.preventDefault(); this.setState({ login: "phone", loginErr: "", code: "", booking: "" }); },
-      faqs: FAQS(D).map(([q, a], i) => ({ q, a, open: faq === i, expanded: faq === i ? "true" : "false", sign: faq === i ? "−" : "+", toggle: () => this.setState({ faq: faq === i ? -1 : i }) })),
       footerCols: [
         { title: "تخصص‌ها", links: [["قلب و عروق", "sara"], ["پوست و مو", "amir"], ["زنان و زایمان", "narges"], ["ارتوپدی", "hamid"], ["پزشک عمومی", "maryam"], ["مغز و اعصاب", "peyman"]].map(([label, k]) => ({ label, href: "DoctorProfilePage.dc.html?doctor=" + k })) },
         { title: "نوبت‌دهی", links: [["نوبت حضوری", "#booking"], ["نوبت تلفنی", "#booking"], ["مشاوره آنلاین", "#booking"], ["پیگیری نوبت", "#contact"]].map(([label, h]) => ({ label, href: "Booking%20platform.dc.html" + h })) },
