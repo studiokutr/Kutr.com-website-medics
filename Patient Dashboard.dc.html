@@ -229,11 +229,42 @@ a:hover{color:#2453D4}
                 </form>
               </sc-if>
               <sc-if value="{{ a.cancelAsk }}" hint-placeholder-val="{{ false }}">
-                <div role="alertdialog" aria-label="لغو نوبت" style="padding:16px; border-radius:14px; background:#FEF3F2; border:1px solid #FECDCA; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px">
-                  <span style="font-size:14px; line-height:1.8; color:#912018">این نوبت لغو شود؟ پیش‌پرداخت طبق قوانین لغو بازگردانده می‌شود.</span>
-                  <div style="display:flex; gap:8px">
-                    <button type="button" onClick="{{ a.cancelYes }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:0; background:#D92D20; color:#FFFFFF; font-weight:700; cursor:pointer">بله، لغو شود</button>
-                    <button type="button" onClick="{{ a.cancelNo }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer">خیر</button>
+                <div role="alertdialog" aria-labelledby="cx-h" style="padding:18px; border-radius:16px; background:#FEF3F2; border:1px solid #FECDCA; display:flex; flex-direction:column; gap:14px">
+                  <div style="display:flex; flex-direction:column; gap:4px">
+                    <span id="cx-h" style="font-size:16px; font-weight:800; color:#912018">لغو نوبت {{ a.when }}</span>
+                    <span style="font-size:14px; line-height:1.8; color:#912018">پیش‌پرداخت ({{ a.paid }}) طبق قوانین لغو کلینیک بازگردانده می‌شود.</span>
+                  </div>
+                  <div role="radiogroup" aria-label="دلیل لغو" style="display:flex; flex-wrap:wrap; gap:8px">
+                    <sc-for list="{{ a.reasons }}" as="r" hint-placeholder-count="4">
+                      <button type="button" role="radio" aria-checked="{{ r.sel }}" onClick="{{ r.pick }}" style="min-height:40px; padding:0 14px; border-radius:999px; border:1px solid {{ r.border }}; background:{{ r.bg }}; color:{{ r.color }}; font:inherit; font-size:14px; cursor:pointer">{{ r.label }}</button>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex; flex-wrap:wrap; gap:8px">
+                    <button type="button" onClick="{{ a.cancelYes }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:0; background:#D92D20; color:#FFFFFF; font-weight:700; cursor:pointer">لغو نوبت</button>
+                    <button type="button" onClick="{{ a.reschFromCancel }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; font-weight:600; cursor:pointer">به جای لغو، زمان را تغییر می‌دهم</button>
+                    <button type="button" onClick="{{ a.cancelNo }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer">منصرف شدم</button>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ a.reschOpen }}" hint-placeholder-val="{{ false }}">
+                <div role="dialog" aria-labelledby="rs-h" style="padding:18px; border-radius:16px; background:#F5F8FF; border:1px solid #C9D7FB; display:flex; flex-direction:column; gap:14px">
+                  <div style="display:flex; flex-direction:column; gap:4px">
+                    <span id="rs-h" style="font-size:16px; font-weight:800">انتخاب زمان جدید</span>
+                    <span style="font-size:14px; color:#4A4A4A">زمان فعلی: {{ a.when }} · {{ a.docName }}</span>
+                  </div>
+                  <div role="radiogroup" aria-label="روز جدید" style="display:flex; gap:8px; overflow-x:auto; scrollbar-width:none">
+                    <sc-for list="{{ a.rDays }}" as="d" hint-placeholder-count="5">
+                      <button type="button" role="radio" aria-checked="{{ d.sel }}" onClick="{{ d.pick }}" style="flex:none; min-width:76px; height:64px; border-radius:14px; border:1px solid {{ d.border }}; background:{{ d.bg }}; color:{{ d.color }}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font:inherit; cursor:pointer"><span style="font-size:13px">{{ d.w }}</span><span style="font-size:15px; font-weight:700">{{ d.d }}</span></button>
+                    </sc-for>
+                  </div>
+                  <div role="radiogroup" aria-label="ساعت جدید" style="display:flex; flex-wrap:wrap; gap:8px">
+                    <sc-for list="{{ a.rTimes }}" as="t" hint-placeholder-count="5">
+                      <button type="button" role="radio" aria-checked="{{ t.sel }}" onClick="{{ t.pick }}" style="min-height:44px; padding:0 14px; border-radius:12px; border:1px solid {{ t.border }}; background:{{ t.bg }}; color:{{ t.color }}; font:inherit; font-size:14px; font-weight:600; cursor:pointer">{{ t.t }}</button>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex; flex-wrap:wrap; gap:8px">
+                    <button type="button" onClick="{{ a.reschYes }}" aria-disabled="{{ a.reschDis }}" style="min-height:44px; padding:0 20px; border-radius:12px; border:0; background:{{ a.reschBg }}; color:#FFFFFF; font-weight:700; cursor:{{ a.reschCursor }}">تأیید زمان جدید</button>
+                    <button type="button" onClick="{{ a.reschNo }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer">انصراف</button>
                   </div>
                 </div>
               </sc-if>
@@ -253,7 +284,12 @@ a:hover{color:#2453D4}
                 <button type="button" onClick="{{ a.cancelStart }}" style="min-height:44px; padding:0 18px; border-radius:12px; border:1px solid #FECDCA; background:#FFFFFF; color:#D92D20; font-size:14px; font-weight:600; cursor:pointer" style-hover="background:#FEF3F2">لغو نوبت</button>
               </sc-if>
               <span style="flex:1"></span>
+              <sc-if value="{{ a.canResch }}" hint-placeholder-val="{{ false }}">
+                <button type="button" onClick="{{ a.reschStart }}" style="min-height:44px; padding:0 22px; border-radius:12px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; font:inherit; font-size:14px; font-weight:600; cursor:pointer" style-hover="background:#F5F8FF">تغییر زمان</button>
+              </sc-if>
+              <sc-if value="{{ a.showAgain }}" hint-placeholder-val="{{ true }}">
               <a href="{{ a.again }}" style="min-height:44px; padding:0 22px; border-radius:12px; border:1px solid #3669EE; color:#3669EE; display:flex; align-items:center; font-size:14px; font-weight:600" style-hover="background:#F5F8FF; color:#3669EE">{{ a.againLabel }}</a>
+              </sc-if>
             </div>
           </article>
         </sc-for>
@@ -500,6 +536,10 @@ const SAMPLE = [
   { id: "s2", doc: "maryam", type: "online", when: "۱۵ شهریور ۱۴۰۵ | ۱۵:۰۰", status: "done", code: "۲۳۱۴۵۵۹۱۲", paid: "۲۷۷٬۵۰۰ تومان", remain: "—", patient: "حساب شما", created: "۱۰ شهریور ۱۴۰۵" },
   { id: "s3", doc: "sara", type: "clinic", when: "۲ مرداد ۱۴۰۵ | ۱۸:۱۵", status: "cancelled", code: "۲۳۰۹۸۷۲۰۴", paid: "۱۲۷٬۵۰۰ تومان · بازگشت داده شد", remain: "—", patient: "حساب شما", created: "۲۸ تیر ۱۴۰۵" }
 ];
+// Demo free times offered when moving an appointment (clinic closed Thursday/Friday).
+const RESCH_DAYS = [["چهارشنبه", "۱۳ آبان"], ["شنبه", "۱۶ آبان"], ["یکشنبه", "۱۷ آبان"], ["دوشنبه", "۱۸ آبان"], ["سه‌شنبه", "۱۹ آبان"]];
+const RESCH_TIMES = ["۱۰:۰۰", "۱۱:۳۰", "۱۶:۰۰", "۱۷:۳۰", "۱۸:۱۵"];
+const CANCEL_REASONS = ["زمان مناسب نیست", "بهبود یافتم", "پزشک دیگری را انتخاب کردم", "سایر"];
 const CITIES = ["تهران / تهران", "البرز / کرج", "اصفهان / اصفهان", "فارس / شیراز", "خراسان رضوی / مشهد", "آذربایجان شرقی / تبریز"];
 const fa = (v) => String(v).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
 const en = (v) => String(v).replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/\D/g, "");
@@ -569,7 +609,7 @@ function headerVals(c, dev, o) {
 }
 
 class Component extends DCLogic {
-  state = { vw: 1440, tab: "appointments", filter: "all", phone: "09121234567", profile: DEFAULT_PROFILE, draft: DEFAULT_PROFILE, errs: {}, booked: [], over: {}, open: "", review: "", stars: 0, reviewText: "", reviewErr: false, chat: "c1", chatDraft: "", chatMsgs: {}, chatRev: {}, cStars: 0, cText: "", cErr: false, cancelAsk: "", menu: false, toast: "" };
+  state = { vw: 1440, tab: "appointments", filter: "all", phone: "09121234567", profile: DEFAULT_PROFILE, draft: DEFAULT_PROFILE, errs: {}, booked: [], over: {}, open: "", review: "", stars: 0, reviewText: "", reviewErr: false, chat: "c1", chatDraft: "", chatMsgs: {}, chatRev: {}, cStars: 0, cText: "", cErr: false, cancelAsk: "", resch: "", rDay: -1, rTime: "", cReason: "", menu: false, toast: "" };
   componentDidMount() {
     let phone = "09121234567", authed = false; try { authed = !!localStorage.getItem("nikan-user"); phone = localStorage.getItem("nikan-user") || phone; } catch (e) {}
     const profile = { ...DEFAULT_PROFILE, ...read("nikan-profile", {}) };
@@ -665,8 +705,16 @@ class Component extends DCLogic {
           reviewText: s.reviewText, onReviewText: (e) => this.setState({ reviewText: e.target.value }), reviewErr: inReview && s.reviewErr,
           reviewSubmit: (e) => { e.preventDefault(); if (!this.state.stars) return this.setState({ reviewErr: true }); this.setOver(a.id, { stars: this.state.stars }); this.setState({ review: "" }); this.toast("نظر شما ثبت شد (نسخه نمایشی)."); },
           canCancel: a.status === "booked" && s.cancelAsk !== a.id, cancelAsk: s.cancelAsk === a.id,
-          cancelStart: () => this.setState({ cancelAsk: a.id }), cancelNo: () => this.setState({ cancelAsk: "" }),
-          cancelYes: () => { this.setOver(a.id, { status: "cancelled", paid: a.paid + " · در حال بازگشت" }); this.setState({ cancelAsk: "" }); this.toast("نوبت لغو شد (نسخه نمایشی)."); },
+          cancelStart: () => this.setState({ cancelAsk: a.id, resch: "", cReason: "" }), cancelNo: () => this.setState({ cancelAsk: "" }),
+          reasons: CANCEL_REASONS.map((label) => { const on = s.cReason === label; return { label, sel: on ? "true" : "false", border: on ? "#D92D20" : "#FECDCA", bg: on ? "#D92D20" : "#FFFFFF", color: on ? "#FFFFFF" : "#912018", pick: () => this.setState({ cReason: label }) }; }),
+          reschFromCancel: () => this.setState({ cancelAsk: "", resch: a.id, rDay: -1, rTime: "" }),
+          canResch: a.status === "booked" && s.resch !== a.id, showAgain: a.status !== "booked", reschOpen: s.resch === a.id, docName: DOCS[a.doc][0],
+          reschStart: () => this.setState({ resch: a.id, cancelAsk: "", rDay: -1, rTime: "" }), reschNo: () => this.setState({ resch: "" }),
+          rDays: RESCH_DAYS.map(([w, d], i) => { const on = s.rDay === i; return { w, d, sel: on ? "true" : "false", border: on ? "#3669EE" : "#E6E6E6", bg: on ? "#3669EE" : "#FFFFFF", color: on ? "#FFFFFF" : "#222222", pick: () => this.setState({ rDay: i, rTime: "" }) }; }),
+          rTimes: s.rDay < 0 ? [] : RESCH_TIMES.map((t) => { const on = s.rTime === t; return { t, sel: on ? "true" : "false", border: on ? "#3669EE" : "#E6E6E6", bg: on ? "#EBF0FE" : "#FFFFFF", color: on ? "#2453D4" : "#222222", pick: () => this.setState({ rTime: t }) }; }),
+          reschDis: s.rDay >= 0 && s.rTime ? "false" : "true", reschBg: s.rDay >= 0 && s.rTime ? "#3669EE" : "#B4C6F7", reschCursor: s.rDay >= 0 && s.rTime ? "pointer" : "not-allowed",
+          reschYes: () => { const st = this.state; if (st.rDay < 0 || !st.rTime) return; this.setOver(a.id, { when: RESCH_DAYS[st.rDay][1] + " ۱۴۰۵ | " + st.rTime }); this.setState({ resch: "" }); this.toast("زمان نوبت تغییر کرد (نسخه نمایشی)."); },
+          cancelYes: () => { this.setOver(a.id, { status: "cancelled", paid: a.paid + " · در حال بازگشت", reason: this.state.cReason }); this.setState({ cancelAsk: "" }); this.toast("نوبت لغو شد (نسخه نمایشی)."); },
           again: "Booking%20Flow.dc.html?doctor=" + a.doc + "&type=" + a.type, againLabel: a.status === "booked" ? "تغییر زمان" : "نوبت مجدد"
         };
       }),
