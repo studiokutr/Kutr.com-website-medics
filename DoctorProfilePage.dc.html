@@ -247,7 +247,7 @@ a:hover{color:#2453D4}
         <div style="display:flex; flex-direction:column; gap:16px; padding:20px; border-radius:18px; background:#F8F9FA">
           <span style="display:flex; align-items:center; gap:10px; font-size:17px; font-weight:700"><span aria-hidden="true" style="width:10px; height:10px; border-radius:3px; background:#15B743"></span>مشاوره آنلاین</span>
           <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:15px; line-height:1.7; color:#373A41">
-            <li>تماس تصویری یا صوتی در زمان رزروشده</li>
+            <li>تماس تصویری یا صوتی در زمان نوبت</li>
             <li>امکان ارسال مدارک و جواب آزمایش پیش از جلسه</li>
             <li>مناسب برای پیگیری درمان و مشاوره اولیه</li>
           </ul>
@@ -256,7 +256,7 @@ a:hover{color:#2453D4}
           <div style="display:flex; flex-direction:column; gap:16px; padding:20px; border-radius:18px; background:#F8F9FA">
             <span style="display:flex; align-items:center; gap:10px; font-size:17px; font-weight:700"><span aria-hidden="true" style="width:10px; height:10px; border-radius:3px; background:#0E8F86"></span>نوبت تلفنی</span>
             <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:15px; line-height:1.7; color:#373A41">
-              <li>پزشک در زمان رزروشده با شماره موبایل شما تماس می‌گیرد</li>
+              <li>پزشک در زمان نوبت با شماره موبایل شما تماس می‌گیرد</li>
               <li>بدون نیاز به اینترنت پرسرعت یا نصب برنامه</li>
               <li>مناسب برای پیگیری درمان و پرسش‌های کوتاه</li>
             </ul>
@@ -312,7 +312,7 @@ a:hover{color:#2453D4}
     
     <div style="display:grid; grid-template-columns:{{ L.footCols }}; gap:{{ L.footGap }}; padding:0 0 48px">
       <div style="display:flex; flex-direction:column; gap:16px">
-        <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان رزرو نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
+        <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان دریافت نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
         <a href="Booking%20platform.dc.html#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
       </div>
@@ -557,8 +557,8 @@ const TYPES = {
 const firstSlot = (t) => { const d = DAYS.find((x) => x[t].length); return d ? "اولین نوبت خالی: " + d.w + " " + d.d + "، " + d[t][0] : "نوبت خالی ندارد"; };
 const FAQS = (D) => [
   ["نزدیک‌ترین نوبت " + D.name + " چه زمانی است؟", "اولین زمان خالی هر نوع ویزیت در بخش «نوع ویزیت را انتخاب کنید» نمایش داده می‌شود."],
-  [D.types.includes("online") ? "امکان مشاوره آنلاین با " + D.name + " وجود دارد؟" : "آیا " + D.name + " مشاوره آنلاین دارند؟", D.types.includes("online") ? "بله، با انتخاب «مشاوره آنلاین» می‌توانید زمان تماس تصویری یا صوتی را رزرو کنید." : "خیر، " + D.name + " مشاوره آنلاین ارائه نمی‌کنند."],
-  [D.types.includes("phone") ? "نوبت تلفنی با " + D.name + " چگونه انجام می‌شود؟" : "آیا " + D.name + " نوبت تلفنی دارند؟", D.types.includes("phone") ? "با انتخاب «نوبت تلفنی» زمان تماس را رزرو کنید؛ پزشک در همان ساعت با شماره موبایلی که با آن وارد شده‌اید تماس می‌گیرد." : "خیر، " + D.name + " نوبت تلفنی ارائه نمی‌کنند."],
+  [D.types.includes("online") ? "امکان مشاوره آنلاین با " + D.name + " وجود دارد؟" : "آیا " + D.name + " مشاوره آنلاین دارند؟", D.types.includes("online") ? "بله، با انتخاب «مشاوره آنلاین» می‌توانید زمان تماس تصویری یا صوتی را انتخاب کنید." : "خیر، " + D.name + " مشاوره آنلاین ارائه نمی‌کنند."],
+  [D.types.includes("phone") ? "نوبت تلفنی با " + D.name + " چگونه انجام می‌شود؟" : "آیا " + D.name + " نوبت تلفنی دارند؟", D.types.includes("phone") ? "با انتخاب «نوبت تلفنی» زمان تماس را انتخاب کنید؛ پزشک در همان ساعت با شماره موبایلی که با آن وارد شده‌اید تماس می‌گیرد." : "خیر، " + D.name + " نوبت تلفنی ارائه نمی‌کنند."],
   ["هزینه ویزیت چگونه پرداخت می‌شود؟", "هزینه ویزیت حضوری " + D.fee.clinic + " تومان است" + (D.types.includes("phone") ? "، نوبت تلفنی " + D.fee.phone + " تومان" : "") + (D.types.includes("online") ? " و مشاوره آنلاین " + D.fee.online + " تومان" : "") + ". مبلغ پیش از تأیید نهایی نمایش داده می‌شود."],
   ["نشانی محل ویزیت حضوری کجاست؟", "ویزیت حضوری در کلینیک نیکان به نشانی " + ADDRESS + " انجام می‌شود."]
 ];

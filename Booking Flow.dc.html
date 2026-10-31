@@ -8,7 +8,7 @@
 <body>
 <x-dc>
 <helmet>
-<title>رزرو نوبت · کلینیک نیکان</title>
+<title>دریافت نوبت · کلینیک نیکان</title>
 <style>
 @font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Light.woff2') format('woff2');font-weight:300;font-display:swap}
 @font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
@@ -106,7 +106,7 @@ a:hover{color:#2453D4}
   <a href="{{ profileHref }}" style="align-self:flex-start; min-height:44px; display:flex; align-items:center; gap:6px; font-size:15px; color:#4A4A4A">بازگشت به پروفایل پزشک <span aria-hidden="true">←</span></a>
 
   <sc-if value="{{ showStepper }}" hint-placeholder-val="{{ true }}">
-    <ol aria-label="مراحل رزرو" style="list-style:none; margin:0 0 8px; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr))">
+    <ol aria-label="مراحل دریافت نوبت" style="list-style:none; margin:0 0 8px; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr))">
       <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
         <li aria-current="{{ st.current }}" style="position:relative; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center">
           <span aria-hidden="true" style="position:absolute; top:13px; left:50%; width:100%; height:0; border-top:2px dashed {{ st.lineColor }}; display:{{ st.lineDisplay }}"></span>
@@ -196,7 +196,7 @@ a:hover{color:#2453D4}
           <span aria-hidden="true" style="flex:none; width:56px; height:56px; border-radius:16px; background-color:#EBF0FE; background-image:url({{ photo }}); background-size:cover"></span>
           <div style="display:flex; flex-direction:column; gap:2px; min-width:0"><span style="font-size:17px; font-weight:800">{{ D.name }}</span><span style="font-size:14px; color:#676767">{{ D.specialty }}</span></div>
         </div>
-        <span role="timer" aria-label="زمان باقی‌مانده برای تکمیل رزرو" style="flex:none; display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:{{ timerBg }}; color:{{ timerFg }}; font-size:14px; font-weight:700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span dir="ltr">{{ timerText }}</span></span>
+        <span role="timer" aria-label="زمان باقی‌مانده برای تکمیل دریافت نوبت" style="flex:none; display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:{{ timerBg }}; color:{{ timerFg }}; font-size:14px; font-weight:700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span dir="ltr">{{ timerText }}</span></span>
       </div>
       <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; padding-top:14px; border-top:1px solid #F0F2F4; font-size:15px"><span style="color:#676767">زمان نوبت</span><span style="font-weight:600">{{ whenText }}</span></div>
     </section>
@@ -308,7 +308,7 @@ a:hover{color:#2453D4}
   <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
     <section role="status" data-screen-label="Step · Done" style="background:#FFFFFF; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; box-shadow:0 8px 28px rgba(16,24,40,.06)">
       <span aria-hidden="true" style="width:72px; height:72px; border-radius:999px; background:#E8F7EC; color:#15B743; display:flex; align-items:center; justify-content:center; font-size:34px">✓</span>
-      <h1 style="margin:0; font-size:22px; font-weight:800">مراحل رزرو کامل شد</h1>
+      <h1 style="margin:0; font-size:22px; font-weight:800">مراحل دریافت نوبت کامل شد</h1>
       <span style="font-size:16px; line-height:1.9">{{ D.name }} · {{ whenText }}</span>
       <span style="font-size:14px; line-height:1.9; color:#676767; max-width:520px">این نسخه نمایشی است: نوبتی در سامانه ثبت نشده، پرداختی انجام نشده و پیامک یادآوری ارسال نمی‌شود.</span>
       <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center">
@@ -498,7 +498,7 @@ class Component extends DCLogic {
       noPatient: s.patient < 0 || expired, patBtnBg: pb.bg, patBtnFg: pb.fg, patBtnCursor: pb.cursor,
       toPay: () => { if (s.patient >= 0 && !expired) this.go("pay"); },
       facts: [["تخصص", specialty], ["نوع نوبت", TYPES[s.type]], ["زمان نوبت", whenText], [remote ? "شیوه ویزیت" : "آدرس", PLACE[s.type]], ["نام مراجعه‌کننده", (s.patients[s.patient] || {}).name || "—"]].map(([k, v]) => ({ k, v })),
-      lines: [[remote ? "هزینه " + TYPES[s.type] : "پیش‌پرداخت ویزیت", toman(remote ? fee : DEPOSIT)], ["هزینه خدمات رزرو", toman(SERVICE)], ["۱۰٪ مالیات بر ارزش افزوده", toman(Math.round(SERVICE * 0.1))]].map(([k, v]) => ({ k, v })),
+      lines: [[remote ? "هزینه " + TYPES[s.type] : "پیش‌پرداخت ویزیت", toman(remote ? fee : DEPOSIT)], ["هزینه خدمات دریافت نوبت", toman(SERVICE)], ["۱۰٪ مالیات بر ارزش افزوده", toman(Math.round(SERVICE * 0.1))]].map(([k, v]) => ({ k, v })),
       totalText: toman(total),
       payNote: remote ? "مبلغ‌ها نمونه هستند." : "باقی‌مانده هزینه ویزیت (" + toman(fee - DEPOSIT) + ") در کلینیک پرداخت می‌شود. مبلغ‌ها نمونه هستند.",
       promoClosed: !s.promoOpen, promoOpenNow: s.promoOpen, promoOpen: () => this.setState({ promoOpen: true }),

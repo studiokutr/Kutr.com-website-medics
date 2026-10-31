@@ -233,7 +233,7 @@ a:hover{color:#2453D4}
     <span aria-hidden="true" style="position:absolute; bottom:-140px; right:-100px; width:340px; height:340px; border-radius:999px; background:rgba(255,255,255,.06)"></span>
     <div style="position:relative; display:flex; flex-direction:{{ bannerDir }}; align-items:center; justify-content:space-between; gap:{{ bannerGap }}; text-align:{{ bannerAlign }}">
       <div style="display:flex; flex-direction:column; align-items:{{ bannerItems }}; gap:14px; min-width:0">
-        <h2 id="booking-h" style="margin:0; font-size:{{ L.h2 }}; line-height:1.5; font-weight:800; color:#FFFFFF; text-wrap:balance">به روش دلخواهت، نوبت پزشکت رو رزرو کن!</h2>
+        <h2 id="booking-h" style="margin:0; font-size:{{ L.h2 }}; line-height:1.5; font-weight:800; color:#FFFFFF; text-wrap:balance">به روش دلخواهت، نوبت پزشکت رو دریافت کن!</h2>
         <p style="margin:0; font-size:{{ bannerLead }}; line-height:1.8; color:#E3EAFD; text-wrap:pretty">نوبت حضوری، تلفنی یا آنلاین؛ روشی رو انتخاب کن که برات راحت‌تره.</p>
         <ul aria-label="روش‌های دریافت نوبت" style="list-style:none; margin:{{ bannerListM }}; padding:0; display:grid; grid-template-columns:repeat(3, {{ bannerChipW }}); justify-content:{{ bannerItems }}; gap:{{ bannerChipGap }}; width:{{ bannerListW }}">
           <sc-for list="{{ methods }}" as="m" hint-placeholder-count="3">
@@ -256,7 +256,7 @@ a:hover{color:#2453D4}
   <div style="border-radius:32px; background:#F8F9FA; padding:{{ L.cardPad }}">
     <div style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:{{ stepHeadGap }}">
       <div style="display:flex; flex-direction:column; gap:10px">
-        <h2 id="steps-h" style="margin:0; font-size:{{ L.h2 }}; font-weight:800">رزرو نوبت چطور انجام می‌شود؟</h2>
+        <h2 id="steps-h" style="margin:0; font-size:{{ L.h2 }}; font-weight:800">دریافت نوبت چطور انجام می‌شود؟</h2>
         <p style="margin:0; font-size:18px; color:#676767">پنج قدم ساده، از انتخاب پزشک تا تأیید نوبت.</p>
       </div>
     </div>
@@ -275,7 +275,7 @@ a:hover{color:#2453D4}
       </sc-for>
     </ol>
     <div style="display:flex; justify-content:center; margin-top:{{ stepBtnM }}">
-      <button type="button" onClick="{{ book }}" style="flex:none; height:52px; padding:0 24px; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:16px; font-weight:700; cursor:pointer; transition:background-color .2s" style-hover="background:#2453D4">شروع رزرو</button>
+      <button type="button" onClick="{{ book }}" style="flex:none; height:52px; padding:0 24px; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:16px; font-weight:700; cursor:pointer; transition:background-color .2s" style-hover="background:#2453D4">شروع دریافت نوبت</button>
     </div>
   </div>
 </section>
@@ -337,7 +337,7 @@ a:hover{color:#2453D4}
   <div style="max-width:1440px; margin:0 auto; padding:72px {{ L.px }} 32px">
     <div style="display:grid; grid-template-columns:{{ L.footCols }}; gap:{{ L.footGap }}; padding:0 0 48px">
       <div style="grid-column:{{ L.footAboutCol }}; display:flex; flex-direction:column; gap:16px">
-        <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان رزرو نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
+        <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان دریافت نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
         <a href="#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
       </div>
@@ -585,7 +585,7 @@ class Component extends DCLogic {
     // Hero banners: copy and destinations as given by fateme (item 12). Banner 1 says «دریافت نوبت» but goes to the «درباره ما» page on purpose.
     const heroSlides = [
       ["clinic-hero", "عکس اول: فضای داخلی کلینیک", "خدمات پزشکی با طعم تکنولوژی", "نوبت‌دهی اینترنتی و مشاوره آنلاین با پزشکان کلینیک نیکان", "دریافت نوبت", "about.html"],
-      ["clinic-hero-2", "عکس دوم: کلینیک", "۲۰ درصد تخفیف برای رزرو نوبت آنلاین", "", "بیشتر", "online-booking-discount.html"],
+      ["clinic-hero-2", "عکس دوم: کلینیک", "۲۰ درصد تخفیف برای دریافت نوبت آنلاین", "", "بیشتر", "online-booking-discount.html"],
       ["clinic-hero-3", "عکس سوم: کلینیک", "فواید نوروتراپی", "", "بیشتر", "magazine/neurotherapy-benefits.html"]
     ].map(([id, hint, title, text, cta, href], i) => {
       const on = this.state.slide === i;
@@ -655,8 +655,8 @@ class Component extends DCLogic {
       }, book: () => { location.href = "DoctorProfilePage.dc.html?doctor=" + d.key + "#booking"; } })),
       noResults: list.length === 0,
       consultTypes: [
-        { isClinic: true, isOnline: false, title: "نوبت حضوری", tag: "مراجعه به کلینیک", desc: "زمان مراجعه را آنلاین انتخاب کنید و بدون انتظار طولانی در ساعت مشخص به کلینیک بیایید.", points: ["انتخاب روز و ساعت دلخواه", "معاینه کامل و انجام اقدامات درمانی", "یادآوری نوبت پیش از مراجعه"], cta: "رزرو نوبت حضوری", accent: "#3669EE", bg: "#F5F8FF", border: "#E3EAFD", start: book },
-        { isClinic: false, isOnline: true, title: "مشاوره آنلاین", tag: "از هر جا", desc: "برای پیگیری درمان، بررسی آزمایش‌ها یا مشاوره اولیه، با پزشک به‌صورت تماس تصویری یا صوتی صحبت کنید.", points: ["تماس تصویری یا صوتی با پزشک", "بدون نیاز به رفت‌وآمد", "مناسب پیگیری و مشاوره اولیه"], cta: "رزرو نوبت آنلاین", accent: "#15B743", bg: "#F2FBF4", border: "#DDF3E3", start: book }
+        { isClinic: true, isOnline: false, title: "نوبت حضوری", tag: "مراجعه به کلینیک", desc: "زمان مراجعه را آنلاین انتخاب کنید و بدون انتظار طولانی در ساعت مشخص به کلینیک بیایید.", points: ["انتخاب روز و ساعت دلخواه", "معاینه کامل و انجام اقدامات درمانی", "یادآوری نوبت پیش از مراجعه"], cta: "دریافت نوبت حضوری", accent: "#3669EE", bg: "#F5F8FF", border: "#E3EAFD", start: book },
+        { isClinic: false, isOnline: true, title: "مشاوره آنلاین", tag: "از هر جا", desc: "برای پیگیری درمان، بررسی آزمایش‌ها یا مشاوره اولیه، با پزشک به‌صورت تماس تصویری یا صوتی صحبت کنید.", points: ["تماس تصویری یا صوتی با پزشک", "بدون نیاز به رفت‌وآمد", "مناسب پیگیری و مشاوره اولیه"], cta: "دریافت نوبت آنلاین", accent: "#15B743", bg: "#F2FBF4", border: "#DDF3E3", start: book }
       ],
       steps: [
         ["انتخاب تخصص یا پزشک", "تخصص مورد نیاز را انتخاب یا نام پزشک را جستجو کنید."],
