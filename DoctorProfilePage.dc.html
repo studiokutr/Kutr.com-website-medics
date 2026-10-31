@@ -69,9 +69,7 @@ a:hover{color:#2453D4}
       </sc-for>
     </nav>
     <div style="margin-right:auto; display:flex; align-items:center; gap:12px; flex:none">
-      <sc-if value="{{ hdLoginBtn }}" hint-placeholder-val="{{ true }}">
-      <a href="{{ hdBookHref }}" onClick="{{ hdBook }}" style="height:{{ hdL.btnH }}; padding:0 {{ hdL.btnPad }}; border-radius:16px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; font-size:{{ hdL.btnFs }}; font-weight:700; white-space:nowrap; box-shadow:0 6px 16px rgba(54,105,238,.28); transition:background-color .2s, transform .15s, box-shadow .2s" style-hover="background:#2453D4; color:#FFFFFF; box-shadow:0 8px 22px rgba(54,105,238,.36)" style-active="transform:scale(.97)">دریافت نوبت</a>
-      </sc-if>
+      <!-- No «دریافت نوبت» header button on the doctor page (fateme, 2026-10-31): booking is on the page itself. -->
       <sc-if value="{{ hdLoggedIn }}" hint-placeholder-val="{{ false }}">
         <a href="Patient%20Dashboard.dc.html#appointments" aria-label="حساب کاربری" style="height:{{ hdL.btnH }}; padding:0 8px 0 14px; border-radius:14px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; display:flex; align-items:center; gap:10px; font-size:15px; font-weight:600; white-space:nowrap; transition:background-color .2s" style-hover="background:#F5F8FF; color:#3669EE">
           <span aria-hidden="true" style="flex:none; width:32px; height:32px; border-radius:999px; background:#EBF0FE; display:flex; align-items:center; justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="#3669EE" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0z"></path></svg></span>
@@ -278,56 +276,67 @@ a:hover{color:#2453D4}
       </div>
     </section>
 
-    <section id="sec-reviews" aria-labelledby="rev-h" data-screen-label="Reviews" style="border:1px solid #E6E6E6; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:20px">
-      <h2 id="rev-h" style="margin:0; font-size:22px; font-weight:800">نظرات بیماران درباره {{ D.name }}</h2>
-      <div style="display:flex; flex-direction:column; gap:12px">
-        <sc-for list="{{ revList }}" as="r" hint-placeholder-count="2">
-          <article style="padding:18px 20px; border-radius:18px; background:#F8F9FA; display:flex; flex-direction:column; gap:8px">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
-              <span style="display:flex; align-items:center; gap:10px"><span aria-hidden="true" style="width:36px; height:36px; border-radius:999px; background:#EBF0FE; color:#3669EE; display:flex; align-items:center; justify-content:center; font-weight:800">{{ r.initial }}</span><span style="font-size:15px; font-weight:700">{{ r.name }}</span></span>
-              <span style="font-size:13px; color:#676767">{{ r.date }} · {{ r.typeLabel }}</span>
-            </div>
-            <p style="margin:0; font-size:15px; line-height:1.9; color:#4A4A4A">{{ r.text }}</p>
-          </article>
-        </sc-for>
-        <sc-if value="{{ revNone }}" hint-placeholder-val="{{ false }}">
-          <div style="padding:32px 20px; border-radius:18px; background:#F8F9FA; text-align:center; font-size:15px; color:#676767">{{ revEmpty }}</div>
-        </sc-if>
+    <section id="sec-reviews" aria-labelledby="rev-h" data-screen-label="Reviews" style="display:flex; flex-direction:column; gap:20px">
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <h2 id="rev-h" style="margin:0; font-size:22px; font-weight:800">نظرات بیماران درباره {{ D.name }}</h2>
       </div>
+      <div style="{{ revRow }}">
+        <sc-for list="{{ revList }}" as="r" hint-placeholder-count="3">
+          <figure style="flex:{{ revFlex }}; scroll-snap-align:start; margin:0; display:flex; flex-direction:column; justify-content:space-between; gap:24px; padding:28px; border-radius:24px; border:1px solid #E6E6E6; background:#FFFFFF">
+            <div style="display:flex; flex-direction:column; gap:14px">
+              <span aria-label="{{ r.starsLabel }}" style="display:flex; gap:3px">
+                <sc-for list="{{ r.stars }}" as="st" hint-placeholder-count="5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#EAAA08" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"></path></svg>
+                </sc-for>
+              </span>
+              <blockquote style="margin:0; font-size:17px; line-height:1.95; color:#373A41">«{{ r.text }}»</blockquote>
+            </div>
+            <figcaption style="display:flex; align-items:center; gap:12px; padding-top:18px; border-top:1px solid #ECEEF0">
+              <span aria-hidden="true" style="width:44px; height:44px; border-radius:999px; background:#EBF0FE; color:#3669EE; display:flex; align-items:center; justify-content:center; font-weight:800">{{ r.initial }}</span>
+              <span style="display:flex; flex-direction:column; gap:2px">
+                <span style="font-size:16px; font-weight:700">{{ r.name }}</span>
+                <span style="font-size:13px; color:#676767">{{ r.date }} · {{ r.typeLabel }}</span>
+              </span>
+            </figcaption>
+          </figure>
+        </sc-for>
+      </div>
+      <sc-if value="{{ revNone }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:32px 20px; border-radius:18px; background:#F8F9FA; text-align:center; font-size:15px; color:#676767">{{ revEmpty }}</div>
+      </sc-if>
     </section>
   </div>
 </main>
 
 <footer data-screen-label="Footer" style="background:#000000; color:#FFFFFF; border-radius:40px 40px 0 0">
   <div style="max-width:1440px; margin:0 auto; padding:72px {{ L.padX }} 32px">
-    
     <div style="display:grid; grid-template-columns:{{ L.footCols }}; gap:{{ L.footGap }}; padding:0 0 48px">
-      <div style="display:flex; flex-direction:column; gap:16px">
+      <div style="grid-column:{{ L.footAboutCol }}; display:flex; flex-direction:column; gap:16px">
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان دریافت نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
         <a href="Booking%20platform.dc.html#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
       </div>
-      <nav aria-label="تخصص‌ها" style="display:flex; flex-direction:column; gap:14px">
+      <nav aria-label="تخصص‌ها" style="order:{{ L.fo1 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تخصص‌ها</span>
         <sc-for list="{{ footerSpecs }}" as="f" hint-placeholder-count="5">
           <a href="Booking%20platform.dc.html#doctors" onClick="{{ f.pick }}" style="font-size:14px; color:#BBBBBB; transition:color .2s" style-hover="color:#FFFFFF">{{ f.name }}</a>
         </sc-for>
       </nav>
-      <nav aria-label="نوبت‌دهی" style="display:flex; flex-direction:column; gap:14px">
+      <nav aria-label="نوبت‌دهی" style="order:{{ L.fo2 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">نوبت‌دهی</span>
         <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
         <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
         <a href="Booking%20platform.dc.html#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
-        <a href="#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
+        <a href="Booking%20platform.dc.html#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
       </nav>
-      <nav aria-label="کلینیک" style="display:flex; flex-direction:column; gap:14px">
+      <nav aria-label="کلینیک" style="order:{{ L.fo3 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">کلینیک</span>
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
         <a href="Booking%20platform.dc.html#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
         <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
-      <div style="display:flex; flex-direction:column; gap:14px">
+      <div style="order:{{ L.fo4 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تماس با ما</span>
         <a href="tel:02166778899" dir="ltr" style="font-size:16px; color:#FFFFFF; text-align:right">۰۲۱-۶۶۷۷۸۸۹۹</a>
         <a href="mailto:info@nikan-clinic.example" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">info@nikan-clinic.example</a>
@@ -340,8 +349,8 @@ a:hover{color:#2453D4}
     <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 24px; padding-top:24px; border-top:1px solid #373A41">
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; font-size:13px; color:#969696">
         <span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span>
-        <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
-        <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
+        <a href="Booking%20platform.dc.html#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
+        <a href="Booking%20platform.dc.html#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
       </div>
       <div style="flex:1 1 100%; display:flex; flex-wrap:wrap; justify-content:center; gap:8px">
         <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
@@ -422,17 +431,17 @@ const LAYOUT = {
     mainPadTop: "32px", mainPadBottom: "72px", cols: "minmax(0,1fr) 440px", gap: "24px", cardPad: "32px", cardPadX: "32px", cardPadB: "24px", h1: "28px", avatar: "120px",
     ovDir: "row", ovAlign: "flex-start", ovText: "right", ovItems: "flex-start", shareDisplay: "flex", divider3: "block",
     asideCol: "2", asideRow: "1 / span 2", asidePos: "sticky", asideTop: "112px", asideMax: "764px", restRow: "2", slotCols: "4", cardFooterDisplay: "flex",
-    infoCols: "repeat(2, minmax(0,1fr))", footCols: "minmax(0,1.5fr) repeat(3, minmax(0,0.8fr)) minmax(0,1.2fr)", footGap: "48px", footPadTop: "64px", footPadBottom: "32px", bar: false },
+    infoCols: "repeat(2, minmax(0,1fr))", footCols: "minmax(0,1.6fr) repeat(3, minmax(0,1fr)) minmax(0,1.2fr)", footGap: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, footPadTop: "64px", footPadBottom: "32px", bar: false },
   tablet: { navRow: "none", navGap: "18px", navFs: "15px", footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footTitle: "22px", footBtnPad: "22px", footGrpW: "auto", w: "834px", h: "1194px", padX: "40px", headerH: "80px", headerGap: "24px", logo: "44px", taglineDisplay: "block", navDisplay: "flex", phoneDisplay: "none", loginDisplay: "block", menuDisplay: "none", menuLoginDisplay: "none", btnH: "48px",
     mainPadTop: "28px", mainPadBottom: "64px", cols: "minmax(0,1fr)", gap: "24px", cardPad: "28px", cardPadX: "28px", cardPadB: "28px", h1: "28px", avatar: "112px",
     ovDir: "row", ovAlign: "flex-start", ovText: "right", ovItems: "flex-start", shareDisplay: "flex", divider3: "block",
     asideCol: "1", asideRow: "2", asidePos: "static", asideTop: "auto", asideMax: "none", restRow: "3", slotCols: "5", cardFooterDisplay: "flex",
-    infoCols: "repeat(2, minmax(0,1fr))", footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footPadTop: "56px", footPadBottom: "32px", bar: false },
+    infoCols: "repeat(2, minmax(0,1fr))", footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, footPadTop: "56px", footPadBottom: "32px", bar: false },
   mobile: { navRow: "none", navGap: "18px", navFs: "15px", footCols: "minmax(0,1fr)", footGap: "28px", footTitle: "19px", footBtnPad: "12px", footGrpW: "100%", w: "390px", h: "844px", padX: "16px", headerH: "64px", headerGap: "12px", logo: "40px", taglineDisplay: "none", navDisplay: "none", phoneDisplay: "none", loginDisplay: "none", menuDisplay: "flex", menuLoginDisplay: "block", btnH: "44px",
     mainPadTop: "16px", mainPadBottom: "40px", cols: "minmax(0,1fr)", gap: "16px", cardPad: "20px", cardPadX: "20px", cardPadB: "20px", h1: "24px", avatar: "96px",
     ovDir: "column", ovAlign: "center", ovText: "center", ovItems: "center", shareDisplay: "none", divider3: "none",
     asideCol: "1", asideRow: "2", asidePos: "static", asideTop: "auto", asideMax: "none", restRow: "3", slotCols: "3", cardFooterDisplay: "none",
-    infoCols: "minmax(0,1fr)", footCols: "minmax(0,1fr)", footGap: "28px", footPadTop: "40px", footPadBottom: "24px", bar: true }
+    infoCols: "minmax(0,1fr)", footCols: "auto minmax(0,1fr)", footGap: "28px", footAboutCol: "1 / -1", fo1: 1, fo2: 3, fo3: 2, fo4: 4, footPadTop: "40px", footPadBottom: "24px", bar: true }
 };
 const DOCS = {
   sara: { name: "دکتر سارا محمدی", spec: "cardio", specLabel: "قلب و عروق", specialty: "متخصص قلب و عروق", credential: "فلوشیپ اکوکاردیوگرافی · ۱۵ سال سابقه", recommend: "۹۶٪", rating: "۴٫۸", reviews: "۱۲۴", types: ["clinic", "phone", "online"], fee: { clinic: "۶۵۰٬۰۰۰", phone: "۴۰۰٬۰۰۰", online: "۴۵۰٬۰۰۰" },
@@ -679,7 +688,8 @@ class Component extends DCLogic {
     const D = { ...DOCS[dk], photo: "assets/doctors/photos/" + dk + ".png", specHref: "index.html?spec=" + DOCS[dk].spec + "#doctors" };
     crumbSchema(dk, D);
     const { day, slot, bio, menu, toast, tab } = this.state;
-    const type = D.types.includes(this.state.type) ? this.state.type : D.types[0];
+    // Only in-person visits are offered on this page (phone/online cards removed, fateme 2026-10-31).
+    const type = "clinic";
     const month = this.state.month || 0;
     const dayObj = DAYS.find((d) => d.id === day) || DAYS[0];
     const goMonth = (m) => { if (m < 0 || m >= MONTHS.length) return; const first = DAYS.find((d) => d.m === m); this.setState({ month: m, day: first.id, slot: null }, () => { const r = document.querySelector('[role="radiogroup"][aria-label="روز"]'); if (r) r.scrollLeft = 0; }); };
@@ -698,7 +708,7 @@ class Component extends DCLogic {
       share: () => this.toast("پیوند پروفایل کپی شد."),
       tabs: SECS.map(([id, label, target]) => ({ href: "#" + target, current: tab === id ? "location" : "false",
         label, bg: tab === id ? "#FFFFFF" : "transparent", color: tab === id ? "#3669EE" : "#4A4A4A", go: (e) => { e.preventDefault(); if (location.hash !== "#" + target) history.pushState(null, "", location.pathname + location.search + "#" + target); this.scrollToId(target); } })),
-      types: Object.keys(TYPES).filter((k) => D.types.includes(k)).map((k) => {
+      types: ["clinic"].map((k) => {
         const on = type === k, t = TYPES[k], has = DAYS.some((d) => d[k].length);
         return { title: t.title, sub: t.sub, next: firstSlot(k), nextColor: has ? "#15B743" : "#676767", isClinic: k === "clinic", isPhone: k === "phone", isOnline: k === "online", accent: t.accent, iconBg: t.iconBg,
           checked: on ? "true" : "false", border: on ? "#3669EE" : "#E6E6E6", bg: on ? "#F5F8FF" : "#FFFFFF", ring: on ? "#3669EE" : "#CFCFCF", dot: on ? "#3669EE" : "transparent",
@@ -729,7 +739,10 @@ class Component extends DCLogic {
       typeTags: D.types.map((k) => ({ clinic: { label: "ویزیت حضوری", bg: "#EBF0FE", color: "#2453D4" }, phone: { label: "نوبت تلفنی", bg: "#EBF0FE", color: "#2453D4" }, online: { label: "مشاوره آنلاین", bg: "#EBF0FE", color: "#2453D4" } })[k]),
       services: D.services, D, address: ADDRESS, feeLabel: TYPES[type].title, feeText: (D.fee[type] === "—" ? "ارائه نمی‌شود" : D.fee[type] + " تومان"),
       directions: () => this.toast("مسیریابی پس از اتصال نقشه فعال می‌شود."),
-      revList: REVIEWS.filter((r) => D.types.includes(r.type)).map((r) => ({ ...r, initial: r.name[0], typeLabel: TYPES[r.type].title })),
+      revList: REVIEWS.filter((r) => D.types.includes(r.type)).map((r) => ({ ...r, initial: r.name[0], typeLabel: TYPES[r.type].title, stars: [1, 2, 3, 4, 5], starsLabel: "امتیاز ۵ از ۵" })),
+      // Same cards as the homepage testimonials: a swipe row on phones, a grid on larger screens.
+      revRow: dev === "mobile" ? "margin:0 -" + L.padX + "; padding:0 " + L.padX + "; display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding:0 " + L.padX + "; scrollbar-width:none" : "display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px",
+      revFlex: dev === "mobile" ? "0 0 min(277px, 78%)" : "0 1 auto",
       revNone: !REVIEWS.some((r) => D.types.includes(r.type)),
       modalPos: full ? "fixed" : "absolute",
       ...this.loginVals(D),
