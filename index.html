@@ -289,7 +289,7 @@ a:hover{color:#2453D4}
           </sc-for>
         </ul>
       </div>
-      <a href="#doctors" onClick="{{ bannerBook }}" style="flex:none; height:58px; width:{{ bannerCtaW }}; padding:0 34px; border-radius:16px; background:#FFFFFF; color:#3669EE; font-size:17px; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 12px 28px rgba(16,24,40,.18); transition:background-color .2s, transform .15s, gap .25s" style-hover="background:#EBF0FE; color:#2453D4; gap:16px" style-active="transform:scale(.97)">رزرو نوبت<span aria-hidden="true">←</span></a>
+      <a href="#doctors" onClick="{{ bannerBook }}" style="flex:none; height:58px; width:{{ bannerCtaW }}; padding:0 34px; border-radius:16px; background:#FFFFFF; color:#3669EE; font-size:17px; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 12px 28px rgba(16,24,40,.18); transition:background-color .2s, transform .15s, gap .25s" style-hover="background:#EBF0FE; color:#2453D4; gap:16px" style-active="transform:scale(.97)">دریافت نوبت<span aria-hidden="true">←</span></a>
     </div>
   </div>
 </section>
@@ -624,9 +624,9 @@ class Component extends DCLogic {
   renderVals() {
     const { tab, query, searchSpec, type, appliedQuery, appliedType, toast } = this.state;
     const filled = this.state.filled || [0];
-    // Hero banners: copy and destinations as given by fateme (item 12). Banner 1 says «رزرو نوبت» but goes to the «درباره ما» page on purpose.
+    // Hero banners: copy and destinations as given by fateme (item 12). Banner 1 says «دریافت نوبت» but goes to the «درباره ما» page on purpose.
     const heroSlides = [
-      ["clinic-hero", "عکس اول: فضای داخلی کلینیک", "خدمات پزشکی با طعم تکنولوژی", "نوبت‌دهی اینترنتی و مشاوره آنلاین با پزشکان کلینیک نیکان", "رزرو نوبت", "about.html"],
+      ["clinic-hero", "عکس اول: فضای داخلی کلینیک", "خدمات پزشکی با طعم تکنولوژی", "نوبت‌دهی اینترنتی و مشاوره آنلاین با پزشکان کلینیک نیکان", "دریافت نوبت", "about.html"],
       ["clinic-hero-2", "عکس دوم: کلینیک", "۲۰ درصد تخفیف برای رزرو نوبت آنلاین", "", "بیشتر", "online-booking-discount.html"],
       ["clinic-hero-3", "عکس سوم: کلینیک", "فواید نوروتراپی", "", "بیشتر", "magazine/neurotherapy-benefits.html"]
     ].map(([id, hint, title, text, cta, href], i) => {
