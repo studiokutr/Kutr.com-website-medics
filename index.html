@@ -136,11 +136,14 @@ a:hover{color:#2453D4}
 
 
 <section id="doctors" aria-label="لیست پزشکان کلینیک" data-screen-label="Doctors + search + specialties" style="max-width:1440px; margin:0 auto; padding:{{ L.sy }} {{ L.px }} 0; scroll-margin-top:{{ L.headerH }}">
-  <form role="search" aria-label="جستجوی پزشک" onSubmit="{{ submitSearch }}" style="margin:0 auto; width:100%; max-width:880px; display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:8px; border-radius:20px; background:#FFFFFF; border:1px solid #DEDEDE; box-shadow:0 8px 24px rgba(16,24,40,.05)">
+  <div style="display:flex; flex-direction:column; align-items:center; text-align:center">
+    <p style="margin:0; font-size:clamp(18px, 1.5vw, 22px); line-height:1.7; font-weight:500; color:#676767; max-width:820px; text-wrap:pretty">نام پزشک یا تخصص مورد نظر را جستجو کنید</p>
+  </div>
+  <form role="search" aria-label="جستجوی پزشک" onSubmit="{{ submitSearch }}" style="margin:20px auto 0; width:100%; max-width:880px; display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:8px; border-radius:20px; background:#FFFFFF; border:1px solid #DEDEDE; box-shadow:0 8px 24px rgba(16,24,40,.05)">
     <label style="flex:1.4 1 260px; min-width:0; display:flex; align-items:center; gap:10px; height:56px; padding:0 16px; border-radius:14px; background:#F8F9FA">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#676767" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
       <span style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)">نام پزشک یا تخصص</span>
-      <input type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="پزشک یا تخصص رو جست‌وجو کن" style="flex:1; min-width:0; border:0; outline:0; background:transparent; font-size:16px">
+      <input type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="نام پزشک یا تخصص را جستجو کنید" style="flex:1; min-width:0; border:0; outline:0; background:transparent; font-size:16px">
     </label>
   </form>
   <div role="group" aria-label="فیلتر تخصص" style="margin:28px {{ L.catBleed }} 0; padding:4px {{ L.catPadX }} 8px; display:flex; justify-content:{{ L.catJustify }}; gap:{{ L.catGap }}; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding:0 {{ L.catPadX }}; scrollbar-width:none">
