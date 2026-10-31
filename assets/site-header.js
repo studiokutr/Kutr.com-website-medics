@@ -18,7 +18,11 @@
   });
   menu.querySelectorAll('a:not([aria-disabled="true"])').forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
   h.querySelectorAll('.sh-menu a[aria-disabled="true"]').forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); }); });
-  function setMenu(open) { menu.hidden = !open; burger.setAttribute("aria-expanded", open ? "true" : "false"); burger.setAttribute("aria-label", open ? "بستن منو" : "منو"); burger.classList.toggle("is-open", open); }
+  // Dim overlay under the open menu; tapping it closes the menu.
+  var dim = document.createElement("div"); dim.className = "sh-dim"; dim.hidden = true; dim.setAttribute("aria-hidden", "true");
+  menu.parentNode.insertBefore(dim, menu);
+  dim.addEventListener("click", function () { setMenu(false); });
+  function setMenu(open) { menu.hidden = !open; dim.hidden = !open; burger.setAttribute("aria-expanded", open ? "true" : "false"); burger.setAttribute("aria-label", open ? "بستن منو" : "منو"); burger.classList.toggle("is-open", open); }
   burger.addEventListener("click", function () { setMenu(menu.hidden); });
   function setDd(open) { dd.classList.toggle("is-open", open); dd.querySelector(".sh-ddbtn").setAttribute("aria-expanded", open ? "true" : "false"); }
   dd.addEventListener("mouseenter", function () { clearTimeout(t); setDd(true); });
