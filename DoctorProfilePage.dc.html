@@ -101,7 +101,14 @@ a:hover{color:#2453D4}
   </sc-if>
 </header>
 
-<main style="padding:{{ L.mainPadTop }} {{ L.padX }} {{ L.mainPadBottom }}; display:grid; grid-template-columns:{{ L.cols }}; column-gap:32px; row-gap:{{ L.gap }}; align-items:start">
+<nav aria-label="مسیر صفحه" style="padding:{{ L.mainPadTop }} {{ L.padX }} 0; display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-size:14px; color:#676767">
+  <a href="index.html" style="color:#676767; text-decoration:none; min-height:32px; display:inline-flex; align-items:center">صفحه اصلی</a><span aria-hidden="true" style="color:#94979C">‹</span>
+  <a href="doctors.html" style="color:#676767; text-decoration:none; min-height:32px; display:inline-flex; align-items:center">پزشکان</a><span aria-hidden="true" style="color:#94979C">‹</span>
+  <a href="{{ D.specHref }}" style="color:#676767; text-decoration:none; min-height:32px; display:inline-flex; align-items:center">{{ D.specLabel }}</a><span aria-hidden="true" style="color:#94979C">‹</span>
+  <span aria-current="page" style="color:#222222">{{ D.name }}</span>
+</nav>
+
+<main style="padding:12px {{ L.padX }} {{ L.mainPadBottom }}; display:grid; grid-template-columns:{{ L.cols }}; column-gap:32px; row-gap:{{ L.gap }}; align-items:start">
 
   <section data-screen-label="Doctor overview" style="grid-column:1; grid-row:1; border:1px solid #E6E6E6; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:20px">
     <div style="display:flex; flex-direction:{{ L.ovDir }}; align-items:{{ L.ovAlign }}; gap:20px; text-align:{{ L.ovText }}">
@@ -283,13 +290,6 @@ a:hover{color:#2453D4}
         </sc-if>
       </div>
     </section>
-
-    <nav aria-label="مسیر صفحه" style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-size:14px; color:#676767">
-      <a href="Booking%20platform.dc.html" style="color:#676767; min-height:44px; display:inline-flex; align-items:center">کلینیک نیکان</a><span aria-hidden="true">‹</span>
-      <a href="Booking%20platform.dc.html#doctors" style="color:#676767; min-height:44px; display:inline-flex; align-items:center">پزشکان</a><span aria-hidden="true">‹</span>
-      <a href="Booking%20platform.dc.html#doctors" style="color:#676767; min-height:44px; display:inline-flex; align-items:center">{{ D.specLabel }}</a><span aria-hidden="true">‹</span>
-      <span style="color:#222222">{{ D.name }}</span>
-    </nav>
   </div>
 </main>
 
@@ -548,6 +548,17 @@ const TYPES = {
 };
 const firstSlot = (t) => { const d = DAYS.find((x) => x[t].length); return d ? "اولین نوبت خالی: " + d.w + " " + d.d + "، " + d[t][0] : "نوبت خالی ندارد"; };
 
+// BreadcrumbList schema for search engines, matching the breadcrumb at the top of the page.
+const crumbSchema = (dk, D) => {
+  if (typeof document === "undefined" || crumbSchema.last === dk) return;
+  crumbSchema.last = dk;
+  const base = location.href.replace(/[^/]*([?#].*)?$/, "");
+  const items = [["صفحه اصلی", base], ["پزشکان", base + "doctors.html"], [D.specLabel, base + "index.html?spec=" + D.spec + "#doctors"], [D.name, base + "DoctorProfilePage.dc.html?doctor=" + dk]];
+  let el = document.getElementById("crumb-ld");
+  if (!el) { el = document.createElement("script"); el.type = "application/ld+json"; el.id = "crumb-ld"; document.head.appendChild(el); }
+  el.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items.map(([name, item], i) => ({ "@type": "ListItem", position: i + 1, name, item })) });
+};
+
 class Component extends DCLogic {
   state = { doc: "peyman", vw: 1440, login: null, phone: "", code: "", loginErr: "", booking: "", type: "clinic", day: "d1", slot: null, bio: false, menu: false, toast: "", tab: "about" };
   scrollRef = React.createRef();
@@ -653,7 +664,8 @@ class Component extends DCLogic {
     const dev = this.dev(), auto = this.auto(), L = auto ? { ...LAYOUT[dev], w: "100%" } : LAYOUT[dev];
     const full = auto ? true : (this.props.fullPage ?? false);
     const dk = DOCS[this.state.doc] ? this.state.doc : "peyman";
-    const D = { ...DOCS[dk], photo: "assets/doctors/photos/" + dk + ".png" };
+    const D = { ...DOCS[dk], photo: "assets/doctors/photos/" + dk + ".png", specHref: "index.html?spec=" + DOCS[dk].spec + "#doctors" };
+    crumbSchema(dk, D);
     const { day, slot, bio, menu, toast, tab } = this.state;
     const type = D.types.includes(this.state.type) ? this.state.type : D.types[0];
     const dayObj = DAYS.find((d) => d.id === day) || DAYS[0];

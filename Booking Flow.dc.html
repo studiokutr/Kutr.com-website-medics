@@ -104,7 +104,12 @@ a:hover{color:#2453D4}
 
 <main style="max-width:{{ maxW }}; margin:0 auto; padding:{{ L.py }} {{ L.px }} 96px; display:flex; flex-direction:column; gap:20px">
 
-  <a href="{{ profileHref }}" style="align-self:flex-start; min-height:44px; display:flex; align-items:center; gap:6px; font-size:15px; color:#4A4A4A">بازگشت به پروفایل پزشک <span aria-hidden="true">←</span></a>
+  <nav aria-label="مسیر صفحه" style="display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-size:14px; color:#676767">
+    <a href="index.html" style="color:#676767; text-decoration:none; min-height:32px; display:inline-flex; align-items:center">صفحه اصلی</a><span aria-hidden="true" style="color:#94979C">‹</span>
+    <a href="doctors.html" style="color:#676767; text-decoration:none; min-height:32px; display:inline-flex; align-items:center">پزشکان</a><span aria-hidden="true" style="color:#94979C">‹</span>
+    <a href="{{ profileHref }}" style="color:#676767; text-decoration:none; min-height:32px; display:inline-flex; align-items:center">{{ D.name }}</a><span aria-hidden="true" style="color:#94979C">‹</span>
+    <span aria-current="page" style="color:#222222">دریافت نوبت</span>
+  </nav>
 
   <sc-if value="{{ showStepper }}" hint-placeholder-val="{{ true }}">
     <ol aria-label="مراحل دریافت نوبت" style="list-style:none; margin:0 0 8px; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr))">

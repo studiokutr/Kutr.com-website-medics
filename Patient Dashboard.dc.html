@@ -121,7 +121,12 @@ a:hover{color:#2453D4}
   </sc-if>
 </header>
 
-<main style="flex:1; width:100%; max-width:1280px; margin:0 auto; padding:{{ L.py }} {{ L.px }} 80px; display:grid; grid-template-columns:{{ L.gridCols }}; gap:{{ L.gap }}; align-items:start">
+<nav aria-label="مسیر صفحه" style="width:100%; max-width:1280px; margin:0 auto; box-sizing:border-box; padding:{{ L.py }} {{ L.px }} 0; display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-size:14px; color:#676767">
+  <a href="index.html" style="color:#676767; text-decoration:none; min-height:32px; display:inline-flex; align-items:center">صفحه اصلی</a><span aria-hidden="true" style="color:#94979C">‹</span>
+  <span aria-current="page" style="color:#222222">حساب کاربری</span>
+</nav>
+
+<main style="flex:1; width:100%; max-width:1280px; margin:0 auto; padding:12px {{ L.px }} 80px; display:grid; grid-template-columns:{{ L.gridCols }}; gap:{{ L.gap }}; align-items:start">
 
   <aside aria-label="منوی حساب" style="position:{{ L.asidePos }}; top:{{ L.asideTop }}; background:#FFFFFF; border:1px solid #ECEEF0; border-radius:20px; overflow:hidden">
     <div style="display:flex; flex-direction:{{ L.userDir }}; align-items:center; gap:{{ L.userGap }}; padding:{{ L.userPad }}; text-align:{{ L.userAlign }}">
