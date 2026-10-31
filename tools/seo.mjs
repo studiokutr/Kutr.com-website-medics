@@ -171,11 +171,11 @@ const pages = {
   "DoctorProfilePage.dc.html": {
     head: headBlock({
       title: "پزشکان کلینیک تخصصی نیکان — پروفایل و نوبت‌دهی اینترنتی",
-      desc: "پروفایل پزشکان کلینیک تخصصی نیکان در تهران: معرفی، تحصیلات، خدمات، نظرات بیماران و دریافت نوبت حضوری، تلفنی یا مشاوره آنلاین.",
+      desc: "پروفایل پزشکان کلینیک تخصصی نیکان در تهران: معرفی، تحصیلات، خدمات، نظرات بیماران و دریافت نوبت حضوری.",
       ogType: "profile",
       siteVar: true
     }),
-    noscript: noscriptBlock("پروفایل پزشکان و دریافت نوبت حضوری، تلفنی و مشاوره آنلاین.")
+    noscript: noscriptBlock("پروفایل پزشکان و دریافت نوبت حضوری.")
   },
   // Booking steps and the patient account are private, so they stay out of search results.
   "Booking Flow.dc.html": { head: headBlock({ title: "دریافت نوبت · کلینیک نیکان", desc: "دریافت نوبت حضوری، تلفنی یا مشاوره آنلاین با پزشکان کلینیک تخصصی نیکان.", robots: "noindex, follow" }) },
