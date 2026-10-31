@@ -267,11 +267,6 @@ a:hover{color:#2453D4}
 
     <section id="sec-reviews" aria-labelledby="rev-h" data-screen-label="Reviews" style="border:1px solid #E6E6E6; border-radius:24px; padding:{{ L.cardPad }}; display:flex; flex-direction:column; gap:20px">
       <h2 id="rev-h" style="margin:0; font-size:22px; font-weight:800">نظرات بیماران درباره {{ D.name }}</h2>
-      <div role="tablist" aria-label="نوع ویزیت" style="display:flex; gap:4px; padding:4px; border-radius:16px; background:#F0F2F4">
-        <sc-for list="{{ revTabs }}" as="t" hint-placeholder-count="2">
-          <button type="button" role="tab" aria-selected="{{ t.selected }}" onClick="{{ t.pick }}" style="flex:1; height:44px; border-radius:12px; border:0; background:{{ t.bg }}; color:{{ t.color }}; font-size:15px; font-weight:600; cursor:pointer">{{ t.label }}</button>
-        </sc-for>
-      </div>
       <div style="display:flex; flex-direction:column; gap:12px">
         <sc-for list="{{ revList }}" as="r" hint-placeholder-count="2">
           <article style="padding:18px 20px; border-radius:18px; background:#F8F9FA; display:flex; flex-direction:column; gap:8px">
@@ -539,8 +534,8 @@ function headerVals(c, dev, o) {
     hdSpecs: HDR_SPECS.map(([key, label]) => ({ label, img: "assets/specialties/" + key + ".svg", href: home ? home + "?spec=" + key + "#doctors" : "#doctors",
       pick: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec(key); } })),
     hdDocs: HDR_DOCS.map(([key, name, specialty]) => ({ name, specialty, href: "DoctorProfilePage.dc.html?doctor=" + key })),
-    hdAllHref: home + "#doctors", hdAll: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec("all"); },
-    hdNav: [["نوبت حضوری", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href: home + href })),
+    hdAllHref: "doctors.html", hdAll: () => c.setState({ hdDd: false }),
+    hdNav: [["نوبت حضوری", "#search"], ["مشاوره آنلاین", "#search"]].map(([label, href]) => ({ label, href: home + href })),
     hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری",
     // «دریافت نوبت» starts booking at the homepage search box.
     hdBookHref: home + "#search", hdBook: () => c.setState({ hdMenu: false, hdDd: false })
@@ -569,7 +564,7 @@ const FAQS = (D) => [
 ];
 
 class Component extends DCLogic {
-  state = { doc: "peyman", vw: 1440, login: null, phone: "", code: "", loginErr: "", booking: "", type: "clinic", day: "d1", slot: null, bio: false, faq: 0, rev: "clinic", menu: false, toast: "", tab: "about" };
+  state = { doc: "peyman", vw: 1440, login: null, phone: "", code: "", loginErr: "", booking: "", type: "clinic", day: "d1", slot: null, bio: false, faq: 0, menu: false, toast: "", tab: "about" };
   scrollRef = React.createRef();
 
   componentDidUpdate() { const full = this.isFull(); if (full !== this.lastFull) { this.lastFull = full; this.bindScroll(); } }
@@ -676,7 +671,6 @@ class Component extends DCLogic {
     const D = { ...DOCS[dk], photo: "assets/doctors/photos/" + dk + ".png" };
     const { day, slot, bio, faq, menu, toast, tab } = this.state;
     const type = D.types.includes(this.state.type) ? this.state.type : D.types[0];
-    const rev = D.types.includes(this.state.rev) ? this.state.rev : D.types[0];
     const dayObj = DAYS.find((d) => d.id === day) || DAYS[0];
     const slots = dayObj[type];
     const summary = slot ? TYPES[type].label + " · " + dayObj.w + " " + dayObj.d + " · ساعت " + slot : "هنوز زمانی انتخاب نشده";
@@ -719,12 +713,11 @@ class Component extends DCLogic {
       typeTags: D.types.map((k) => ({ clinic: { label: "ویزیت حضوری", bg: "#EBF0FE", color: "#2453D4" }, phone: { label: "نوبت تلفنی", bg: "#EBF0FE", color: "#2453D4" }, online: { label: "مشاوره آنلاین", bg: "#EBF0FE", color: "#2453D4" } })[k]),
       services: D.services, D, address: ADDRESS, feeLabel: TYPES[type].title, feeText: (D.fee[type] === "—" ? "ارائه نمی‌شود" : D.fee[type] + " تومان"),
       directions: () => this.toast("مسیریابی پس از اتصال نقشه فعال می‌شود."),
-      revTabs: [["clinic", "ویزیت حضوری"], ["phone", "نوبت تلفنی"], ["online", "مشاوره آنلاین"]].filter(([k]) => D.types.includes(k)).map(([k, label]) => ({ label, selected: rev === k ? "true" : "false", bg: rev === k ? "#FFFFFF" : "transparent", color: rev === k ? "#3669EE" : "#4A4A4A", pick: () => this.setState({ rev: k }) })),
-      revList: REVIEWS.filter((r) => r.type === rev && D.types.includes(r.type)).map((r) => ({ ...r, initial: r.name[0], typeLabel: TYPES[r.type].title })),
-      revNone: !REVIEWS.some((r) => r.type === rev && D.types.includes(r.type)),
+      revList: REVIEWS.filter((r) => D.types.includes(r.type)).map((r) => ({ ...r, initial: r.name[0], typeLabel: TYPES[r.type].title })),
+      revNone: !REVIEWS.some((r) => D.types.includes(r.type)),
       modalPos: full ? "fixed" : "absolute",
       ...this.loginVals(D),
-      revEmpty: "هنوز نظری برای " + TYPES[rev].title + " ثبت نشده است.",
+      revEmpty: "هنوز نظری ثبت نشده است.",
       // Icons only for now; fateme will send the profile links later.
       socials: [["اینستاگرام", "ig"], ["تلگرام", "tg"], ["لینکدین", "li"], ["آپارات", "ap"]].map(([label, k]) => ({ label, ig: k === "ig", tg: k === "tg", li: k === "li", ap: k === "ap" })),
       footerSpecs: [["قلب و عروق", "sara"], ["پوست و مو", "amir"], ["زنان و زایمان", "narges"], ["ارتوپدی", "hamid"], ["پزشک عمومی", "maryam"], ["مغز و اعصاب", "peyman"]].map(([name, k]) => ({ name, pick: () => { location.href = "DoctorProfilePage.dc.html?doctor=" + k; } })),
