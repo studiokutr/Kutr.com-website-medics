@@ -2,6 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
+<script>/* Reload always opens the page at the top. */(function(){try{var n=performance.getEntriesByType("navigation")[0];if(!n||n.type!=="reload")return;history.scrollRestoration="manual";if(location.hash)history.replaceState(null,"",location.pathname+location.search);scrollTo(0,0);addEventListener("load",function(){scrollTo(0,0)})}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>درباره کلینیک نیکان — مراقبتی دقیق، در فضایی آرام و قابل اعتماد</title>
 <meta name="description" content="آشنایی با کلینیک تخصصی نیکان در تهران، ونک: ویزیت تخصصی، مشاوره آنلاین و پیگیری درمان.">
@@ -42,9 +43,6 @@ h2{margin:40px 0 8px;font-size:clamp(20px,2.4vw,25px);line-height:1.6;font-weigh
 .cta p{margin:0;font-size:20px;font-weight:800}
 .btn{height:52px;padding:0 24px;border-radius:16px;background:#FFFFFF;color:#3669EE;font-size:16px;font-weight:800;display:inline-flex;align-items:center;gap:8px}
 .btn:hover{background:#EBF0FE}
-.photos{margin:28px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.photos img{display:block;width:100%;height:100%;object-fit:cover;border-radius:20px;aspect-ratio:4/3}
-.photos img:first-child{grid-column:1 / -1;aspect-ratio:16/9}
 .info{margin:16px 0 0;padding:24px;border-radius:24px;border:1px solid #E6E6E6;display:grid;gap:18px}
 .info dt{font-size:14px;color:#676767}
 .info dd{margin:2px 0 0;font-size:17px}
@@ -59,6 +57,17 @@ h2{margin:40px 0 8px;font-size:clamp(20px,2.4vw,25px);line-height:1.6;font-weigh
 .links h2{margin:0 0 8px;font-size:18px}
 .links ul{margin:0;padding:0 20px 0 0}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+.intro{margin:32px 0 0}
+.intro h2{margin:0 0 6px}
+.intro p{margin:0;font-size:16px;color:#676767}
+.intro-v{position:relative;margin:18px 0 0;aspect-ratio:16/9;border-radius:28px;overflow:hidden;background:radial-gradient(circle at 75% 20%,#5B86F2 0%,#3669EE 35%,#1E3FA8 100%);box-shadow:0 20px 48px rgba(16,24,40,.14)}
+.intro-v::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(16,24,40,.45) 0%,rgba(16,24,40,0) 50%)}
+.intro-v .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:999px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 12px rgba(255,255,255,.22)}
+.intro-v .play svg{margin-left:-4px}
+.intro-v figcaption{position:absolute;right:28px;left:28px;bottom:24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;color:#FFFFFF}
+.intro-v figcaption b{font-size:20px;font-weight:800}
+.intro-v figcaption span{padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.18);font-size:13px}
+@media (max-width:699px){.intro-v{border-radius:20px}.intro-v .play{width:60px;height:60px;box-shadow:0 0 0 8px rgba(255,255,255,.22)}.intro-v figcaption{right:16px;left:16px;bottom:14px}.intro-v figcaption b{font-size:16px}}
 </style>
 <link rel="stylesheet" href="assets/site-header.css">
 <link rel="stylesheet" href="assets/site-footer.css">
@@ -66,7 +75,7 @@ h2{margin:40px 0 8px;font-size:clamp(20px,2.4vw,25px);line-height:1.6;font-weigh
 <body>
 <header class="sh" id="sh">
   <div class="sh-bar">
-    <button class="sh-burger" type="button" aria-expanded="false" aria-controls="sh-menu" aria-label="منو"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    <button class="sh-burger" type="button" aria-expanded="false" aria-controls="sh-menu" aria-label="منو"><svg class="sh-bars" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg><svg class="sh-x" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
     <a class="sh-logo" href="index.html" aria-label="کلینیک تخصصی نیکان — صفحه اصلی"><span class="sh-mark" aria-hidden="true">ن</span><span class="sh-brand"><b>کلینیک نیکان</b><small>نوبت‌دهی و مشاوره آنلاین</small></span></a>
     <nav class="sh-nav" aria-label="منوی اصلی">
       <div class="sh-dd"><button class="sh-ddbtn" type="button" aria-expanded="false" aria-haspopup="true">پزشکان و تخصص‌ها<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
@@ -96,11 +105,15 @@ h2{margin:40px 0 8px;font-size:clamp(20px,2.4vw,25px);line-height:1.6;font-weigh
 <span class="chip">درباره کلینیک</span>
 <h1>مراقبتی دقیق، در فضایی آرام و قابل اعتماد</h1>
 <p class="lead2">در کلینیک نیکان پزشکان متخصص در کنار هم کار می‌کنند تا مسیر تشخیص و درمان برای شما ساده‌تر شود. پرونده شما بین پزشکان کلینیک در دسترس است و می‌توانید پیگیری درمان را به‌صورت حضوری یا آنلاین ادامه دهید.</p>
-<div class="photos">
-  <img src="assets/about/clinic-1.webp" alt="فضای کلینیک نیکان" loading="eager">
-  <img src="assets/about/clinic-2.webp" alt="اتاق معاینه کلینیک نیکان" loading="lazy">
-  <img src="assets/about/clinic-3.webp" alt="پذیرش و سالن انتظار کلینیک نیکان" loading="lazy">
-</div>
+<section class="intro" aria-labelledby="intro-h">
+<h2 id="intro-h">ویدیوی معرفی کلینیک</h2>
+<p>در چند دقیقه با فضای کلینیک نیکان، پزشکان و روند دریافت نوبت آشنا شوید.</p>
+<!-- Placeholder until the clinic sends the video: replace the figure with a <video> or the Aparat/YouTube embed. -->
+<figure class="intro-v" aria-label="ویدیوی معرفی کلینیک نیکان (به‌زودی)">
+  <span class="play" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="#3669EE"><path d="M8 5.5v13l11-6.5z"></path></svg></span>
+  <figcaption><b>آشنایی با کلینیک نیکان</b><span>به‌زودی</span></figcaption>
+</figure>
+</section>
 </main>
 <footer class="sf">
   <div class="sf-in">
