@@ -14,6 +14,9 @@
 <style>
   /* Doctor card photos: no dashed placeholder ring over the photo. */
   image-slot[id^="doctor-"]::part(ring){display:none}
+  /* Search placeholder: slightly smaller on small phones so the whole example fits. */
+  @media (max-width:419px){ input[type="search"]::placeholder{font-size:14px} }
+  @media (max-width:379px){ input[type="search"]::placeholder{font-size:13px} }
 @font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Light.woff2') format('woff2');font-weight:300;font-display:swap}
 @font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-SemiBold.woff2') format('woff2');font-weight:500 600;font-display:swap}
@@ -145,7 +148,7 @@ a:hover{color:#2453D4}
     <label style="flex:1.4 1 260px; min-width:0; display:flex; align-items:center; gap:10px; height:56px; padding:0 16px; border-radius:14px; background:#F8F9FA">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#676767" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
       <span style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)">نام پزشک یا تخصص</span>
-      <input type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="دکتر محمد محمدی" style="flex:1; min-width:0; border:0; outline:0; background:transparent; font-size:16px">
+      <input type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="دکتر محمد محمدی، متخصص قلب و عروق" style="flex:1; min-width:0; border:0; outline:0; background:transparent; font-size:16px">
     </label>
   </form>
   <div role="group" aria-label="فیلتر تخصص" style="margin:22px {{ L.catBleed }} 0; padding:10px {{ L.catPadX }} 12px; display:flex; justify-content:{{ L.catJustify }}; gap:{{ L.catGap }}; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding:0 {{ L.catPadX }}; scrollbar-width:none">
