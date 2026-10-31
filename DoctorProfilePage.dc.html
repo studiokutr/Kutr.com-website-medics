@@ -610,7 +610,7 @@ const setDoctorSeo = (key, D) => {
   const visits = D.types.map((t) => VISIT_WORDS[t]);
   const visitText = visits.length > 1 ? visits.slice(0, -1).join("، ") + " و " + visits[visits.length - 1] : visits[0];
   const title = D.name + "، " + D.specialty + " | نوبت‌دهی اینترنتی کلینیک نیکان";
-  const desc = D.name + "، " + D.specialty + " در کلینیک تخصصی نیکان تهران. دریافت " + visitText + "؛ معرفی، تحصیلات، خدمات، نظرات بیماران و سوالات متداول.";
+  const desc = D.name + "، " + D.specialty + " در کلینیک تخصصی نیکان تهران. دریافت " + visitText + "؛ معرفی، تحصیلات، خدمات و نظرات بیماران.";
   const head = document.head;
   const tag = (sel, make) => head.querySelector(sel) || head.appendChild(make());
   document.title = title;
@@ -622,12 +622,8 @@ const setDoctorSeo = (key, D) => {
   const ld = { "@context": "https://schema.org", "@graph": [
     { "@type": "IndividualPhysician", "@id": url + "#physician", name: D.name, url, image: site + "assets/doctors/photos/" + key + ".png",
       description: D.bio, medicalSpecialty: SCHEMA_SPEC[D.spec] || [], practicesAt: clinic,
-      address: { "@type": "PostalAddress", streetAddress: ADDRESS.replace(/^تهران، /, ""), addressLocality: "تهران", addressCountry: "IR" } },
-    { "@type": "BreadcrumbList", itemListElement: [
-      { "@type": "ListItem", position: 1, name: "کلینیک نیکان", item: site },
-      { "@type": "ListItem", position: 2, name: D.name, item: url }
-    ] }
-  ] };
+      address: { "@type": "PostalAddress", streetAddress: ADDRESS.replace(/^تهران، /, ""), addressLocality: "تهران", addressCountry: "IR" } }
+  ] }; // The BreadcrumbList is set separately (script#crumb-ld).
   const s = tag("script#doctor-ld", () => Object.assign(document.createElement("script"), { id: "doctor-ld", type: "application/ld+json" }));
   s.textContent = JSON.stringify(ld);
 };
