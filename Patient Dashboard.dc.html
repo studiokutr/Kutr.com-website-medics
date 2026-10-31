@@ -336,11 +336,76 @@ a:hover{color:#2453D4}
     </sc-if>
 
     <sc-if value="{{ isChat }}" hint-placeholder-val="{{ false }}">
-      <section aria-labelledby="chat-h" data-screen-label="Dashboard · Chat" style="background:#FFFFFF; border:1px solid #ECEEF0; border-radius:20px; padding:{{ L.formPad }}; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center">
-        <span aria-hidden="true" style="width:64px; height:64px; border-radius:999px; background:#EBF0FE; color:#3669EE; display:flex; align-items:center; justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"></path></svg></span>
-        <h1 id="chat-h" style="margin:0; font-size:18px; font-weight:800">صفحه گفتگو</h1>
-        <p style="margin:0; max-width:460px; font-size:15px; line-height:1.9; color:#4A4A4A">گفتگوی شما با پزشک پس از دریافت نوبت مشاوره آنلاین این‌جا نمایش داده می‌شود. در حال حاضر گفتگوی فعالی ندارید.</p>
-        <a href="Booking%20platform.dc.html#doctors" style="min-height:48px; padding:0 22px; border-radius:14px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; font-weight:700" style-hover="color:#FFFFFF; background:#2453D4">دریافت مشاوره آنلاین</a>
+      <section aria-labelledby="chat-h" data-screen-label="Dashboard · Chat" style="background:#FFFFFF; border:1px solid #ECEEF0; border-radius:20px; overflow:hidden; display:grid; grid-template-columns:{{ chatCols }}; align-items:stretch">
+        <div style="display:flex; flex-direction:column; min-width:0; border-left:{{ chatListBorder }}; border-bottom:{{ chatListBorderB }}">
+          <div style="padding:20px 20px 12px; display:flex; flex-direction:column; gap:4px">
+            <h1 id="chat-h" style="margin:0; font-size:18px; font-weight:800">صفحه گفتگو</h1>
+            <p style="margin:0; font-size:13px; line-height:1.8; color:#676767">گفتگو با پزشک بعد از نوبت تلفنی یا مشاوره آنلاین</p>
+          </div>
+          <div role="tablist" aria-label="گفتگوها" style="display:flex; flex-direction:{{ chatListDir }}; gap:6px; padding:0 12px 12px; overflow-x:auto; scrollbar-width:none">
+            <sc-for list="{{ convs }}" as="c" hint-placeholder-count="2">
+              <button type="button" role="tab" aria-selected="{{ c.sel }}" onClick="{{ c.pick }}" style="flex:{{ chatItemFlex }}; display:flex; align-items:center; gap:12px; padding:12px; border-radius:14px; border:1px solid {{ c.border }}; background:{{ c.bg }}; cursor:pointer; text-align:right; font:inherit; color:#222222">
+                <img src="{{ c.photo }}" alt="" width="44" height="44" style="flex:none; width:44px; height:44px; border-radius:999px; object-fit:cover; background:#F2F4F7">
+                <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px">
+                  <span style="font-size:15px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ c.name }}</span>
+                  <span style="font-size:12px; color:#676767; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ c.last }}</span>
+                </span>
+                <span style="flex:none; padding:2px 8px; border-radius:999px; background:{{ c.stBg }}; color:{{ c.stFg }}; font-size:11px; font-weight:700">{{ c.st }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; min-width:0">
+          <div style="display:flex; align-items:center; gap:12px; padding:14px 20px; border-bottom:1px solid #F0F2F4">
+            <img src="{{ cPhoto }}" alt="" width="40" height="40" style="flex:none; width:40px; height:40px; border-radius:999px; object-fit:cover; background:#F2F4F7">
+            <span style="flex:1; min-width:0; display:flex; flex-direction:column">
+              <span style="font-size:16px; font-weight:800">{{ cName }}</span>
+              <span style="font-size:13px; color:#676767">{{ cTopic }}</span>
+            </span>
+            <a href="{{ cProfile }}" style="flex:none; font-size:13px; font-weight:600; color:#3669EE">صفحه پزشک</a>
+          </div>
+          <div role="log" aria-label="پیام‌ها" style="flex:1; min-height:280px; max-height:460px; overflow-y:auto; padding:20px; background:#F8F9FA; display:flex; flex-direction:column; gap:10px">
+            <span style="align-self:center; padding:4px 12px; border-radius:999px; background:#ECEEF0; color:#676767; font-size:12px">{{ cDay }}</span>
+            <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="3">
+              <div style="align-self:{{ m.align }}; max-width:82%; padding:10px 14px; border-radius:{{ m.radius }}; background:{{ m.bg }}; color:{{ m.color }}; border:1px solid {{ m.border }}; display:flex; flex-direction:column; gap:4px">
+                <span style="font-size:15px; line-height:1.9">{{ m.text }}</span>
+                <span style="align-self:flex-end; font-size:11px; opacity:.7">{{ m.time }}</span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ cEnded }}" hint-placeholder-val="{{ false }}">
+              <span style="align-self:center; padding:4px 12px; border-radius:999px; background:#ECEEF0; color:#676767; font-size:12px">این گفتگو به پایان رسید</span>
+            </sc-if>
+          </div>
+          <sc-if value="{{ cOpen }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ sendMsg }}" style="display:flex; align-items:flex-end; gap:10px; padding:14px 16px; border-top:1px solid #F0F2F4">
+              <label style="flex:1; display:flex"><span style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)">پیام شما</span><textarea rows="1" value="{{ chatDraft }}" onChange="{{ onDraft }}" placeholder="پیام خود را بنویسید…" style="flex:1; min-height:48px; max-height:120px; resize:none; padding:12px 14px; border-radius:14px; border:1px solid #E6E6E6; background:#F8F9FA; font:inherit; font-size:15px; line-height:1.6"></textarea></label>
+              <button type="submit" aria-label="ارسال پیام" style="flex:none; width:48px; height:48px; border-radius:14px; border:0; background:{{ sendBg }}; color:#FFFFFF; display:flex; align-items:center; justify-content:center; cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:scaleX(-1)"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"></path></svg></button>
+            </form>
+          </sc-if>
+          <sc-if value="{{ cAskReview }}" hint-placeholder-val="{{ false }}">
+            <form onSubmit="{{ cSubmit }}" novalidate="" style="padding:20px; border-top:1px solid #F0F2F4; display:flex; flex-direction:column; gap:14px">
+              <div style="display:flex; flex-direction:column; gap:4px">
+                <h2 style="margin:0; font-size:17px; font-weight:800">نظر شما درباره {{ cName }}</h2>
+                <p style="margin:0; font-size:14px; color:#676767">به پزشک امتیاز بدهید و تجربه‌تان را بنویسید. نظر شما به مراجعان دیگر کمک می‌کند.</p>
+              </div>
+              <div role="group" aria-label="امتیاز به پزشک" style="display:flex; align-items:center; gap:6px">
+                <sc-for list="{{ cStars }}" as="st" hint-placeholder-count="5">
+                  <button type="button" aria-label="{{ st.label }}" aria-pressed="{{ st.sel }}" onClick="{{ st.pick }}" style="width:44px; height:44px; border-radius:12px; border:1px solid {{ st.border }}; background:{{ st.bg }}; color:{{ st.color }}; display:flex; align-items:center; justify-content:center; cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"></path></svg></button>
+                </sc-for>
+                <span style="margin-right:6px; font-size:14px; font-weight:700; color:#4A4A4A">{{ cStarsText }}</span>
+              </div>
+              <label style="display:flex; flex-direction:column; gap:6px"><span style="font-size:14px; color:#4A4A4A">نظر شما</span><textarea rows="3" value="{{ cText }}" onChange="{{ onCText }}" placeholder="مثلاً درباره‌ی دقت پزشک، توضیحات و زمان پاسخ‌گویی" style="padding:12px 14px; border-radius:14px; border:1px solid #E6E6E6; background:#F8F9FA; font:inherit; font-size:15px; line-height:1.8; resize:vertical"></textarea></label>
+              <sc-if value="{{ cErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px; color:#D92D20">لطفاً به پزشک امتیاز بدهید.</span></sc-if>
+              <button type="submit" style="align-self:flex-start; min-height:48px; padding:0 28px; border-radius:14px; border:0; background:#3669EE; color:#FFFFFF; font:inherit; font-size:15px; font-weight:700; cursor:pointer">ثبت نظر</button>
+            </form>
+          </sc-if>
+          <sc-if value="{{ cReviewed }}" hint-placeholder-val="{{ false }}">
+            <div role="status" style="margin:16px 20px 20px; padding:16px; border-radius:14px; background:#ECFDF3; color:#067647; display:flex; flex-direction:column; gap:4px">
+              <span style="font-size:15px; font-weight:700">✓ نظر شما ثبت شد · {{ cRevStars }}</span>
+              <sc-if value="{{ cRevHasText }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px; line-height:1.8; color:#344054">«{{ cRevText }}»</span></sc-if>
+            </div>
+          </sc-if>
+        </div>
       </section>
     </sc-if>
 
@@ -415,6 +480,18 @@ const DOCS = {
   maryam: ["دکتر مریم حسینی", "پزشک عمومی"], peyman: ["دکتر پیمان راد", "متخصص مغز و اعصاب (نورولوژی)"]
 };
 const ADDRESS = "تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم";
+// Demo conversations (front end only). Messages the user sends and chat reviews are kept in the browser (nikan-chat, nikan-chat-reviews).
+const CHATS = [
+  { id: "c1", doc: "hamid", topic: "پیگیری نوبت تلفنی · ۲۰ مهر ۱۴۰۵", day: "۲۰ مهر ۱۴۰۵", open: true, msgs: [
+    ["doc", "۱۸:۲۰", "سلام، همان‌طور که در تماس گفتم، تا جلسه بعد تمرین‌های کششی را روزی دو بار انجام دهید."],
+    ["me", "۱۸:۳۵", "سلام دکتر، ممنون. اگر درد بیشتر شد چه کار کنم؟"],
+    ["doc", "۱۸:۴۱", "در این صورت تمرین را متوقف کنید و از همین‌جا پیام بدهید یا نوبت حضوری بگیرید."]] },
+  { id: "c2", doc: "maryam", topic: "مشاوره آنلاین · ۱۵ شهریور ۱۴۰۵", day: "۱۵ شهریور ۱۴۰۵", open: false, msgs: [
+    ["me", "۱۵:۰۲", "سلام دکتر، جواب آزمایشم را فرستادم."],
+    ["doc", "۱۵:۰۸", "سلام، آزمایش را دیدم. نتیجه در محدوده طبیعی است و جای نگرانی نیست."],
+    ["me", "۱۵:۱۰", "خیلی ممنون از راهنمایی‌تان."],
+    ["doc", "۱۵:۱۲", "خواهش می‌کنم. سه ماه دیگر برای آزمایش دوره‌ای مراجعه کنید."]] }
+];
 const TYPES = { clinic: "ویزیت حضوری", phone: "نوبت تلفنی", online: "مشاوره آنلاین" };
 const ST = { booked: ["دریافت شده", "#EBF0FE", "#2453D4"], done: ["انجام شده", "#F2F4F7", "#475467"], cancelled: ["لغو شده", "#FEF3F2", "#B42318"] };
 const SAMPLE = [
@@ -492,12 +569,12 @@ function headerVals(c, dev, o) {
 }
 
 class Component extends DCLogic {
-  state = { vw: 1440, tab: "appointments", filter: "all", phone: "09121234567", profile: DEFAULT_PROFILE, draft: DEFAULT_PROFILE, errs: {}, booked: [], over: {}, open: "", review: "", stars: 0, reviewText: "", reviewErr: false, cancelAsk: "", menu: false, toast: "" };
+  state = { vw: 1440, tab: "appointments", filter: "all", phone: "09121234567", profile: DEFAULT_PROFILE, draft: DEFAULT_PROFILE, errs: {}, booked: [], over: {}, open: "", review: "", stars: 0, reviewText: "", reviewErr: false, chat: "c1", chatDraft: "", chatMsgs: {}, chatRev: {}, cStars: 0, cText: "", cErr: false, cancelAsk: "", menu: false, toast: "" };
   componentDidMount() {
     let phone = "09121234567", authed = false; try { authed = !!localStorage.getItem("nikan-user"); phone = localStorage.getItem("nikan-user") || phone; } catch (e) {}
     const profile = { ...DEFAULT_PROFILE, ...read("nikan-profile", {}) };
     const hash = (location.hash || "").slice(1);
-    this.setState({ vw: document.documentElement.clientWidth, phone, authed, profile, draft: profile, booked: read("nikan-appts", []), over: read("nikan-appt-state", {}), tab: ["profile", "appointments", "chat"].includes(hash) ? hash : "appointments" });
+    this.setState({ vw: document.documentElement.clientWidth, phone, authed, profile, draft: profile, booked: read("nikan-appts", []), over: read("nikan-appt-state", {}), chatMsgs: read("nikan-chat", {}), chatRev: read("nikan-chat-reviews", {}), tab: ["profile", "appointments", "chat"].includes(hash) ? hash : "appointments" });
     // clientWidth ignores iOS Safari's toolbar show/hide while scrolling, which fires resize with the same width.
     this.onResize = () => { const w = document.documentElement.clientWidth; if (w !== this.state.vw) this.setState({ vw: w }); };
     this.onHash = () => { const h = location.hash.slice(1); if (["profile", "appointments", "chat"].includes(h)) this.setState({ tab: h }); };
@@ -506,6 +583,32 @@ class Component extends DCLogic {
     headerMount(this);
   }
   componentWillUnmount() { headerUnmount(this); window.removeEventListener("resize", this.onResize); window.removeEventListener("hashchange", this.onHash); window.removeEventListener("keydown", this.onKey); clearTimeout(this.tt); clearTimeout(this.mt); }
+  chatVals(s, dev) {
+    const C = CHATS.find((c) => c.id === s.chat) || CHATS[0], mobile = dev === "mobile";
+    const extra = s.chatMsgs[C.id] || [], rev = s.chatRev[C.id];
+    const all = C.msgs.concat(extra);
+    const stars = s.cStars;
+    return {
+      chatCols: mobile ? "minmax(0,1fr)" : (dev === "desktop" ? "280px minmax(0,1fr)" : "240px minmax(0,1fr)"),
+      chatListDir: mobile ? "row" : "column", chatItemFlex: mobile ? "0 0 min(270px, 82%)" : "none",
+      chatListBorder: mobile ? "0" : "1px solid #F0F2F4", chatListBorderB: mobile ? "1px solid #F0F2F4" : "0",
+      convs: CHATS.map((c) => { const on = c.id === C.id, m = c.msgs.concat(s.chatMsgs[c.id] || []); return { name: DOCS[c.doc][0], photo: "assets/doctors/photos/" + c.doc + ".png", last: m[m.length - 1][2],
+        st: c.open ? "فعال" : "پایان یافته", stBg: c.open ? "#ECFDF3" : "#F2F4F7", stFg: c.open ? "#067647" : "#475467",
+        sel: on ? "true" : "false", bg: on ? "#F5F8FF" : "#FFFFFF", border: on ? "#C9D7FB" : "transparent",
+        pick: () => this.setState({ chat: c.id, chatDraft: "", cStars: 0, cText: "", cErr: false }) }; }),
+      cName: DOCS[C.doc][0], cPhoto: "assets/doctors/photos/" + C.doc + ".png", cTopic: C.topic, cDay: C.day, cProfile: "DoctorProfilePage.dc.html?doctor=" + C.doc,
+      msgs: all.map(([who, time, text]) => { const me = who === "me"; return { text, time, align: me ? "flex-start" : "flex-end", bg: me ? "#3669EE" : "#FFFFFF", color: me ? "#FFFFFF" : "#222222", border: me ? "#3669EE" : "#ECEEF0", radius: me ? "16px 16px 4px 16px" : "16px 16px 16px 4px" }; }),
+      cOpen: C.open, cEnded: !C.open, chatDraft: s.chatDraft, sendBg: s.chatDraft.trim() ? "#3669EE" : "#B4C6F7",
+      onDraft: (e) => this.setState({ chatDraft: e.target.value }),
+      sendMsg: (e) => { e.preventDefault(); const t = this.state.chatDraft.trim(); if (!t) return; const d = new Date(), time = fa(String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"));
+        const chatMsgs = { ...this.state.chatMsgs, [C.id]: (this.state.chatMsgs[C.id] || []).concat([["me", time, t]]) }; write("nikan-chat", chatMsgs); this.setState({ chatMsgs, chatDraft: "" }, () => { const l = document.querySelector('[role="log"]'); if (l) l.scrollTop = l.scrollHeight; }); },
+      cAskReview: !C.open && !rev, cReviewed: !C.open && !!rev,
+      cRevStars: rev ? fa(rev.stars) + " از ۵" : "", cRevText: rev ? rev.text : "", cRevHasText: !!(rev && rev.text),
+      cStars: [1, 2, 3, 4, 5].map((n) => { const on = stars >= n; return { label: fa(n) + " ستاره", sel: stars === n ? "true" : "false", border: on ? "#F5A524" : "#D9D9D9", bg: on ? "#FFF7E6" : "#FFFFFF", color: on ? "#F5A524" : "#C9CDD2", pick: () => this.setState({ cStars: n, cErr: false }) }; }),
+      cStarsText: stars ? fa(stars) + " از ۵" : "", cText: s.cText, onCText: (e) => this.setState({ cText: e.target.value }), cErr: s.cErr,
+      cSubmit: (e) => { e.preventDefault(); if (!this.state.cStars) return this.setState({ cErr: true }); const chatRev = { ...this.state.chatRev, [C.id]: { stars: this.state.cStars, text: this.state.cText.trim() } }; write("nikan-chat-reviews", chatRev); this.setState({ chatRev, cStars: 0, cText: "" }); this.toast("نظر شما ثبت شد (نسخه نمایشی)."); }
+    };
+  }
   toast(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: "" }), 2600); }
   goTab(tab) { this.setState({ tab, menu: false }); try { history.replaceState(null, "", "#" + tab); } catch (e) {} window.scrollTo(0, 0); }
   logout() { try { localStorage.removeItem("nikan-user"); } catch (e) {} location.href = "Booking%20platform.dc.html"; }
@@ -543,6 +646,7 @@ class Component extends DCLogic {
           color: out ? "#D92D20" : "#94979C", iconColor: out ? "#D92D20" : "#94979C", go: () => { if (out) this.logout(); } };
       }),
       isAppts: s.tab === "appointments", isProfile: s.tab === "profile", isChat: s.tab === "chat",
+      ...this.chatVals(s, dev),
       filters: [["all", "همه"], ["clinic", "ویزیت حضوری"], ["phone", "نوبت تلفنی"], ["online", "مشاوره آنلاین"]].map(([k, label]) => { const on = s.filter === k; return { label, count: fa(counts[k]), sel: on ? "true" : "false", line: on ? "#3669EE" : "transparent", color: on ? "#222222" : "#676767", weight: on ? 700 : 500, pick: () => this.setState({ filter: k }) }; }),
       apptsEmpty: list.length === 0,
       appts: list.map((a) => {
