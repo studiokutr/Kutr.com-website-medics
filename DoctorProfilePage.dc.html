@@ -167,7 +167,11 @@ a:hover{color:#2453D4}
       <div style="display:flex; flex-direction:column; gap:12px">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px">
           <h3 style="margin:0; font-size:16px; font-weight:700">انتخاب روز</h3>
-          <span style="font-size:12px; color:#676767; background:#F0F2F4; padding:4px 10px; border-radius:999px">زمان‌های خالی این ماه</span>
+          <div style="display:flex; align-items:center; gap:6px">
+            <button type="button" aria-label="ماه قبل" onClick="{{ prevMonth }}" disabled="{{ prevDis }}" style="width:32px; height:32px; border-radius:999px; border:1px solid #E6E6E6; background:#FFFFFF; display:flex; align-items:center; justify-content:center; padding:0; color:{{ prevColor }}; cursor:{{ prevCursor }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+            <span aria-live="polite" style="min-width:84px; text-align:center; font-size:15px; font-weight:700; color:#222222">{{ monthTitle }}</span>
+            <button type="button" aria-label="ماه بعد" onClick="{{ nextMonth }}" disabled="{{ nextDis }}" style="width:32px; height:32px; border-radius:999px; border:1px solid #E6E6E6; background:#FFFFFF; display:flex; align-items:center; justify-content:center; padding:0; color:{{ nextColor }}; cursor:{{ nextCursor }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+          </div>
         </div>
         <div role="radiogroup" aria-label="روز" style="display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px">
           <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
@@ -529,7 +533,8 @@ function headerVals(c, dev, o) {
   };
 }
 const SECS = [["about", "معرفی", "sec-about"], ["services", "خدمات", "sec-services"], ["contact", "اطلاعات مراجعه", "sec-contact"], ["reviews", "نظرات", "sec-reviews"]];
-// Demo free times for the coming month: the same Saturday–Wednesday pattern repeated for 4 weeks (from ۹ آبان).
+// Demo free times: the same Saturday–Wednesday pattern every week (clinic closed Thursday/Friday),
+// from today (۹ آبان ۱۴۰۵, a Saturday) to the end of دی, grouped by Jalali month.
 const WEEK = [
   { w: "شنبه", clinic: ["۱۶:۰۰", "۱۶:۳۰", "۱۷:۰۰", "۱۸:۳۰"], phone: ["۱۳:۰۰", "۱۳:۳۰"], online: ["۲۰:۰۰", "۲۰:۳۰"] },
   { w: "یکشنبه", clinic: [], phone: ["۱۱:۰۰", "۱۱:۳۰", "۱۲:۰۰"], online: ["۱۹:۰۰"] },
@@ -538,11 +543,16 @@ const WEEK = [
   { w: "چهارشنبه", clinic: ["۱۵:۰۰", "۱۵:۳۰", "۱۶:۰۰"], phone: ["۱۲:۰۰", "۱۲:۳۰"], online: ["۲۱:۰۰", "۲۱:۳۰"] }
 ];
 const faNum = (n) => String(n).replace(/\d/g, (x) => "۰۱۲۳۴۵۶۷۸۹"[x]);
+const MONTHS = [["آبان", 30, 9], ["آذر", 30, 1], ["دی", 30, 1]].map(([name, len, from]) => ({ name, title: name + " ۱۴۰۵", len, from }));
 const DAYS = [];
-for (let k = 0; k < 4; k++) WEEK.forEach((x, j) => {
-  const n = 9 + k * 7 + j, d = n <= 30 ? faNum(n) + " آبان" : faNum(n - 30) + " آذر";
-  DAYS.push({ ...x, id: "d" + (DAYS.length + 1), d });
-});
+{
+  let wd = 0; // 0 = Saturday
+  MONTHS.forEach((m, mi) => {
+    for (let n = m.from; n <= m.len; n++, wd = (wd + 1) % 7) {
+      if (wd < WEEK.length) DAYS.push({ ...WEEK[wd], id: "d" + (DAYS.length + 1), d: faNum(n) + " " + m.name, m: mi });
+    }
+  });
+}
 const TYPES = {
   clinic: { title: "نوبت حضوری", sub: "کلینیک نیکان، تهران", accent: "#3669EE", iconBg: "#EBF0FE", label: "حضوری" },
   phone: { title: "نوبت تلفنی", sub: "تماس تلفنی پزشک با شما", accent: "#0E8F86", iconBg: "#E3F5F3", label: "تلفنی" },
@@ -562,7 +572,7 @@ const crumbSchema = (dk, D) => {
 };
 
 class Component extends DCLogic {
-  state = { doc: "peyman", vw: 1440, login: null, phone: "", code: "", loginErr: "", booking: "", type: "clinic", day: "d1", slot: null, bio: false, menu: false, toast: "", tab: "about" };
+  state = { doc: "peyman", vw: 1440, login: null, phone: "", code: "", loginErr: "", booking: "", type: "clinic", day: "d1", month: 0, slot: null, bio: false, menu: false, toast: "", tab: "about" };
   scrollRef = React.createRef();
 
   componentDidUpdate() { const full = this.isFull(); if (full !== this.lastFull) { this.lastFull = full; this.bindScroll(); } }
@@ -670,7 +680,9 @@ class Component extends DCLogic {
     crumbSchema(dk, D);
     const { day, slot, bio, menu, toast, tab } = this.state;
     const type = D.types.includes(this.state.type) ? this.state.type : D.types[0];
+    const month = this.state.month || 0;
     const dayObj = DAYS.find((d) => d.id === day) || DAYS[0];
+    const goMonth = (m) => { if (m < 0 || m >= MONTHS.length) return; const first = DAYS.find((d) => d.m === m); this.setState({ month: m, day: first.id, slot: null }, () => { const r = document.querySelector('[role="radiogroup"][aria-label="روز"]'); if (r) r.scrollLeft = 0; }); };
     const slots = dayObj[type];
     const summary = slot ? TYPES[type].label + " · " + dayObj.w + " " + dayObj.d + " · ساعت " + slot : "هنوز زمانی انتخاب نشده";
     const proceed = () => {
@@ -692,7 +704,12 @@ class Component extends DCLogic {
           checked: on ? "true" : "false", border: on ? "#3669EE" : "#E6E6E6", bg: on ? "#F5F8FF" : "#FFFFFF", ring: on ? "#3669EE" : "#CFCFCF", dot: on ? "#3669EE" : "transparent",
           pick: () => this.setState({ type: k, slot: null }) };
       }),
-      days: DAYS.map((d) => {
+      monthTitle: MONTHS[month].title,
+      prevMonth: () => goMonth(month - 1), nextMonth: () => goMonth(month + 1),
+      prevDis: month === 0, nextDis: month === MONTHS.length - 1,
+      prevColor: month === 0 ? "#CFCFCF" : "#3669EE", nextColor: month === MONTHS.length - 1 ? "#CFCFCF" : "#3669EE",
+      prevCursor: month === 0 ? "default" : "pointer", nextCursor: month === MONTHS.length - 1 ? "default" : "pointer",
+      days: DAYS.filter((d) => d.m === month).map((d) => {
         const on = d.id === day, has = d[type].length > 0;
         return { w: d.w, d: d.d, checked: on ? "true" : "false", disabled: false,
           border: on ? "#3669EE" : "#E6E6E6", bg: on ? "#3669EE" : has ? "#FFFFFF" : "#F8F9FA", color: on ? "#FFFFFF" : has ? "#222222" : "#94979C", cursor: "pointer",

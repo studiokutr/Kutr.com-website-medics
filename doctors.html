@@ -95,6 +95,16 @@ h2{margin:40px 0 8px;font-size:clamp(20px,2.4vw,25px);line-height:1.6;font-weigh
 a.art:hover h2{color:#3669EE}
 .soon{align-self:flex-start;padding:2px 10px;border-radius:999px;background:#F2F4F7;color:#676767;font-size:12px}
 @media (max-width:699px){.doc-top{flex-direction:column;align-items:center;text-align:center;gap:12px}.doc-stats,.tags{justify-content:center}.tags{gap:6px;flex-wrap:nowrap}.tags span{height:26px;padding:0 7px;font-size:12px;white-space:nowrap}}
+.cats{margin:24px -16px 0;padding:10px 16px 12px;display:flex;justify-content:safe center;gap:28px;overflow-x:auto;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cats button{flex:0 0 112px;display:flex;flex-direction:column;align-items:center;gap:10px;padding:0;border:0;background:transparent;cursor:pointer;font:inherit;font-size:16px;font-weight:800;line-height:1.4;color:#222222;transition:transform .25s}
+.cats button:hover{transform:translateY(-3px)}
+.cats button span{display:block;width:96px;height:96px;border-radius:999px;background-color:#EBF0FE;background-size:contain;background-position:center;background-repeat:no-repeat;transition:box-shadow .2s}
+.cats button[aria-pressed="true"]{color:#3669EE}
+.cats button[aria-pressed="true"] span{box-shadow:0 0 0 2px #3669EE}
+.doc[hidden]{display:none}
+@media (max-width:1099px){.cats{justify-content:flex-start;gap:20px}}
+@media (max-width:699px){.cats{gap:14px}.cats button{flex-basis:80px;font-size:14px}.cats button span{width:72px;height:72px}}
 </style>
 <link rel="stylesheet" href="assets/site-header.css">
 <link rel="stylesheet" href="assets/site-footer.css">
@@ -131,43 +141,44 @@ a.art:hover h2{color:#3669EE}
 <nav class="crumbs" aria-label="مسیر صفحه"><ol><li><a href="index.html">صفحه اصلی</a></li><li aria-current="page">همه پزشکان</li></ol></nav>
 <h1>همه پزشکان</h1>
 <p class="lead">پزشکان کلینیک نیکان را ببینید و از صفحه هر پزشک نوبت بگیرید.</p>
+<div class="cats" role="group" aria-label="فیلتر تخصص"><button type="button" data-spec="all" aria-pressed="true"><span aria-hidden="true" style="background-image:url(assets/specialties/all.svg)"></span>همه</button><button type="button" data-spec="cardio" aria-pressed="false"><span aria-hidden="true" style="background-image:url(assets/specialties/cardio.svg)"></span>قلب و عروق</button><button type="button" data-spec="derm" aria-pressed="false"><span aria-hidden="true" style="background-image:url(assets/specialties/derm.svg)"></span>پوست و مو</button><button type="button" data-spec="gyn" aria-pressed="false"><span aria-hidden="true" style="background-image:url(assets/specialties/gyn.svg)"></span>زنان و زایمان</button><button type="button" data-spec="ortho" aria-pressed="false"><span aria-hidden="true" style="background-image:url(assets/specialties/ortho.svg)"></span>ارتوپدی</button><button type="button" data-spec="gp" aria-pressed="false"><span aria-hidden="true" style="background-image:url(assets/specialties/gp.svg)"></span>پزشک عمومی</button><button type="button" data-spec="neuro" aria-pressed="false"><span aria-hidden="true" style="background-image:url(assets/specialties/neuro.svg)"></span>مغز و اعصاب</button></div>
 <div class="grid">
-<article class="doc">
+<article class="doc" data-spec="cardio">
   <div class="doc-top"><img src="assets/doctors/photos/sara.png" alt="دکتر سارا محمدی" loading="lazy" width="88" height="88"><div><h2>دکتر سارا محمدی</h2><span class="doc-sub">متخصص قلب و عروق</span><span class="doc-cred">فلوشیپ اکوکاردیوگرافی · ۱۵ سال سابقه</span></div></div>
   <div class="doc-stats"><span><b>۹۶٪</b> توصیه شده</span><span class="r"><svg width="16" height="16" viewBox="0 0 24 24" fill="#EAAA08" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"></path></svg> <b>۴٫۸</b> (از ۱۲۴ نظر)</span></div>
   <div class="tags"><span>ویزیت حضوری</span><span>نوبت تلفنی</span><span>مشاوره آنلاین</span></div>
   <div class="next"><span>اولین نوبت خالی</span><b>امروز، ۱۶:۳۰</b></div>
   <div class="acts"><a class="b1" href="DoctorProfilePage.dc.html?doctor=sara">درباره‌ی پزشک</a><a class="b2" href="DoctorProfilePage.dc.html?doctor=sara#booking">دریافت نوبت</a></div>
 </article>
-<article class="doc">
+<article class="doc" data-spec="derm">
   <div class="doc-top"><img src="assets/doctors/photos/amir.png" alt="دکتر امیر رضایی" loading="lazy" width="88" height="88"><div><h2>دکتر امیر رضایی</h2><span class="doc-sub">متخصص پوست، مو و زیبایی</span><span class="doc-cred">بورد تخصصی پوست · ۱۰ سال سابقه</span></div></div>
   <div class="doc-stats"><span><b>۹۳٪</b> توصیه شده</span><span class="r"><svg width="16" height="16" viewBox="0 0 24 24" fill="#EAAA08" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"></path></svg> <b>۴٫۷</b> (از ۸۸ نظر)</span></div>
   <div class="tags"><span>ویزیت حضوری</span><span>نوبت تلفنی</span><span>مشاوره آنلاین</span></div>
   <div class="next"><span>اولین نوبت خالی</span><b>سه‌شنبه ۵ آبان</b></div>
   <div class="acts"><a class="b1" href="DoctorProfilePage.dc.html?doctor=amir">درباره‌ی پزشک</a><a class="b2" href="DoctorProfilePage.dc.html?doctor=amir#booking">دریافت نوبت</a></div>
 </article>
-<article class="doc">
+<article class="doc" data-spec="gyn">
   <div class="doc-top"><img src="assets/doctors/photos/narges.png" alt="دکتر نرگس کریمی" loading="lazy" width="88" height="88"><div><h2>دکتر نرگس کریمی</h2><span class="doc-sub">متخصص زنان، زایمان و نازایی</span><span class="doc-cred">فلوشیپ نازایی · ۱۸ سال سابقه</span></div></div>
   <div class="doc-stats"><span><b>۹۵٪</b> توصیه شده</span><span class="r"><svg width="16" height="16" viewBox="0 0 24 24" fill="#EAAA08" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"></path></svg> <b>۴٫۹</b> (از ۲۱۰ نظر)</span></div>
   <div class="tags"><span>ویزیت حضوری</span></div>
   <div class="next"><span>اولین نوبت خالی</span><b>چهارشنبه ۶ آبان</b></div>
   <div class="acts"><a class="b1" href="DoctorProfilePage.dc.html?doctor=narges">درباره‌ی پزشک</a><a class="b2" href="DoctorProfilePage.dc.html?doctor=narges#booking">دریافت نوبت</a></div>
 </article>
-<article class="doc">
+<article class="doc" data-spec="ortho">
   <div class="doc-top"><img src="assets/doctors/photos/hamid.png" alt="دکتر حمید احمدی" loading="lazy" width="88" height="88"><div><h2>دکتر حمید احمدی</h2><span class="doc-sub">متخصص ارتوپدی</span><span class="doc-cred">فلوشیپ زانو و آرتروسکوپی · ۱۲ سال سابقه</span></div></div>
   <div class="doc-stats"><span><b>۹۱٪</b> توصیه شده</span><span class="r"><svg width="16" height="16" viewBox="0 0 24 24" fill="#EAAA08" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"></path></svg> <b>۴٫۶</b> (از ۷۶ نظر)</span></div>
   <div class="tags"><span>ویزیت حضوری</span><span>نوبت تلفنی</span></div>
   <div class="next"><span>اولین نوبت خالی</span><b>امروز، ۱۸:۰۰</b></div>
   <div class="acts"><a class="b1" href="DoctorProfilePage.dc.html?doctor=hamid">درباره‌ی پزشک</a><a class="b2" href="DoctorProfilePage.dc.html?doctor=hamid#booking">دریافت نوبت</a></div>
 </article>
-<article class="doc">
+<article class="doc" data-spec="gp">
   <div class="doc-top"><img src="assets/doctors/photos/maryam.png" alt="دکتر مریم حسینی" loading="lazy" width="88" height="88"><div><h2>دکتر مریم حسینی</h2><span class="doc-sub">پزشک عمومی</span><span class="doc-cred">پزشک خانواده · ۸ سال سابقه</span></div></div>
   <div class="doc-stats"><span><b>۹۴٪</b> توصیه شده</span><span class="r"><svg width="16" height="16" viewBox="0 0 24 24" fill="#EAAA08" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"></path></svg> <b>۴٫۷</b> (از ۱۵۲ نظر)</span></div>
   <div class="tags"><span>ویزیت حضوری</span><span>نوبت تلفنی</span><span>مشاوره آنلاین</span></div>
   <div class="next"><span>اولین نوبت خالی</span><b>امروز، ۱۵:۰۰</b></div>
   <div class="acts"><a class="b1" href="DoctorProfilePage.dc.html?doctor=maryam">درباره‌ی پزشک</a><a class="b2" href="DoctorProfilePage.dc.html?doctor=maryam#booking">دریافت نوبت</a></div>
 </article>
-<article class="doc">
+<article class="doc" data-spec="neuro">
   <div class="doc-top"><img src="assets/doctors/photos/peyman.png" alt="دکتر پیمان راد" loading="lazy" width="88" height="88"><div><h2>دکتر پیمان راد</h2><span class="doc-sub">متخصص مغز و اعصاب (نورولوژی)</span><span class="doc-cred">بورد تخصصی نورولوژی · ۲۰ سال سابقه</span></div></div>
   <div class="doc-stats"><span><b>۹۳٪</b> توصیه شده</span><span class="r"><svg width="16" height="16" viewBox="0 0 24 24" fill="#EAAA08" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"></path></svg> <b>۴٫۷</b> (از ۷۰ نظر)</span></div>
   <div class="tags"><span>ویزیت حضوری</span><span>نوبت تلفنی</span><span>مشاوره آنلاین</span></div>
@@ -224,6 +235,7 @@ a.art:hover h2{color:#3669EE}
     </div>
   </div>
 </footer>
+<script>/* Quick specialty filter; ?spec=<key> preselects one. */(function(){var bar=document.querySelector(".cats");if(!bar)return;var bs=bar.querySelectorAll("button"),docs=document.querySelectorAll(".doc[data-spec]");function pick(k,push){bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.spec===k?"true":"false")});docs.forEach(function(d){d.hidden=k!=="all"&&d.dataset.spec!==k});if(push){var u=new URL(location.href);if(k==="all")u.searchParams.delete("spec");else u.searchParams.set("spec",k);history.replaceState(null,"",u)}}bs.forEach(function(b){b.addEventListener("click",function(){var k=b.dataset.spec;pick(b.getAttribute("aria-pressed")==="true"&&k!=="all"?"all":k,true)})});var q=new URLSearchParams(location.search).get("spec");if(q&&bar.querySelector('[data-spec="'+q+'"]'))pick(q,false)})();</script>
 <script src="assets/site-header.js"></script>
 </body>
 </html>
