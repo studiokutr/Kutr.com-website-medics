@@ -88,6 +88,9 @@ a:hover{color:#2453D4}
       <sc-for list="{{ hdNav }}" as="n" hint-placeholder-count="5">
         <a href="{{ n.href }}" style="color:#373A41; padding:8px 0; border-bottom:2px solid transparent; transition:color .2s, border-color .2s; white-space:nowrap" style-hover="color:#3669EE; border-color:#3669EE">{{ n.label }}</a>
       </sc-for>
+      <sc-if value="{{ hdLoginBtn }}" hint-placeholder-val="{{ true }}">
+        <a href="#login" onClick="{{ hdNavLogin }}" style="color:#373A41; padding:8px 0; border-bottom:2px solid transparent; transition:color .2s, border-color .2s; white-space:nowrap" style-hover="color:#3669EE; border-color:#3669EE">ورود و ثبت‌نام</a>
+      </sc-if>
     </nav>
     <div style="margin-right:auto; display:flex; align-items:center; gap:12px; flex:none">
       <sc-if value="{{ hdLoginBtn }}" hint-placeholder-val="{{ true }}">
@@ -430,7 +433,9 @@ function headerVals(c, dev, o) {
       pick: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec(key); } })),
     hdDocs: HDR_DOCS.map(([key, name, specialty]) => ({ name, specialty, href: "DoctorProfilePage.dc.html?doctor=" + key })),
     hdAllHref: "doctors.html", hdAll: () => c.setState({ hdDd: false }),
-    hdNav: [["نوبت حضوری", "#search"], ["مشاوره آنلاین", "#search"]].map(([label, href]) => ({ label, href: home + href })),
+    // Desktop nav (fateme, 2026-10-31): پزشکان و تخصص‌ها (dropdown), درباره ما, تماس با ما, and ورود و ثبت‌نام while logged out.
+    hdNav: [["درباره ما", "about.html"], ["تماس با ما", "contact.html"]].map(([label, href]) => ({ label, href })),
+    hdNavLogin: (e) => { e.preventDefault(); openLogin(); },
     hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری",
     // «دریافت نوبت» starts booking at the homepage search box.
     hdBookHref: home + "#search", hdBook: () => c.setState({ hdMenu: false, hdDd: false })

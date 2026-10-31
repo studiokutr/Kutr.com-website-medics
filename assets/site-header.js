@@ -9,6 +9,7 @@
   try { user = localStorage.getItem("nikan-user") || ""; var p = JSON.parse(localStorage.getItem("nikan-profile") || "null"); if (p) name = (p.first + " " + p.last).trim(); } catch (e) {}
   // Hamburger menu: logged out shows «ورود و ثبت‌نام»; logged in shows profile and appointments.
   h.querySelectorAll(user ? ".sh-menu [data-guest]" : ".sh-menu [data-auth]").forEach(function (a) { a.hidden = true; });
+  if (user) h.querySelectorAll(".sh-navlogin").forEach(function (a) { a.hidden = true; });
   if (user) {
     h.querySelector(".sh-login").hidden = true;
     h.querySelector(".sh-acct").hidden = false;
