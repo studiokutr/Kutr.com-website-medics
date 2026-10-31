@@ -77,7 +77,7 @@ a:hover{color:#2453D4}
     </nav>
     <div style="margin-right:auto; display:flex; align-items:center; gap:12px; flex:none">
       <sc-if value="{{ hdLoginBtn }}" hint-placeholder-val="{{ true }}">
-      <button type="button" onClick="{{ hdLogin }}" style="height:{{ hdL.btnH }}; padding:0 {{ hdL.btnPad }}; border-radius:16px; border:0; background:#3669EE; color:#FFFFFF; font-size:{{ hdL.btnFs }}; font-weight:700; cursor:pointer; white-space:nowrap; box-shadow:0 6px 16px rgba(54,105,238,.28); transition:background-color .2s, transform .15s, box-shadow .2s" style-hover="background:#2453D4; box-shadow:0 8px 22px rgba(54,105,238,.36)" style-active="transform:scale(.97)">ورود و ثبت‌نام</button>
+      <a href="{{ hdBookHref }}" onClick="{{ hdBook }}" style="height:{{ hdL.btnH }}; padding:0 {{ hdL.btnPad }}; border-radius:16px; background:#3669EE; color:#FFFFFF; display:flex; align-items:center; font-size:{{ hdL.btnFs }}; font-weight:700; white-space:nowrap; box-shadow:0 6px 16px rgba(54,105,238,.28); transition:background-color .2s, transform .15s, box-shadow .2s" style-hover="background:#2453D4; color:#FFFFFF; box-shadow:0 8px 22px rgba(54,105,238,.36)" style-active="transform:scale(.97)">دریافت نوبت</a>
       </sc-if>
       <sc-if value="{{ hdLoggedIn }}" hint-placeholder-val="{{ false }}">
         <a href="Patient%20Dashboard.dc.html#appointments" aria-label="حساب کاربری" style="height:{{ hdL.btnH }}; padding:0 8px 0 14px; border-radius:14px; border:1px solid #3669EE; background:#FFFFFF; color:#3669EE; display:flex; align-items:center; gap:10px; font-size:15px; font-weight:600; white-space:nowrap; transition:background-color .2s" style-hover="background:#F5F8FF; color:#3669EE">
@@ -143,10 +143,10 @@ a:hover{color:#2453D4}
     <label style="flex:1.4 1 260px; min-width:0; display:flex; align-items:center; gap:10px; height:56px; padding:0 16px; border-radius:14px; background:#F8F9FA">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#676767" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
       <span style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)">نام پزشک یا تخصص</span>
-      <input type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="نام پزشک یا تخصص را جستجو کنید" style="flex:1; min-width:0; border:0; outline:0; background:transparent; font-size:16px">
+      <input type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="دکتر محمد محمدی" style="flex:1; min-width:0; border:0; outline:0; background:transparent; font-size:16px">
     </label>
   </form>
-  <div role="group" aria-label="فیلتر تخصص" style="margin:28px {{ L.catBleed }} 0; padding:4px {{ L.catPadX }} 8px; display:flex; justify-content:{{ L.catJustify }}; gap:{{ L.catGap }}; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding:0 {{ L.catPadX }}; scrollbar-width:none">
+  <div role="group" aria-label="فیلتر تخصص" style="margin:22px {{ L.catBleed }} 0; padding:10px {{ L.catPadX }} 12px; display:flex; justify-content:{{ L.catJustify }}; gap:{{ L.catGap }}; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding:0 {{ L.catPadX }}; scrollbar-width:none">
         <sc-for list="{{ specTiles }}" as="t" hint-placeholder-count="6">
           <button type="button" aria-pressed="{{ t.on }}" onClick="{{ t.pick }}" style="flex:0 0 {{ L.catW }}; scroll-snap-align:start; display:flex; flex-direction:column; align-items:center; gap:10px; padding:0; border:0; background:transparent; cursor:pointer; text-align:center; transition:transform .25s" style-hover="transform:translateY(-3px)">
             <span aria-hidden="true" style="display:block; width:{{ L.catC }}; height:{{ L.catC }}; border-radius:999px; background-color:#EBF0FE; background-image:url({{ t.img }}); background-size:contain; background-position:center; background-repeat:no-repeat; box-shadow:0 0 0 2px {{ t.ring }}; transition:box-shadow .2s"></span>
@@ -166,21 +166,21 @@ a:hover{color:#2453D4}
 
   <div style="margin:0 {{ L.rowBleed }}; padding:{{ L.rowPad }}; display:{{ L.rowDisp }}; grid-template-columns:repeat({{ L.docCols }}, minmax(0,1fr)); gap:{{ L.cardGap }}; overflow-x:{{ L.rowOv }}; scroll-snap-type:{{ L.rowSnap }}; scroll-padding:{{ L.rowPad }}; scrollbar-width:none">
     <sc-for list="{{ doctors }}" as="d" hint-placeholder-count="6">
-      <article style="flex:{{ L.docFlex }}; scroll-snap-align:start; display:flex; flex-direction:column; gap:20px; padding:24px; border-radius:24px; background:#FFFFFF; border:1px solid #E6E6E6; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(34,34,34,.08); border-color:#DBDBDB">
-        <div style="display:flex; gap:16px; align-items:flex-start">
+      <article style="position:relative; flex:{{ L.docFlex }}; scroll-snap-align:start; display:flex; flex-direction:column; gap:20px; padding:24px; border-radius:24px; background:#FFFFFF; border:1px solid #E6E6E6; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(34,34,34,.08); border-color:#DBDBDB">
+        <div style="display:flex; flex-direction:{{ docTopDir }}; gap:{{ docTopGap }}; align-items:{{ docTopAlign }}; text-align:{{ docTopText }}">
           <div style="flex:none; width:88px; height:88px; border-radius:22px; overflow:hidden; background:#F8F9FA; border:1px solid #ECEEF0">
             <image-slot id="{{ d.photoId }}" shape="rect" fit="cover" src="{{ d.photo }}" placeholder="عکس پزشک"></image-slot>
           </div>
-          <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:6px">
+          <div style="flex:1; min-width:0; display:flex; flex-direction:column; align-items:{{ docTopAlign }}; gap:6px">
             <h3 style="margin:0; font-size:20px; font-weight:800">{{ d.name }}</h3>
             <span style="font-size:15px; color:#4A4A4A">{{ d.specialty }}</span>
             <span style="font-size:14px; color:#676767">{{ d.credential }}</span>
           </div>
-          <button type="button" onClick="{{ d.share }}" aria-label="{{ d.shareLabel }}" title="اشتراک‌گذاری" style="flex:none; width:44px; height:44px; margin:-6px 0 0 -6px; border-radius:12px; border:1px solid #E6E6E6; background:#FFFFFF; color:#4A4A4A; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:color .2s, border-color .2s, background-color .2s" style-hover="color:#3669EE; border-color:#C9D7FB; background:#F5F8FF" style-active="transform:scale(.94)">
+          <button type="button" onClick="{{ d.share }}" aria-label="{{ d.shareLabel }}" title="اشتراک‌گذاری" style="position:{{ docSharePos }}; top:18px; left:18px; flex:none; width:44px; height:44px; margin:-6px 0 0 -6px; border-radius:12px; border:1px solid #E6E6E6; background:#FFFFFF; color:#4A4A4A; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:color .2s, border-color .2s, background-color .2s" style-hover="color:#3669EE; border-color:#C9D7FB; background:#F5F8FF" style-active="transform:scale(.94)">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
           </button>
         </div>
-        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; font-size:14px; color:#4A4A4A">
+        <div style="display:flex; align-items:center; justify-content:{{ docTagJustify }}; gap:14px; flex-wrap:wrap; font-size:14px; color:#4A4A4A">
           <span style="display:flex; align-items:center; gap:6px"><span style="color:#15B743; font-weight:700">{{ d.recommend }}</span>توصیه شده</span>
           <span aria-hidden="true" style="width:1px; height:16px; background:#DEDEDE"></span>
           <span style="display:flex; align-items:center; gap:6px">
@@ -189,9 +189,9 @@ a:hover{color:#2453D4}
             <span style="color:#676767">{{ d.reviews }}</span>
           </span>
         </div>
-        <div style="display:flex; flex-wrap:wrap; gap:8px">
+        <div style="display:flex; flex-wrap:{{ docTagWrap }}; justify-content:{{ docTagJustify }}; gap:{{ docTagGap }}">
           <sc-for list="{{ d.types }}" as="ty" hint-placeholder-count="2">
-            <span style="display:inline-flex; align-items:center; height:28px; padding:0 10px; border-radius:8px; background:{{ ty.bg }}; color:{{ ty.color }}; font-size:13px; font-weight:600">{{ ty.label }}</span>
+            <span style="display:inline-flex; align-items:center; height:{{ docTagH }}; padding:0 {{ docTagPad }}; border-radius:8px; background:{{ ty.bg }}; color:{{ ty.color }}; font-size:{{ docTagFs }}; font-weight:600; white-space:nowrap">{{ ty.label }}</span>
           </sc-for>
         </div>
         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:16px; background:#F8F9FA">
@@ -218,7 +218,7 @@ a:hover{color:#2453D4}
   </sc-if>
 
   <div style="display:flex; justify-content:center; margin-top:{{ L.allBtnM }}">
-    <a href="#doctors" style="height:52px; padding:0 26px; border-radius:16px; border:1px solid #D9D9D9; color:#222222; font-size:16px; font-weight:600; display:flex; align-items:center; gap:10px; transition:border-color .2s, color .2s, gap .25s" style-hover="border-color:#3669EE; color:#3669EE; gap:16px">مشاهده همه پزشکان<span aria-hidden="true">←</span></a>
+    <a href="doctors.html" style="height:52px; padding:0 26px; border-radius:16px; border:1px solid #D9D9D9; color:#222222; font-size:16px; font-weight:600; display:flex; align-items:center; gap:10px; transition:border-color .2s, color .2s, gap .25s" style-hover="border-color:#3669EE; color:#3669EE; gap:16px">مشاهده همه پزشکان<span aria-hidden="true">←</span></a>
   </div>
 </section>
 
@@ -311,16 +311,16 @@ a:hover{color:#2453D4}
     <div style="display:flex; align-items:center; gap:12px">
       <button type="button" onClick="{{ magPrev }}" aria-label="مطالب قبلی" style="display:{{ magArrows }}; width:48px; height:48px; border-radius:14px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer; font-size:18px; transition:border-color .2s, color .2s" style-hover="border-color:#3669EE; color:#3669EE">→</button>
       <button type="button" onClick="{{ magNext }}" aria-label="مطالب بعدی" style="display:{{ magArrows }}; width:48px; height:48px; border-radius:14px; border:1px solid #D9D9D9; background:#FFFFFF; cursor:pointer; font-size:18px; transition:border-color .2s, color .2s" style-hover="border-color:#3669EE; color:#3669EE">←</button>
-      <a href="#magazine" style="font-size:17px; font-weight:600; color:#3669EE; padding:0 8px; white-space:nowrap">مشاهده همه</a>
+      <a href="magazine/index.html" style="font-size:17px; font-weight:600; color:#3669EE; padding:0 8px; white-space:nowrap">مشاهده همه</a>
     </div>
   </div>
-  <div ref="{{ magRef }}" style="display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; padding-bottom:8px">
+  <div ref="{{ magRef }}" style="margin:0 {{ L.rowBleed }}; padding:10px {{ magPadX }} 22px; display:flex; gap:{{ L.cardGap }}; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding:0 {{ magPadX }}; scrollbar-width:none">
     <sc-for list="{{ articles }}" as="a" hint-placeholder-count="5">
-      <a href="#magazine" style="flex:0 0 302px; scroll-snap-align:start; display:flex; flex-direction:column; gap:14px; color:#222222">
+      <a href="#magazine" style="flex:0 0 {{ magCardW }}; scroll-snap-align:start; display:flex; flex-direction:column; gap:14px; padding:14px 14px 20px; border-radius:24px; background:#FFFFFF; border:1px solid #E6E6E6; color:#222222; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(34,34,34,.08); border-color:#DBDBDB; color:#222222">
         <div style="position:relative; aspect-ratio:4 / 3; border-radius:20px; background:#F8F9FA; border:1px solid #ECEEF0; overflow:hidden"><image-slot id="{{ a.slotId }}" shape="rect" fit="cover" placeholder="{{ a.slotHint }}" style="position:absolute; inset:0; width:100%; height:100%"></image-slot></div>
-        <span style="align-self:flex-start; font-size:13px; color:#3669EE; background:#EBF0FE; padding:4px 10px; border-radius:8px">{{ a.cat }}</span>
-        <h3 style="margin:0; font-size:17px; font-weight:700; line-height:1.7">{{ a.title }}</h3>
-        <span style="font-size:15px; color:#676767; display:flex; align-items:center; gap:6px">ادامه مطلب<span aria-hidden="true">←</span></span>
+        <span style="align-self:flex-start; margin:0 4px; font-size:13px; color:#3669EE; background:#EBF0FE; padding:4px 10px; border-radius:8px">{{ a.cat }}</span>
+        <h3 style="margin:0 4px; flex:1; font-size:17px; font-weight:700; line-height:1.7">{{ a.title }}</h3>
+        <span style="margin:0 4px; font-size:15px; color:#3669EE; font-weight:600; display:flex; align-items:center; gap:6px">ادامه مطلب<span aria-hidden="true">←</span></span>
       </a>
     </sc-for>
   </div>
@@ -372,7 +372,7 @@ a:hover{color:#2453D4}
         <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
         <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
       </div>
-      <div style="display:flex; flex-wrap:wrap; gap:8px">
+      <div style="flex:1 1 100%; display:flex; flex-wrap:wrap; justify-content:center; gap:8px">
         <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
           <span role="img" aria-label="{{ s.label }}" title="{{ s.label }}" style="width:44px; height:44px; border-radius:999px; border:1px solid #373A41; display:flex; align-items:center; justify-content:center; color:#CECFD2">
             <sc-if value="{{ s.ig }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg></sc-if>
@@ -514,7 +514,9 @@ function headerVals(c, dev, o) {
     hdDocs: HDR_DOCS.map(([key, name, specialty]) => ({ name, specialty, href: "DoctorProfilePage.dc.html?doctor=" + key })),
     hdAllHref: home + "#doctors", hdAll: () => { c.setState({ hdDd: false }); if (o.onSpec) o.onSpec("all"); },
     hdNav: [["نوبت حضوری", "#booking"], ["مشاوره آنلاین", "#booking"]].map(([label, href]) => ({ label, href: home + href })),
-    hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری", hdLogin: openLogin
+    hdLoginBtn: !o.authed, hdLoggedIn: !!o.authed, hdUserName: o.name || "حساب کاربری",
+    // «دریافت نوبت» starts booking at the homepage search box.
+    hdBookHref: home + "#search", hdBook: () => c.setState({ hdMenu: false, hdDd: false })
   };
 }
 
@@ -550,7 +552,7 @@ class Component extends DCLogic {
   toast(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: "" }), 2600); }
   goDoctors() { const el = document.getElementById("doctors"); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 88, behavior: "smooth" }); }
   pickSpec(key) { this.setState({ tab: key, searchSpec: key }); this.goDoctors(); }
-  scrollMag(dir) { const el = this.magRef.current; if (el) el.scrollBy({ left: dir * 322, behavior: "smooth" }); }
+  scrollMag(dir) { const el = this.magRef.current, card = el && el.firstElementChild; if (el) el.scrollBy({ left: dir * (card ? card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || 0) : 322), behavior: "smooth" }); }
 
   loginVals(D) {
     const { login, phone, code, loginErr, booking } = this.state;
@@ -594,7 +596,7 @@ class Component extends DCLogic {
     const L = {
       desktop: { catW: "128px", catC: "112px", catFs: "17px", catGap: "40px", catJustify: "center", catBleed: "0", catPadX: "0", navRow: "none", navGap: "28px", navFs: "16px", px: "80px", sy: "120px", headerH: "88px", headerGap: "40px", navDisplay: "flex", phoneDisplay: "flex", menuDisplay: "none", btnH: "52px", btnPad: "26px", btnFs: "16px", h2: "35px", specCols: 6, gridGap: "16px", docCols: 3, cardGap: "32px", consultCols: 2, cardPad: "40px", stepCols: 5, stepGap: "20px", twoCols: "minmax(0,1fr) minmax(0,1fr)", aboutGap: "64px", svcCols: 2, aboutRow: "220px", revCols: 3, contactCols: "minmax(0,1fr) minmax(0,1.25fr)", footCols: "minmax(0,1.6fr) repeat(3, minmax(0,1fr)) minmax(0,1.2fr)", footGap: "40px", footTitle: "26px", footBtnPad: "22px", footGrpW: "auto", ctaFlex: "none", ctaBtnPad: "26px", secY: "120px", secY2: "120px", endY: "120px", rowDisp: "grid", rowOv: "visible", rowSnap: "none", rowBleed: "0", rowPad: "0", specFlex: "0 1 auto", docFlex: "0 1 auto", revFlex: "0 1 auto", specDocGap: "48px", allBtnM: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, },
       tablet: { catW: "112px", catC: "96px", catFs: "16px", catGap: "24px", catJustify: "flex-start", catBleed: "-40px", catPadX: "40px", navRow: "none", navGap: "18px", navFs: "15px", px: "40px", sy: "88px", headerH: "80px", headerGap: "20px", navDisplay: "flex", phoneDisplay: "none", menuDisplay: "none", btnH: "48px", btnPad: "20px", btnFs: "15px", h2: "30px", specCols: 3, gridGap: "14px", docCols: 2, cardGap: "24px", consultCols: 2, cardPad: "28px", stepCols: 5, stepGap: "12px", twoCols: "minmax(0,1fr)", aboutGap: "36px", svcCols: 2, aboutRow: "200px", revCols: 2, contactCols: "minmax(0,1fr)", footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footTitle: "22px", footBtnPad: "22px", footGrpW: "auto", ctaFlex: "none", ctaBtnPad: "26px", secY: "88px", secY2: "120px", endY: "88px", rowDisp: "grid", rowOv: "visible", rowSnap: "none", rowBleed: "0", rowPad: "0", specFlex: "0 1 auto", docFlex: "0 1 auto", revFlex: "0 1 auto", specDocGap: "48px", allBtnM: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, },
-      mobile: { catW: "88px", catC: "76px", catFs: "14px", catGap: "16px", catJustify: "flex-start", catBleed: "-16px", catPadX: "16px", navRow: "none", navGap: "18px", navFs: "15px", px: "16px", sy: "64px", headerH: "68px", headerGap: "10px", navDisplay: "none", phoneDisplay: "none", menuDisplay: "flex", btnH: "44px", btnPad: "14px", btnFs: "14px", h2: "25px", specCols: 2, gridGap: "12px", docCols: 1, cardGap: "16px", consultCols: 1, cardPad: "20px", stepCols: 1, stepGap: "0", twoCols: "minmax(0,1fr)", aboutGap: "28px", svcCols: 1, aboutRow: "140px", revCols: 1, contactCols: "minmax(0,1fr)", footCols: "auto minmax(0,1fr)", footGap: "28px", footTitle: "19px", footBtnPad: "12px", footGrpW: "100%", ctaFlex: "1 1 100%", ctaBtnPad: "14px", secY: "40px", secY2: "40px", endY: "80px", rowDisp: "flex", rowOv: "auto", rowSnap: "x mandatory", rowBleed: "-16px", rowPad: "0 16px", specFlex: "0 0 158px", docFlex: "0 0 min(318px, 85%)", revFlex: "0 0 min(277px, 78%)", specDocGap: "24px", allBtnM: "16px", footAboutCol: "1 / -1", fo1: 1, fo2: 3, fo3: 2, fo4: 4 }
+      mobile: { catW: "88px", catC: "76px", catFs: "14px", catGap: "16px", catJustify: "flex-start", catBleed: "-16px", catPadX: "16px", navRow: "none", navGap: "18px", navFs: "15px", px: "16px", sy: "64px", headerH: "68px", headerGap: "10px", navDisplay: "none", phoneDisplay: "none", menuDisplay: "flex", btnH: "44px", btnPad: "14px", btnFs: "14px", h2: "25px", specCols: 2, gridGap: "12px", docCols: 1, cardGap: "16px", consultCols: 1, cardPad: "20px", stepCols: 1, stepGap: "0", twoCols: "minmax(0,1fr)", aboutGap: "28px", svcCols: 1, aboutRow: "140px", revCols: 1, contactCols: "minmax(0,1fr)", footCols: "auto minmax(0,1fr)", footGap: "28px", footTitle: "19px", footBtnPad: "12px", footGrpW: "100%", ctaFlex: "1 1 100%", ctaBtnPad: "14px", secY: "40px", secY2: "40px", endY: "80px", rowDisp: "flex", rowOv: "auto", rowSnap: "x mandatory", rowBleed: "-16px", rowPad: "10px 16px 22px", specFlex: "0 0 158px", docFlex: "0 0 min(318px, 88%)", revFlex: "0 0 min(277px, 78%)", specDocGap: "24px", allBtnM: "16px", footAboutCol: "1 / -1", fo1: 1, fo2: 3, fo3: 2, fo4: 4 }
     }[dev];
     const noteParts = [q && `«${q}»`, appliedType !== "all" && TYPE_TAG[appliedType].label].filter(Boolean);
     return {
@@ -664,6 +666,11 @@ class Component extends DCLogic {
         { name: "م. کاظمی", meta: "ویزیت حضوری · پزشک عمومی", text: "پیامک یادآوری نوبت خیلی کمک کرد. فضای کلینیک آرام و رفتار پرسنل محترمانه بود." }
       ].map(r => ({ ...r, initial: r.name[0], stars: [1, 2, 3, 4, 5], starsLabel: "امتیاز ۵ از ۵" })),
       articles: ARTICLES.map((a, i) => ({ ...a, slotId: "magazine-" + (i + 1), slotHint: "عکس مقاله: " + a.title })),
+      // Phone doctor cards: name and specialty under the photo, and the three visit tags small enough for one row.
+      ...(dev === "mobile"
+        ? { docTopDir: "column", docTopGap: "12px", docTopAlign: "center", docTopText: "center", docSharePos: "absolute", docTagJustify: "center", docTagGap: "4px", docTagH: "26px", docTagPad: "6px", docTagFs: "11.5px", docTagWrap: "nowrap" }
+        : { docTopDir: "row", docTopGap: "16px", docTopAlign: "flex-start", docTopText: "right", docSharePos: "static", docTagJustify: "flex-start", docTagGap: "8px", docTagH: "28px", docTagPad: "10px", docTagFs: "13px", docTagWrap: "wrap" }),
+      magCardW: dev === "mobile" ? "min(280px, 78%)" : "302px", magPadX: dev === "mobile" ? "16px" : "4px",
       magRef: this.magRef, magPrev: () => this.scrollMag(1), magNext: () => this.scrollMag(-1),
       // Icons only for now; fateme will send the profile links later.
       socials: [["اینستاگرام", "ig"], ["تلگرام", "tg"], ["لینکدین", "li"], ["آپارات", "ap"]].map(([label, k]) => ({ label, ig: k === "ig", tg: k === "tg", li: k === "li", ap: k === "ap" })),

@@ -14,7 +14,7 @@
   }
   // Profile and appointments need a login; without one they open the login box on the homepage.
   h.querySelectorAll("[data-auth]").forEach(function (a) {
-    a.addEventListener("click", function (e) { if (!user) { e.preventDefault(); location.href = h.querySelector(".sh-login").href; } });
+    a.addEventListener("click", function (e) { if (!user) { e.preventDefault(); location.href = h.querySelector(".sh-logo").href + "#login"; } });
   });
   h.querySelectorAll('.sh-menu a[aria-disabled="true"]').forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); }); });
   function setMenu(open) { menu.hidden = !open; burger.setAttribute("aria-expanded", open ? "true" : "false"); if (open) menuY = window.scrollY; }
