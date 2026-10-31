@@ -329,34 +329,33 @@ a:hover{color:#2453D4}
 
 <footer data-screen-label="Footer" style="background:#000000; color:#FFFFFF; border-radius:40px 40px 0 0">
   <div style="max-width:1440px; margin:0 auto; padding:72px {{ L.px }} 32px">
-    
     <div style="display:grid; grid-template-columns:{{ L.footCols }}; gap:{{ L.footGap }}; padding:0 0 48px">
-      <div style="display:flex; flex-direction:column; gap:16px">
+      <div style="grid-column:{{ L.footAboutCol }}; display:flex; flex-direction:column; gap:16px">
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان دریافت نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
         <a href="Booking%20platform.dc.html#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
       </div>
-      <nav aria-label="تخصص‌ها" style="display:flex; flex-direction:column; gap:14px">
+      <nav aria-label="تخصص‌ها" style="order:{{ L.fo1 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تخصص‌ها</span>
         <sc-for list="{{ footerSpecs }}" as="f" hint-placeholder-count="5">
           <a href="Booking%20platform.dc.html#doctors" onClick="{{ f.pick }}" style="font-size:14px; color:#BBBBBB; transition:color .2s" style-hover="color:#FFFFFF">{{ f.name }}</a>
         </sc-for>
       </nav>
-      <nav aria-label="نوبت‌دهی" style="display:flex; flex-direction:column; gap:14px">
+      <nav aria-label="نوبت‌دهی" style="order:{{ L.fo2 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">نوبت‌دهی</span>
         <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
         <a href="Booking%20platform.dc.html#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
         <a href="Booking%20platform.dc.html#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
-        <a href="#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
+        <a href="Booking%20platform.dc.html#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
       </nav>
-      <nav aria-label="کلینیک" style="display:flex; flex-direction:column; gap:14px">
+      <nav aria-label="کلینیک" style="order:{{ L.fo3 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">کلینیک</span>
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
         <a href="Booking%20platform.dc.html#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
         <a href="Booking%20platform.dc.html#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
-      <div style="display:flex; flex-direction:column; gap:14px">
+      <div style="order:{{ L.fo4 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تماس با ما</span>
         <a href="tel:02166778899" dir="ltr" style="font-size:16px; color:#FFFFFF; text-align:right">۰۲۱-۶۶۷۷۸۸۹۹</a>
         <a href="mailto:info@nikan-clinic.example" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">info@nikan-clinic.example</a>
@@ -369,8 +368,8 @@ a:hover{color:#2453D4}
     <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 24px; padding-top:24px; border-top:1px solid #373A41">
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; font-size:13px; color:#969696">
         <span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span>
-        <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
-        <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
+        <a href="Booking%20platform.dc.html#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
+        <a href="Booking%20platform.dc.html#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
       </div>
       <div style="flex:1 1 100%; display:flex; flex-wrap:wrap; justify-content:center; gap:8px">
         <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
@@ -494,9 +493,9 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state, vw = s.vw, dev = vw >= 1100 ? "desktop" : vw >= 700 ? "tablet" : "mobile";
     const L = {
-      desktop: { footCols: "minmax(0,1.5fr) repeat(3, minmax(0,0.8fr)) minmax(0,1.2fr)", footGap: "48px", navRow: "none", navGap: "28px", navFs: "16px", px: "80px", py: "32px", headerH: "80px", headerGap: "40px", navDisplay: "flex", spacer: "0", brandText: "inline", userName: "inline", gridCols: "280px minmax(0,1fr)", gap: "24px", asidePos: "sticky", asideTop: "112px", userDir: "column", userGap: "12px", userPad: "24px 20px", userAlign: "center", avatar: "56px", tabDir: "column", tabFlex: "none", tabPad: "20px", tabChevron: "block", cardPad: "24px", apptCols: 6, detailCols: 3, formPad: "32px", fieldCols: "repeat(2, minmax(0,1fr))" },
-      tablet: { footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", navRow: "none", navGap: "18px", navFs: "15px", px: "32px", py: "24px", headerH: "72px", headerGap: "20px", navDisplay: "flex", spacer: "0", brandText: "none", userName: "none", gridCols: "minmax(0,1fr)", gap: "16px", asidePos: "static", asideTop: "0", userDir: "row", userGap: "14px", userPad: "16px 20px", userAlign: "right", avatar: "48px", tabDir: "row", tabFlex: "1 0 auto", tabPad: "16px", tabChevron: "none", cardPad: "22px", apptCols: 3, detailCols: 3, formPad: "28px", fieldCols: "repeat(2, minmax(0,1fr))" },
-      mobile: { footCols: "minmax(0,1fr)", footGap: "28px", navRow: "none", navGap: "18px", navFs: "15px", px: "16px", py: "16px", headerH: "64px", headerGap: "12px", navDisplay: "none", spacer: "1", brandText: "none", userName: "none", gridCols: "minmax(0,1fr)", gap: "14px", asidePos: "static", asideTop: "0", userDir: "row", userGap: "12px", userPad: "14px 16px", userAlign: "right", avatar: "44px", tabDir: "row", tabFlex: "none", tabPad: "14px", tabChevron: "none", cardPad: "16px", apptCols: 2, detailCols: 1, formPad: "18px", fieldCols: "minmax(0,1fr)" }
+      desktop: { footCols: "minmax(0,1.6fr) repeat(3, minmax(0,1fr)) minmax(0,1.2fr)", footGap: "40px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, navRow: "none", navGap: "28px", navFs: "16px", px: "80px", py: "32px", headerH: "80px", headerGap: "40px", navDisplay: "flex", spacer: "0", brandText: "inline", userName: "inline", gridCols: "280px minmax(0,1fr)", gap: "24px", asidePos: "sticky", asideTop: "112px", userDir: "column", userGap: "12px", userPad: "24px 20px", userAlign: "center", avatar: "56px", tabDir: "column", tabFlex: "none", tabPad: "20px", tabChevron: "block", cardPad: "24px", apptCols: 6, detailCols: 3, formPad: "32px", fieldCols: "repeat(2, minmax(0,1fr))" },
+      tablet: { footCols: "repeat(2, minmax(0,1fr))", footGap: "36px", footAboutCol: "auto", fo1: 0, fo2: 0, fo3: 0, fo4: 0, navRow: "none", navGap: "18px", navFs: "15px", px: "32px", py: "24px", headerH: "72px", headerGap: "20px", navDisplay: "flex", spacer: "0", brandText: "none", userName: "none", gridCols: "minmax(0,1fr)", gap: "16px", asidePos: "static", asideTop: "0", userDir: "row", userGap: "14px", userPad: "16px 20px", userAlign: "right", avatar: "48px", tabDir: "row", tabFlex: "1 0 auto", tabPad: "16px", tabChevron: "none", cardPad: "22px", apptCols: 3, detailCols: 3, formPad: "28px", fieldCols: "repeat(2, minmax(0,1fr))" },
+      mobile: { footCols: "auto minmax(0,1fr)", footGap: "28px", footAboutCol: "1 / -1", fo1: 1, fo2: 3, fo3: 2, fo4: 4, navRow: "none", navGap: "18px", navFs: "15px", px: "16px", py: "16px", headerH: "64px", headerGap: "12px", navDisplay: "none", spacer: "1", brandText: "none", userName: "none", gridCols: "minmax(0,1fr)", gap: "14px", asidePos: "static", asideTop: "0", userDir: "column", userGap: "12px", userPad: "24px 20px", userAlign: "center", avatar: "56px", tabDir: "column", tabFlex: "none", tabPad: "20px", tabChevron: "block", cardPad: "16px", apptCols: 2, detailCols: 1, formPad: "18px", fieldCols: "minmax(0,1fr)" }
     }[dev];
     const P = s.profile, d = s.draft, fullName = (P.first + " " + P.last).trim() || "کاربر کلینیک";
     const ITEMS = [["profile", "اطلاعات کاربری", "iUser"], ["appointments", "نوبت‌های من", "iCal"], ["chat", "صفحه گفتگو", "iChat"], ["logout", "خروج", "iOut"]];
@@ -516,7 +515,7 @@ class Component extends DCLogic {
       menuLeave: () => { if (dev === "desktop") { clearTimeout(this.mt); this.mt = setTimeout(() => this.setState({ menu: false }), 160); } },
       menuToggle: () => this.setState((st) => ({ menu: !st.menu })),
       menuItems: ITEMS.map((it) => ({ ...item(it), color: it[0] === "logout" ? "#D92D20" : "#222222" })),
-      sideItems: ITEMS.map((it) => { const on = s.tab === it[0], out = it[0] === "logout"; return { ...item(it), current: on ? "page" : "false", bg: on && dev === "desktop" ? "#F2F4F7" : "transparent", color: out ? "#D92D20" : on ? "#222222" : "#373A41", iconColor: out ? "#D92D20" : "#3669EE", weight: on ? 700 : 500, underline: dev !== "desktop" ? "2px solid " + (on ? "#3669EE" : "transparent") : "0" }; }),
+      sideItems: ITEMS.map((it) => { const on = s.tab === it[0], out = it[0] === "logout"; return { ...item(it), current: on ? "page" : "false", bg: on && dev !== "tablet" ? "#F2F4F7" : "transparent", color: out ? "#D92D20" : on ? "#222222" : "#373A41", iconColor: out ? "#D92D20" : "#3669EE", weight: on ? 700 : 500, underline: dev === "tablet" ? "2px solid " + (on ? "#3669EE" : "transparent") : "0" }; }),
       // Privacy and terms pages don't exist yet, so they are shown as "coming soon"; log out only appears when signed in.
       acctItems: [["حریم خصوصی", "iShield"], ["قوانین و شرایط", "iDoc"], ...(s.authed ? [["خروج از حساب", "iOut"]] : [])].map(([label, icon]) => {
         const out = icon === "iOut";
