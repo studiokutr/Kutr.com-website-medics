@@ -220,11 +220,15 @@ a:hover{color:#2453D4}
     <sc-for list="{{ doctors }}" as="d" hint-placeholder-count="6">
       <article style="position:relative; flex:{{ L.docFlex }}; scroll-snap-align:start; display:flex; flex-direction:column; gap:20px; padding:24px; border-radius:24px; background:#FFFFFF; border:1px solid #E6E6E6; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(34,34,34,.08); border-color:#DBDBDB">
         <div style="display:flex; flex-direction:{{ docTopDir }}; gap:{{ docTopGap }}; align-items:{{ docTopAlign }}; text-align:{{ docTopText }}">
-          <div style="flex:none; width:88px; height:88px; border-radius:22px; overflow:hidden; background:#F8F9FA">
+          <div style="flex:none; width:{{ docPhoto }}; height:{{ docPhoto }}; border-radius:22px; overflow:hidden; background:#F8F9FA">
             <image-slot id="{{ d.photoId }}" shape="rect" fit="cover" src="{{ d.photo }}" placeholder="عکس پزشک"></image-slot>
           </div>
           <div style="flex:1; min-width:0; display:flex; flex-direction:column; align-items:{{ docTopAlign }}; gap:6px">
+<<<<<<< HEAD
             <h3 title="{{ d.name }}" style="margin:0; font-size:20px; font-weight:800; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis"><a href="{{ d.profile }}" style="color:inherit" style-hover="color:#3669EE">{{ d.name }}</a></h3>
+=======
+            <h3 title="{{ d.name }}" style="margin:0; padding-left:{{ docNamePad }}; font-size:{{ docNameFs }}; font-weight:800; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ d.name }}</h3>
+>>>>>>> origin/main
             <span title="{{ d.specialty }}" style="font-size:15px; color:#4A4A4A; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ d.specialty }}</span>
             <span title="{{ d.credential }}" style="font-size:14px; color:#676767; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ d.credential }}</span>
           </div>
@@ -368,7 +372,7 @@ a:hover{color:#2453D4}
   </div>
   <div ref="{{ magRef }}" style="margin:0 {{ L.rowBleed }}; padding:10px {{ magPadX }} 22px; display:flex; gap:{{ L.cardGap }}; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding:0 {{ magPadX }}; scrollbar-width:none">
     <sc-for list="{{ articles }}" as="a" hint-placeholder-count="5">
-      <a href="#magazine" style="flex:0 0 {{ magCardW }}; scroll-snap-align:start; display:flex; flex-direction:column; gap:14px; padding:14px 14px 20px; border-radius:24px; background:#FFFFFF; border:1px solid #E6E6E6; color:#222222; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(34,34,34,.08); border-color:#DBDBDB; color:#222222">
+      <a href="{{ a.href }}" style="flex:0 0 {{ magCardW }}; scroll-snap-align:start; display:flex; flex-direction:column; gap:14px; padding:14px 14px 20px; border-radius:24px; background:#FFFFFF; border:1px solid #E6E6E6; color:#222222; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(34,34,34,.08); border-color:#DBDBDB; color:#222222">
         <div style="position:relative; aspect-ratio:4 / 3; border-radius:20px; background:#F8F9FA; border:1px solid #ECEEF0; overflow:hidden"><image-slot id="{{ a.slotId }}" shape="rect" fit="cover" placeholder="{{ a.slotHint }}" style="position:absolute; inset:0; width:100%; height:100%"></image-slot></div>
         <span style="align-self:flex-start; margin:0 4px; font-size:13px; color:#3669EE; background:#EBF0FE; padding:4px 10px; border-radius:8px">{{ a.cat }}</span>
         <h3 style="margin:0 4px; flex:1; font-size:17px; font-weight:700; line-height:1.7">{{ a.title }}</h3>
@@ -386,7 +390,7 @@ a:hover{color:#2453D4}
       <div style="grid-column:{{ L.footAboutCol }}; display:flex; flex-direction:column; gap:16px">
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان دریافت نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
         <p style="margin:0; font-size:14px; line-height:2; color:#CECFD2">نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
-        <a href="#contact" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
+        <a href="contact.html" aria-label="نقشه موقعیت کلینیک" style="position:relative; display:block; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#282828"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; filter:grayscale(.4)"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%)"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
       </div>
       <nav aria-label="تخصص‌ها" style="order:{{ L.fo1 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تخصص‌ها</span>
@@ -399,14 +403,14 @@ a:hover{color:#2453D4}
         <a href="#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">نوبت حضوری</a>
         <a href="#search" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مشاوره آنلاین</a>
         <a href="#doctors" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پزشکان کلینیک</a>
-        <a href="#top" onClick="{{ openLoginLink }}" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
+        <a href="Patient%20Dashboard.dc.html#appointments" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">لغو یا تغییر نوبت</a>
       </nav>
       <nav aria-label="کلینیک" style="order:{{ L.fo3 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">کلینیک</span>
         <a href="about.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">درباره ما</a>
-        <a href="#magazine" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
+        <a href="magazine/index.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">مجله سلامت</a>
         <a href="contact.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">تماس با ما</a>
-        <a href="#booking" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
+        <a href="faq.html" style="font-size:14px; color:#BBBBBB" style-hover="color:#FFFFFF">پرسش‌های متداول</a>
       </nav>
       <div style="order:{{ L.fo4 }}; display:flex; flex-direction:column; gap:14px">
         <span style="font-size:15px; font-weight:700">تماس با ما</span>
@@ -421,8 +425,8 @@ a:hover{color:#2453D4}
     <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 24px; padding-top:24px; border-top:1px solid #373A41">
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; font-size:13px; color:#969696">
         <span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span>
-        <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
-        <a href="#top" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
+        <a href="privacy.html" style="color:#969696" style-hover="color:#FFFFFF">حریم خصوصی</a>
+        <a href="terms.html" style="color:#969696" style-hover="color:#FFFFFF">قوانین و مقررات</a>
       </div>
       <div style="flex:1 1 100%; display:flex; flex-wrap:wrap; justify-content:center; gap:8px">
         <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
@@ -496,12 +500,12 @@ const SPECS = [
   { key: "neuro", label: "مغز و اعصاب" }
 ];
 const ARTICLES = [
-        { cat: "قلب و عروق", title: "چه زمانی باید فشار خون را جدی بگیریم؟" },
-        { cat: "پوست و مو", title: "مراقبت از پوست در فصل سرما" },
-        { cat: "مغز و اعصاب", title: "نوروتراپی خوب است یا نه؟" },
-        { cat: "ارتوپدی", title: "درد زانو: علت‌ها و زمان مراجعه به پزشک" },
-        { cat: "زنان و زایمان", title: "معاینات دوره‌ای که نباید فراموش شوند" },
-        { cat: "پزشک عمومی", title: "چک‌آپ سالانه شامل چه آزمایش‌هایی است؟" }
+        { cat: "قلب و عروق", title: "چه زمانی باید فشار خون را جدی بگیریم؟", href: "magazine/high-blood-pressure.html" },
+        { cat: "پوست و مو", title: "مراقبت از پوست در فصل سرما", href: "magazine/winter-skin-care.html" },
+        { cat: "مغز و اعصاب", title: "نوروتراپی خوب است یا نه؟", href: "magazine/is-neurotherapy-effective.html" },
+        { cat: "ارتوپدی", title: "درد زانو: علت‌ها و زمان مراجعه به پزشک", href: "magazine/knee-pain.html" },
+        { cat: "زنان و زایمان", title: "معاینات دوره‌ای که نباید فراموش شوند", href: "magazine/womens-health-screenings.html" },
+        { cat: "پزشک عمومی", title: "چک‌آپ سالانه شامل چه آزمایش‌هایی است؟", href: "magazine/annual-checkup-tests.html" }
       ];
 const DOCTORS = [
   { key: "sara", photoId: "doctor-sara", name: "دکتر سارا محمدی", spec: "cardio", specialty: "متخصص قلب و عروق", credential: "فلوشیپ اکوکاردیوگرافی · ۱۵ سال سابقه", recommend: "۹۶٪", rating: "۴٫۸", reviews: "(از ۱۲۴ نظر)", next: "امروز، ۱۶:۳۰", types: ["clinic", "phone", "online"] },
@@ -523,13 +527,12 @@ const HDR_SPECS = [["cardio", "قلب و عروق"], ["derm", "پوست و مو"
 const HDR_DOCS = [["sara", "دکتر سارا محمدی", "متخصص قلب و عروق"], ["amir", "دکتر امیر رضایی", "متخصص پوست، مو و زیبایی"], ["narges", "دکتر نرگس کریمی", "متخصص زنان، زایمان و نازایی"], ["hamid", "دکتر حمید احمدی", "متخصص ارتوپدی"], ["maryam", "دکتر مریم حسینی", "پزشک عمومی"], ["peyman", "دکتر پیمان راد", "متخصص مغز و اعصاب (نورولوژی)"]];
 // Hamburger menu (mobile): profile/appointments need login; FAQ has no page yet, so it is shown as "coming soon".
 const HDR_BURGER = (home, authed, openLogin, close) => [
-  // Logged out: one «ورود و ثبت‌نام» item instead of profile/appointments (fateme, 2026-10-31).
-  ...(authed ? [["پروفایل من", "iUser", "Patient%20Dashboard.dc.html#profile", true], ["نوبت‌های من", "iCal", "Patient%20Dashboard.dc.html#appointments", true]]
-    : [["ورود و ثبت‌نام", "iUser", "#login", "login"]]),
+  // Logged out: «ورود و ثبت‌نام». Profile/appointments removed from the menu (fateme, 2026-10-31).
+  ...(authed ? [] : [["ورود و ثبت‌نام", "iUser", "#login", "login"]]),
   ["جستجوی پزشک", "iSearch", home + "#doctors"],
   ["درباره ما", "iInfo", "about.html"],
   ["تماس با ما", "iPhone", "contact.html"],
-  ["سؤالات متداول", "iFaq", ""]
+  ["سؤالات متداول", "iFaq", "faq.html"]
 ].map(([label, icon, href, auth]) => {
   const soon = !href;
   return { label, href: href || "#", soon, disabled: soon ? "true" : "false", color: soon ? "#94979C" : "#373A41", iconColor: soon ? "#94979C" : "#3669EE", cursor: soon ? "default" : "pointer",
@@ -575,6 +578,9 @@ function headerVals(c, dev, o) {
   };
 }
 
+// Pages that need a login (the account page) store their address in sessionStorage "nikan-next" and open #login here; go back there after login.
+const goNext = () => { let n = ""; try { n = sessionStorage.getItem("nikan-next") || ""; sessionStorage.removeItem("nikan-next"); } catch (x) {} if (!/^[A-Za-z%][\w%.\-]*\.html(#[\w-]*)?$/.test(n)) return false; location.href = n; return true; };
+
 class Component extends DCLogic {
   heroTimer = null;
   heroIds = ["clinic-hero", "clinic-hero-2", "clinic-hero-3"];
@@ -594,6 +600,7 @@ class Component extends DCLogic {
     this.onResize = () => { const w = document.documentElement.clientWidth; if (w !== this.state.vw) this.setState({ vw: w }); };
     window.addEventListener("resize", this.onResize);
     let user = "", pname = ""; try { user = localStorage.getItem("nikan-user") || ""; const p = JSON.parse(localStorage.getItem("nikan-profile") || "null"); if (p) pname = (p.first + " " + p.last).trim(); } catch (e) {}
+    if (location.hash === "#login" && user && goNext()) return;
     const spec = new URLSearchParams(location.search).get("spec"), wantLogin = location.hash === "#login" && !user;
     this.setState({ vw: document.documentElement.clientWidth, user, pname, ...(SPECS.some((x) => x.key === spec) ? { tab: spec } : {}), ...(wantLogin ? { login: "phone" } : {}) });
     this.fillPoll = setInterval(() => { const f = this.filledSlides(); if (f.join() !== (this.state.filled || []).join()) this.setState((st) => ({ filled: f, slide: f.includes(st.slide) ? st.slide : f[0] })); }, 1000);
@@ -622,9 +629,9 @@ class Component extends DCLogic {
       phoneShown: faD(en(phone)), hasLoginErr: !!loginErr, loginErr, loginInvalid: loginErr ? "true" : "false", loginBorder: loginErr ? "#D92D20" : "#D9D9D9",
       codeCta: booking ? "تأیید و ثبت نوبت" : "ورود",
       submitPhone: (e) => { e.preventDefault(); if (!/^09\d{9}$/.test(en(this.state.phone))) { this.setState({ loginErr: "شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود." }); return; } this.setState({ login: "code", loginErr: "" }); },
-      submitCode: (e) => { e.preventDefault(); if (en(this.state.code).length !== 5) { this.setState({ loginErr: "کد تأیید ۵ رقمی را کامل وارد کنید." }); return; } try { localStorage.setItem("nikan-user", en(this.state.phone)); } catch (x) {} this.setState({ login: "done", loginErr: "", user: en(this.state.phone) }); },
+      submitCode: (e) => { e.preventDefault(); if (en(this.state.code).length !== 5) { this.setState({ loginErr: "کد تأیید ۵ رقمی را کامل وارد کنید." }); return; } try { localStorage.setItem("nikan-user", en(this.state.phone)); } catch (x) {} if (goNext()) return; this.setState({ login: "done", loginErr: "", user: en(this.state.phone) }); },
       editPhone: () => this.setState({ login: "phone", code: "" }),
-      closeLogin: () => this.setState({ login: null }),
+      closeLogin: () => { try { sessionStorage.removeItem("nikan-next"); } catch (x) {} this.setState({ login: null }); },
       doneTitle: booking ? D.name + " · " + booking : "با شماره " + faD(en(phone)) + " وارد شدید.",
       doneText: booking ? "این نسخه نمایشی است: نوبتی در سامانه ثبت نشده، پرداختی انجام نشده و پیامک یادآوری ارسال نمی‌شود." : "این نسخه نمایشی است و حساب کاربری واقعی ساخته نشده است."
     };
@@ -721,10 +728,10 @@ class Component extends DCLogic {
         { name: "م. کاظمی", meta: "ویزیت حضوری · پزشک عمومی", text: "پیامک یادآوری نوبت خیلی کمک کرد. فضای کلینیک آرام و رفتار پرسنل محترمانه بود." }
       ].map(r => ({ ...r, initial: r.name[0], stars: [1, 2, 3, 4, 5], starsLabel: "امتیاز ۵ از ۵" })),
       articles: ARTICLES.map((a, i) => ({ ...a, slotId: "magazine-" + (i + 1), slotHint: "عکس مقاله: " + a.title })),
-      // Phone doctor cards: name and specialty under the photo, and the three visit tags small enough for one row.
+      // Doctor cards: name and specialty under the photo on every width (no «…» cut-offs); on phones the three visit tags are small enough for one row.
       ...(dev === "mobile"
-        ? { docTopDir: "column", docTopGap: "12px", docTopAlign: "center", docTopText: "center", docSharePos: "absolute", docTagJustify: "center", docTagGap: "4px", docTagH: "26px", docTagPad: "6px", docTagFs: "11.5px", docTagWrap: "nowrap" }
-        : { docTopDir: "row", docTopGap: "16px", docTopAlign: "flex-start", docTopText: "right", docSharePos: "static", docTagJustify: "flex-start", docTagGap: "8px", docTagH: "28px", docTagPad: "10px", docTagFs: "13px", docTagWrap: "wrap" }),
+        ? { docTopDir: "column", docTopGap: "12px", docTopAlign: "center", docTopText: "center", docSharePos: "absolute", docPhoto: "88px", docNamePad: "0", docNameFs: "20px", docTagJustify: "center", docTagGap: "4px", docTagH: "26px", docTagPad: "6px", docTagFs: "11.5px", docTagWrap: "nowrap" }
+        : { docTopDir: "column", docTopGap: "12px", docTopAlign: "center", docTopText: "center", docSharePos: "absolute", docPhoto: "88px", docNamePad: "0", docNameFs: "20px", docTagJustify: "center", docTagGap: "8px", docTagH: "28px", docTagPad: "10px", docTagFs: "13px", docTagWrap: "wrap" }),
       magCardW: dev === "mobile" ? "min(280px, 78%)" : "302px", magPadX: dev === "mobile" ? "16px" : "4px",
       magRef: this.magRef, magPrev: () => this.scrollMag(1), magNext: () => this.scrollMag(-1),
       // Icons only for now; fateme will send the profile links later.
