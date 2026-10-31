@@ -54,6 +54,8 @@
 <helmet>
 <meta name="design_doc_mode" content="canvas">
 <style>
+  /* Doctor card photos: no dashed placeholder ring over the photo. */
+  image-slot[id^="doctor-"]::part(ring){display:none}
 @font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Light.woff2') format('woff2');font-weight:300;font-display:swap}
 @font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:'Yekan Bakh';src:url('uploads/YekanBakhFaNum-SemiBold.woff2') format('woff2');font-weight:500 600;font-display:swap}
@@ -210,7 +212,7 @@ a:hover{color:#2453D4}
     <sc-for list="{{ doctors }}" as="d" hint-placeholder-count="6">
       <article style="position:relative; flex:{{ L.docFlex }}; scroll-snap-align:start; display:flex; flex-direction:column; gap:20px; padding:24px; border-radius:24px; background:#FFFFFF; border:1px solid #E6E6E6; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(34,34,34,.08); border-color:#DBDBDB">
         <div style="display:flex; flex-direction:{{ docTopDir }}; gap:{{ docTopGap }}; align-items:{{ docTopAlign }}; text-align:{{ docTopText }}">
-          <div style="flex:none; width:88px; height:88px; border-radius:22px; overflow:hidden; background:#F8F9FA; border:1px solid #ECEEF0">
+          <div style="flex:none; width:88px; height:88px; border-radius:22px; overflow:hidden; background:#F8F9FA">
             <image-slot id="{{ d.photoId }}" shape="rect" fit="cover" src="{{ d.photo }}" placeholder="عکس پزشک"></image-slot>
           </div>
           <div style="flex:1; min-width:0; display:flex; flex-direction:column; align-items:{{ docTopAlign }}; gap:6px">
@@ -236,12 +238,12 @@ a:hover{color:#2453D4}
             <span style="display:inline-flex; align-items:center; height:{{ docTagH }}; padding:0 {{ docTagPad }}; border-radius:8px; background:{{ ty.bg }}; color:{{ ty.color }}; font-size:{{ docTagFs }}; font-weight:600; white-space:nowrap">{{ ty.label }}</span>
           </sc-for>
         </div>
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:16px; background:#F8F9FA">
-          <span style="display:flex; align-items:center; gap:8px; font-size:13px; color:#676767">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:14px 12px; border-radius:16px; background:#F8F9FA">
+          <span style="display:flex; align-items:center; gap:6px; font-size:13px; color:#676767; white-space:nowrap">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15B743" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="3"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
             اولین نوبت خالی
           </span>
-          <span style="font-size:15px; font-weight:700; color:#15B743">{{ d.next }}</span>
+          <span style="font-size:14px; font-weight:700; color:#15B743; white-space:nowrap">{{ d.next }}</span>
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
           <button type="button" onClick="{{ d.about }}" style="height:52px; border-radius:16px; border:0; background:#F2F2F2; color:#222222; font-size:16px; font-weight:600; cursor:pointer; transition:background-color .2s, transform .15s" style-hover="background:#E6E6E6" style-active="transform:scale(.97)">درباره‌ی پزشک</button>
@@ -495,7 +497,7 @@ const ARTICLES = [
       ];
 const DOCTORS = [
   { key: "sara", photoId: "doctor-sara", name: "دکتر سارا محمدی", spec: "cardio", specialty: "متخصص قلب و عروق", credential: "فلوشیپ اکوکاردیوگرافی · ۱۵ سال سابقه", recommend: "۹۶٪", rating: "۴٫۸", reviews: "(از ۱۲۴ نظر)", next: "امروز، ۱۶:۳۰", types: ["clinic", "phone", "online"] },
-  { key: "amir", photoId: "doctor-amir", name: "دکتر امیر رضایی", spec: "derm", specialty: "متخصص پوست، مو و زیبایی", credential: "بورد تخصصی پوست · ۱۰ سال سابقه", recommend: "۹۳٪", rating: "۴٫۷", reviews: "(از ۸۸ نظر)", next: "فردا، سه‌شنبه ۵ آبان", types: ["clinic", "phone", "online"] },
+  { key: "amir", photoId: "doctor-amir", name: "دکتر امیر رضایی", spec: "derm", specialty: "متخصص پوست، مو و زیبایی", credential: "بورد تخصصی پوست · ۱۰ سال سابقه", recommend: "۹۳٪", rating: "۴٫۷", reviews: "(از ۸۸ نظر)", next: "سه‌شنبه ۵ آبان", types: ["clinic", "phone", "online"] },
   { key: "narges", photoId: "doctor-narges", name: "دکتر نرگس کریمی", spec: "gyn", specialty: "متخصص زنان، زایمان و نازایی", credential: "فلوشیپ نازایی · ۱۸ سال سابقه", recommend: "۹۵٪", rating: "۴٫۹", reviews: "(از ۲۱۰ نظر)", next: "چهارشنبه ۶ آبان", types: ["clinic"] },
   { key: "hamid", photoId: "doctor-hamid", name: "دکتر حمید احمدی", spec: "ortho", specialty: "متخصص ارتوپدی", credential: "فلوشیپ زانو و آرتروسکوپی · ۱۲ سال سابقه", recommend: "۹۱٪", rating: "۴٫۶", reviews: "(از ۷۶ نظر)", next: "امروز، ۱۸:۰۰", types: ["clinic", "phone"] },
   { key: "maryam", photoId: "doctor-maryam", name: "دکتر مریم حسینی", spec: "gp", specialty: "پزشک عمومی", credential: "پزشک خانواده · ۸ سال سابقه", recommend: "۹۴٪", rating: "۴٫۷", reviews: "(از ۱۵۲ نظر)", next: "امروز، ۱۵:۰۰", types: ["clinic", "phone", "online"] },
