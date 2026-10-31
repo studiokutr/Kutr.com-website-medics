@@ -60,9 +60,6 @@ h2{margin:40px 0 8px;font-size:clamp(20px,2.4vw,25px);line-height:1.6;font-weigh
 .links{margin:40px 0 0;padding:24px;border-radius:24px;border:1px solid #E6E6E6}
 .links h2{margin:0 0 8px;font-size:18px}
 .links ul{margin:0;padding:0 20px 0 0}
-footer{background:#000000;color:#969696;border-radius:40px 40px 0 0;font-size:13px}
-footer .wrap{padding-top:32px;padding-bottom:32px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
-footer a{color:#CECFD2}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 .wrap{max-width:1200px}
 .grid{margin:28px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
@@ -99,6 +96,7 @@ a.art:hover h2{color:#3669EE}
 @media (max-width:699px){.doc-top{flex-direction:column;align-items:center;text-align:center;gap:12px}.doc-stats,.tags{justify-content:center}.tags{gap:6px;flex-wrap:nowrap}.tags span{height:26px;padding:0 7px;font-size:12px;white-space:nowrap}}
 </style>
 <link rel="stylesheet" href="assets/site-header.css">
+<link rel="stylesheet" href="assets/site-footer.css">
 </head>
 <body>
 <header class="sh" id="sh">
@@ -177,7 +175,54 @@ a.art:hover h2{color:#3669EE}
 </article>
 </div>
 </main>
-<footer><div class="wrap"><span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span><a href="tel:02166778899" dir="ltr">۰۲۱-۶۶۷۷۸۸۹۹</a></div></footer>
+<footer class="sf">
+  <div class="sf-in">
+    <div class="sf-grid">
+      <div class="sf-about">
+        <p>درباره: کلینیک نیکان مجموعه‌ای از پزشکان متخصص است که امکان رزرو نوبت حضوری، تلفنی و مشاوره آنلاین را در یک‌جا فراهم می‌کند.</p>
+        <p>نشانی: تهران، خیابان ولیعصر، بالاتر از میدان ونک، پلاک ۲۴۱۰، طبقه سوم</p>
+        <a class="sf-map" href="contact.html" aria-label="نقشه موقعیت کلینیک"><iframe title="نقشه کوچک کلینیک" loading="lazy" tabindex="-1" src="https://www.openstreetmap.org/export/embed.html?bbox=51.4025%2C35.7538%2C51.4185%2C35.7618&amp;layer=mapnik"></iframe><svg aria-hidden="true" width="26" height="33" viewBox="0 0 44 56"><path d="M22 2C11 2 2 10.6 2 21.4 2 35 22 54 22 54s20-19 20-32.6C42 10.6 33 2 22 2z" fill="#D92D20" stroke="#FFFFFF" stroke-width="3"></path><circle cx="22" cy="21" r="7" fill="#FFFFFF"></circle></svg></a>
+      </div>
+      <nav class="sf-col sf-o1" aria-label="تخصص‌ها">
+        <span>تخصص‌ها</span>
+      <a href="index.html?spec=cardio#doctors">قلب و عروق</a>
+      <a href="index.html?spec=derm#doctors">پوست و مو</a>
+      <a href="index.html?spec=gyn#doctors">زنان و زایمان</a>
+      <a href="index.html?spec=ortho#doctors">ارتوپدی</a>
+      <a href="index.html?spec=gp#doctors">پزشک عمومی</a>
+      <a href="index.html?spec=neuro#doctors">مغز و اعصاب</a>
+      </nav>
+      <nav class="sf-col sf-o2" aria-label="نوبت‌دهی">
+        <span>نوبت‌دهی</span>
+        <a href="index.html#search">نوبت حضوری</a>
+        <a href="index.html#search">مشاوره آنلاین</a>
+        <a href="index.html#doctors">پزشکان کلینیک</a>
+        <a href="index.html#login">لغو یا تغییر نوبت</a>
+      </nav>
+      <nav class="sf-col sf-o3" aria-label="کلینیک">
+        <span>کلینیک</span>
+        <a href="about.html">درباره ما</a>
+        <a href="index.html#magazine">مجله سلامت</a>
+        <a href="contact.html">تماس با ما</a>
+        <a href="index.html#booking">پرسش‌های متداول</a>
+      </nav>
+      <div class="sf-col sf-o4">
+        <span>تماس با ما</span>
+        <a class="sf-tel" href="tel:02166778899" dir="ltr">۰۲۱-۶۶۷۷۸۸۹۹</a>
+        <a href="mailto:info@nikan-clinic.example">info@nikan-clinic.example</a>
+        <div class="sf-badges"><span>نماد اعتماد</span><span>ساماندهی</span></div>
+      </div>
+    </div>
+    <div class="sf-bottom">
+      <div class="sf-legal">
+        <span>© ۱۴۰۵ کلینیک نیکان. همه حقوق محفوظ است.</span>
+        <a href="#">حریم خصوصی</a>
+        <a href="#">قوانین و مقررات</a>
+      </div>
+      <div class="sf-social"><span role="img" aria-label="اینستاگرام" title="اینستاگرام"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg></span><span role="img" aria-label="تلگرام" title="تلگرام"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4 3 11l6.5 2.5L12 20l3-4.5 5 3.5z"></path><path d="m9.5 13.5 11.5-9.5"></path></svg></span><span role="img" aria-label="لینکدین" title="لینکدین"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"></rect><path d="M8 10.5V17M8 7.5v.01M12 17v-6.5M12 13.5a2.5 2.5 0 0 1 5 0V17"></path></svg></span><span role="img" aria-label="آپارات" title="آپارات"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><circle cx="9" cy="9" r="1.6" fill="currentColor" stroke="none"></circle><circle cx="15" cy="9" r="1.6" fill="currentColor" stroke="none"></circle><circle cx="9" cy="15" r="1.6" fill="currentColor" stroke="none"></circle><circle cx="15" cy="15" r="1.6" fill="currentColor" stroke="none"></circle></svg></span></div>
+    </div>
+  </div>
+</footer>
 <script src="assets/site-header.js"></script>
 </body>
 </html>
