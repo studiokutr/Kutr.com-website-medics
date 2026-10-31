@@ -102,7 +102,8 @@ a:hover{color:#2453D4}
     </div>
   </div>
   <sc-if value="{{ hdMenuOpen }}" hint-placeholder-val="{{ false }}">
-    <nav aria-label="منوی اصلی" style="max-height:calc(100dvh - {{ hdL.headerH }}); overflow-y:auto; overscroll-behavior:contain; padding:8px {{ hdL.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
+    <button type="button" tabindex="-1" aria-label="بستن منو" onClick="{{ hdClose }}" style="position:fixed; top:{{ hdL.headerH }}; left:0; right:0; bottom:0; width:100%; padding:0; border:0; border-radius:0; background:rgba(0,0,0,0.45); cursor:default"></button>
+    <nav aria-label="منوی اصلی" style="position:relative; z-index:1; max-height:calc(100dvh - {{ hdL.headerH }}); overflow-y:auto; overscroll-behavior:contain; padding:8px {{ hdL.px }} 16px; display:flex; flex-direction:column; border-top:1px solid #ECEEF0; background:#FFFFFF">
       <sc-for list="{{ hdBurger }}" as="b" hint-placeholder-count="6">
         <a href="{{ b.href }}" onClick="{{ b.go }}" aria-disabled="{{ b.disabled }}" style="min-height:52px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #F0F2F4; font-size:16px; color:{{ b.color }}; cursor:{{ b.cursor }}">
           <span aria-hidden="true" style="flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:{{ b.iconColor }}">
@@ -451,6 +452,7 @@ function headerVals(c, dev, o) {
     hdUp: c.state.hdUp ? "#ECEEF0" : "transparent", hdShadow: c.state.hdUp ? "0 6px 24px rgba(34,34,34,.05)" : "none",
     hdMenuOpen: menu && dev === "mobile", hdMenuShut: !(menu && dev === "mobile"), hdMenuExpanded: menu ? "true" : "false", hdMenuLabel: menu ? "بستن منو" : "منو",
     hdToggle: () => c.setState((s) => ({ hdMenu: !s.hdMenu })),
+    hdClose: () => c.setState({ hdMenu: false }),
     hdBurger: HDR_BURGER(home, o.authed, openLogin, close),
     hdDdShow: dd, hdDdExpanded: dd ? "true" : "false", hdDdRot: dd ? "rotate(180deg)" : "none",
     hdDdColor: dd ? "#3669EE" : "#373A41", hdDdLine: dd ? "#3669EE" : "transparent",
