@@ -326,7 +326,7 @@ a:hover{color:#2453D4}
   </div>
   <div ref="{{ magRef }}" style="margin:0 {{ L.rowBleed }}; padding:10px {{ magPadX }} 22px; display:flex; gap:{{ L.cardGap }}; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding:0 {{ magPadX }}; scrollbar-width:none">
     <sc-for list="{{ articles }}" as="a" hint-placeholder-count="5">
-      <a href="#magazine" style="flex:0 0 {{ magCardW }}; scroll-snap-align:start; display:flex; flex-direction:column; gap:14px; padding:14px 14px 20px; border-radius:24px; background:#FFFFFF; border:1px solid #E6E6E6; color:#222222; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(34,34,34,.08); border-color:#DBDBDB; color:#222222">
+      <a href="{{ a.href }}" style="flex:0 0 {{ magCardW }}; scroll-snap-align:start; display:flex; flex-direction:column; gap:14px; padding:14px 14px 20px; border-radius:24px; background:#FFFFFF; border:1px solid #E6E6E6; color:#222222; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s" style-hover="transform:translateY(-4px); box-shadow:0 18px 40px rgba(34,34,34,.08); border-color:#DBDBDB; color:#222222">
         <div style="position:relative; aspect-ratio:4 / 3; border-radius:20px; background:#F8F9FA; border:1px solid #ECEEF0; overflow:hidden"><image-slot id="{{ a.slotId }}" shape="rect" fit="cover" placeholder="{{ a.slotHint }}" style="position:absolute; inset:0; width:100%; height:100%"></image-slot></div>
         <span style="align-self:flex-start; margin:0 4px; font-size:13px; color:#3669EE; background:#EBF0FE; padding:4px 10px; border-radius:8px">{{ a.cat }}</span>
         <h3 style="margin:0 4px; flex:1; font-size:17px; font-weight:700; line-height:1.7">{{ a.title }}</h3>
@@ -454,12 +454,12 @@ const SPECS = [
   { key: "neuro", label: "مغز و اعصاب" }
 ];
 const ARTICLES = [
-        { cat: "قلب و عروق", title: "چه زمانی باید فشار خون را جدی بگیریم؟" },
-        { cat: "پوست و مو", title: "مراقبت از پوست در فصل سرما" },
-        { cat: "مغز و اعصاب", title: "نوروتراپی خوب است یا نه؟" },
-        { cat: "ارتوپدی", title: "درد زانو: علت‌ها و زمان مراجعه به پزشک" },
-        { cat: "زنان و زایمان", title: "معاینات دوره‌ای که نباید فراموش شوند" },
-        { cat: "پزشک عمومی", title: "چک‌آپ سالانه شامل چه آزمایش‌هایی است؟" }
+        { cat: "قلب و عروق", title: "چه زمانی باید فشار خون را جدی بگیریم؟", href: "magazine/high-blood-pressure.html" },
+        { cat: "پوست و مو", title: "مراقبت از پوست در فصل سرما", href: "magazine/winter-skin-care.html" },
+        { cat: "مغز و اعصاب", title: "نوروتراپی خوب است یا نه؟", href: "magazine/is-neurotherapy-effective.html" },
+        { cat: "ارتوپدی", title: "درد زانو: علت‌ها و زمان مراجعه به پزشک", href: "magazine/knee-pain.html" },
+        { cat: "زنان و زایمان", title: "معاینات دوره‌ای که نباید فراموش شوند", href: "magazine/womens-health-screenings.html" },
+        { cat: "پزشک عمومی", title: "چک‌آپ سالانه شامل چه آزمایش‌هایی است؟", href: "magazine/annual-checkup-tests.html" }
       ];
 const DOCTORS = [
   { key: "sara", photoId: "doctor-sara", name: "دکتر سارا محمدی", spec: "cardio", specialty: "متخصص قلب و عروق", credential: "فلوشیپ اکوکاردیوگرافی · ۱۵ سال سابقه", recommend: "۹۶٪", rating: "۴٫۸", reviews: "(از ۱۲۴ نظر)", next: "امروز، ۱۶:۳۰", types: ["clinic", "phone", "online"] },
