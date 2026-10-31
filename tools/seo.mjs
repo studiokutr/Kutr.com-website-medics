@@ -46,7 +46,7 @@ const SPECIALTY = {
 
 // Pages that keep their own hand-written <head> (title, canonical, structured data).
 const STATIC_PAGES = [
-  "about.html", "contact.html", "doctors.html", "online-booking-discount.html",
+  "about.html", "contact.html", "doctors.html", "faq.html", "privacy.html", "terms.html", "online-booking-discount.html",
   "magazine/index.html", "magazine/neurotherapy-benefits.html",
   "magazine/high-blood-pressure.html", "magazine/winter-skin-care.html", "magazine/is-neurotherapy-effective.html",
   "magazine/knee-pain.html", "magazine/womens-health-screenings.html", "magazine/annual-checkup-tests.html"
